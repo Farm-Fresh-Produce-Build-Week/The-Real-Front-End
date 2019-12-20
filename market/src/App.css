@@ -30,14 +30,6 @@
   position: absolute;
   color: fushia;
 }
-
-.radioButton {
-  font-size: 15px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
 .errors {
   margin: 0;
   position: absolute;
@@ -65,7 +57,7 @@ label input {
 
 button {
   max-width: 150px;
-  margin: 20px 0;
+  margin: 20px 10px;
   padding: 12px 20px;
   border-style: none;
   background-color: #14586b;
@@ -86,4 +78,18 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: row;
+  margin: 5rem auto;
+  justify-content: center;
+}
+
+.login-container {
+  margin: 0 5rem;
+  padding: 2rem;
+  width: 40rem;
+  background: #848c8e;
 }

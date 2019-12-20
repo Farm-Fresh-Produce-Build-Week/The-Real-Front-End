@@ -20,6 +20,9 @@ import Navigation from "./components/Navigation";
 import RegisterFarmer from "./components/RegisterFarmer";
 import FarmerLandingPage from "./components/FarmerLandingPage";
 import RegisterCustomer from "./components/RegisterCustomer";
+import LoginFarmer from "./components/LoginFarmer";
+import LoginCustomer from "./components/LoginCustomer";
+import Landing from "./components/Landing";
 
 // Styles
 import "./App.css";
@@ -46,8 +49,9 @@ function App() {
     <FarmItemsContext.Provider value={{ farmItems, setFarmItems }}>
       <div className="App">
         <Navigation />
-        <Route exact path="/" />
-        <Route exact path="/login" />
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/login-customer" component={LoginCustomer} />
+        <Route exact path="/login-farmer" component={LoginFarmer} />
         <Route
           exact
           path="/register-farmer"
@@ -63,9 +67,9 @@ function App() {
           }}
         />
         {/* <Route exact path="/farmer-register" /> */}
-        <Route exact path="/dashboard" />
-        <Route exact path="/farmer-dashboard" component={FarmerLandingPage} />
-        <Route path="/:id" />
+        <Route exact path="/dashboard-customer" />
+        <Route exact path="/dashboard-farmer" component={FarmerLandingPage} />
+        <Route path="dashboard-customer/:id" />
         <Footer />
       </div>
     </FarmItemsContext.Provider>
