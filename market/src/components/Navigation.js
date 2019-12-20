@@ -9,8 +9,8 @@ const Navigation = () => {
       <div className="nav-bar">
         <nav>
           {/* Yes, I would change these to NavLinks */}
-          // should these be navlinks or links instead of a hrefs.. YES!
-          :-PerformanceMark
+          // should these be navlinks or links instead of a hrefs.. YES they
+          should!
           <a href="#"> Home </a>
           <a href="#"> Contact </a>
           <a href="#"> About Us </a>

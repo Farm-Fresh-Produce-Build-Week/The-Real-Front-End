@@ -5,7 +5,7 @@ export const AxiosWithAuth = () => {
   console.log("grabbed token:", token);
 
   return axios.create({
-    baseURL: "https://farmers-fresh-api.herokuapp.com/api/",
+    baseURL: "https://farmers-fresh-api.herokuapp.com/api",
     headers: {
       Authorization: token
     }
