@@ -9,7 +9,7 @@ const Navigation = () => {
         <div className="nav-bar">
             <nav>
 
-                // should these be navlinks or links instead of a hrefs.. 
+                {/*should be navlinks or links instead of a hrefs*/}
                 <a href="#"> Home </a>
                 <a href="#"> Contact </a>
                 <a href="#"> About Us </a>
