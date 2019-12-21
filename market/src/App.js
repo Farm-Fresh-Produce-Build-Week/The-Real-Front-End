@@ -18,7 +18,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import RegisterFarmer from "./components/RegisterFarmer";
-import FarmerLandingPage from "./components/FarmerLandingPage";
+import DashboardFarmer from "./components/DashboardFarmer";
 import RegisterCustomer from "./components/RegisterCustomer";
 import LoginFarmer from "./components/LoginFarmer";
 import LoginCustomer from "./components/LoginCustomer";
@@ -76,7 +76,7 @@ function App() {
         <PrivateRoute
           exact
           path="/dashboard-farmer"
-          component={FarmerLandingPage}
+          component={DashboardFarmer}
         />
         <PrivateRoute path="dashboard-customer/:id" />
         <PrivateRoute path="dashboard-farmer/:id" />
