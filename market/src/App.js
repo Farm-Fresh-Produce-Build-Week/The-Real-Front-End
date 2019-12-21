@@ -23,6 +23,7 @@ import RegisterCustomer from "./components/RegisterCustomer";
 import LoginFarmer from "./components/LoginFarmer";
 import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
+import DashboardCustomer from "./components/DashboardCustomer";
 
 // Styles
 import "./App.css";
@@ -67,7 +68,11 @@ function App() {
           }}
         />
         {/* <Route exact path="/farmer-register" /> */}
-        <PrivateRoute exact path="/dashboard-customer" />
+        <PrivateRoute
+          exact
+          path="/dashboard-customer"
+          component={DashboardCustomer}
+        />
         <PrivateRoute
           exact
           path="/dashboard-farmer"

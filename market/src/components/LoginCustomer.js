@@ -11,7 +11,9 @@ const LoginCustomer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
-    props.history.push("/dashboard-customer");
+    if (status !== undefined) {
+      props.history.push("/dashboard-customer");
+    }
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);
@@ -72,7 +74,8 @@ const FormikSignUp = withFormik({
       .post("/users/login", values)
       .then(res => {
         console.log("Login Customer success, RES: ", res);
-        // setStatus(res.data);
+        setStatus(res.data.user);
+        localStorage.setItem("token", res.data.token);
         resetForm();
       })
       .catch(err => console.log(err.response));

@@ -11,7 +11,9 @@ const RegisterFarmer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
-    props.history.push("/dashboard-farmer");
+    if (status !== undefined) {
+      props.history.push("/dashboard-farmer");
+    }
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);

@@ -11,7 +11,9 @@ const LoginFarmer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
-    props.history.push("/dashboard-customer");
+    if (status !== undefined) {
+      props.history.push("/dashboard-farmer");
+    }
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);
@@ -20,7 +22,7 @@ const LoginFarmer = props => {
     <div className="card">
       <div className="sign-form">
         <Form>
-          <h2 style={{ color: "#14586b" }}>Customer Sign In</h2>
+          <h2 style={{ color: "#14586b" }}>Farmer Sign In</h2>
           <label htmlFor="name">
             Username
             <Field
@@ -46,8 +48,8 @@ const LoginFarmer = props => {
               <p className="errors">{errors.password}</p>
             )}
           </label>
+          <button type="submit">Submit</button>
         </Form>
-        <button type="submit">Submit</button>
       </div>
     </div>
   );
@@ -69,10 +71,11 @@ const FormikSignUp = withFormik({
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
     AxiosWithAuth()
-      .post("https://reqres.in/api/users/", values)
+      .post("/farmers/login", values)
       .then(res => {
-        console.log("success", res);
+        console.log("Farmer Customer success, RES: ", res);
         setStatus(res.data);
+        localStorage.setItem("token", res.data.token);
         resetForm();
       })
       .catch(err => console.log(err.response));
