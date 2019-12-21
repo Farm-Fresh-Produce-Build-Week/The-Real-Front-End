@@ -1,7 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
-const Navigation = () => {
+const Navigation = props => {
+  const logOut = e => {
+    // e.preventDefault();
+    console.log("LOGOUT PRESSED!");
+    localStorage.removeItem("token");
+    // return <Redirect to="/" />;
+    // props.history.push("/");
+  };
+
   return (
     <>
       <div className="Navigation-Area">
@@ -20,6 +28,9 @@ const Navigation = () => {
           </NavLink>
           <NavLink to="/">
             <button>Sign Up</button>
+          </NavLink>
+          <NavLink to="/">
+            <button onClick={() => logOut()}>Logout</button>
           </NavLink>
         </nav>
       </div>

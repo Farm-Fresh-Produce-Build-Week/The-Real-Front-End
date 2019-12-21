@@ -3,12 +3,17 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
-const LoginCustomer = ({ values, errors, touched, status, setFieldValue }) => {
+const LoginCustomer = props => {
+  const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     console.log("status has changed!", status);
-    status && setUsers(users => [...users, status]);
+    status && setUsers([...users, status]);
+    props.history.push("/dashboard-customer");
+    console.log("Status: ", status);
+    console.log("Users: ", users);
   }, [status]);
 
   return (
@@ -41,8 +46,8 @@ const LoginCustomer = ({ values, errors, touched, status, setFieldValue }) => {
               <p className="errors">{errors.password}</p>
             )}
           </label>
+          <button type="submit">Submit</button>
         </Form>
-        <button type="submit">Submit</button>
       </div>
     </div>
   );
@@ -64,10 +69,10 @@ const FormikSignUp = withFormik({
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
     AxiosWithAuth()
-      .post("https://reqres.in/api/users/", values)
+      .post("/users/login", values)
       .then(res => {
-        console.log("success", res);
-        setStatus(res.data);
+        console.log("Login Customer success, RES: ", res);
+        // setStatus(res.data);
         resetForm();
       })
       .catch(err => console.log(err.response));

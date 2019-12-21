@@ -3,12 +3,17 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
-const LoginFarmer = ({ values, errors, touched, status, setFieldValue }) => {
+const LoginFarmer = props => {
+  const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     console.log("status has changed!", status);
-    status && setUsers(users => [...users, status]);
+    status && setUsers([...users, status]);
+    props.history.push("/dashboard-customer");
+    console.log("Status: ", status);
+    console.log("Users: ", users);
   }, [status]);
 
   return (

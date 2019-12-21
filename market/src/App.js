@@ -67,9 +67,14 @@ function App() {
           }}
         />
         {/* <Route exact path="/farmer-register" /> */}
-        <Route exact path="/dashboard-customer" />
-        <Route exact path="/dashboard-farmer" component={FarmerLandingPage} />
-        <Route path="dashboard-customer/:id" />
+        <PrivateRoute exact path="/dashboard-customer" />
+        <PrivateRoute
+          exact
+          path="/dashboard-farmer"
+          component={FarmerLandingPage}
+        />
+        <PrivateRoute path="dashboard-customer/:id" />
+        <PrivateRoute path="dashboard-farmer/:id" />
         <Footer />
       </div>
     </FarmItemsContext.Provider>
