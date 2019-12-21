@@ -1,6 +1,6 @@
 import React from "react";
 
-import farmer3 from "../../Images/Farmer/farmer3.jpg";
+import farmer3 from "../Images/Farmer/farmer3.jpg";
 import starfull from "../icons/PNG/starfull.png";
 import starhalf from "../icons/PNG/starhalf.png"; 
 import starempty from "../icons/PNG/starempty.png";
