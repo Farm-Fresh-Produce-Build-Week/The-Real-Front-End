@@ -1,10 +1,12 @@
 import React from "react";
 
+
 import facebook2 from "../icons/PNG/facebook2.png";
 import instagram from "../icons/PNG/instagram.png";
 import twitter from "../icons/PNG/twitter.png";
 import phone from "../icons/PNG/phone.png";
 import mail from "../icons/PNG/mail.png";
+
 
 const Footer = () => {
   return (
