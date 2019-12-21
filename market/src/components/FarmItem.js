@@ -1,10 +1,26 @@
 // single item/product for sale   !! Mostly mock data right now. 
 
 // farmItems setFarmItems is the App's application state.  
+// cart and setCard are also states being uses. Are they application level or app.js level??
+
+
+{/* <button className="customer-shopping"> Add To Cart </button>
+
+            <button className="farmer-edit-farmItem" 
+                onClick={() => 
+                props.history.push(`/edit-item/${item.id}`)}>
+                Edit 
+            </button>
+
+            <button className="farmer-delete-farmItem" onClick={handleDelete}> Delete </button> 
+
+            not sure how to intergrade the functionally for customer and farmer. They see different functions. */}
+
+           // line 70 not sure if routing correctly and able to make it work. Have to set up the farm name with an id? 
 
 import React from "react";
 import { Route, NavLink } from "react-router-dom";
-import axios from "axios"; or   // import axiosWithAuth from "../utils/axiosWithAuth";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 import FarmItemDescription from "../FarmItemDescription.js";
 import blackberries from "../../Images/Produce/blackberries.jsp"; 
@@ -16,7 +32,7 @@ const FarmItem = (props) => {
     );
 
     if (!props.items.length || !item) {
-        return <h2> Loading Items  </h2>; 
+        return <h2> Loading ... ...   </h2>; 
         // could change this to a react-spinner later
     }
 
@@ -33,32 +49,38 @@ const FarmItem = (props) => {
         .catch(error => console.log("LT: FarmItem.js: handleDelete: error", error))
     };
 
-    // does ha
-
 
 
     return (
-        <div className="Produce-Card">
-            <div className="image-wrapper">
-                <img src={blackberries} alt="blackberries" />
+        <div className="FarmItem-Wrapper">
+            <div className="FarmItem-Header">
+                <div className="image-wrapper">
+                    <img src={blackberries} alt="blackberries" />
+                </div> 
+                    {/* end of image div  */}
+                <div className="Item-Info">
+                    {/* <h3> farm name and location here </h3>   */}
+                    <h2> Blackberries </h2>
+                    <h3>  $   </h3>
+                    <h3> Amount available </h3>
+                </div>
             </div>
-            <div className="Item-Info">
-                <h3> farm name and location here </h3>  
-                <h2> Blackberries </h2>
-                <h3>  $   </h3>
-                <h3> Amount available </h3>
-            </div>
-            <div className="item-description">
-                <FarmItemDescription /> 
-            </div>
-            {/* <button className="customer-shopping"> Add To Cart </button>
-            <button className="farmer-edit-farmItem"> Edit </button> 
-            <button className="farmer-delete-farmItem"> Delete </button> 
-            
-            not sure how to intergrade the functionally for customer and farmer */}
-        </div>
-    ); 
+                {/* end of farmItem Header  */}
+            <nav className="farmItem-sub-nav">
+                <NavLink exact to={`/farmitem-list/${item.id}`}>
+                    Details 
+                </NavLink>
+                <NavLink exact to={`/farms/${farmsname.id}`}>  
+                    About the Farm 
+                    {/* {farm.name}  ??  */}
+                </NavLink>
+            </nav> 
+                {/* end of farmItem-sub-nav */}
 
+            <Route exact path ="item-list/:id"
+            render={props => <FarmItemDescription {...props} item={item} /> } />
+            </div>
+    ); 
 }
 
 export default FarmItem; 

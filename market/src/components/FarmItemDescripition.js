@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const FarmItemDescription = (props) => {
+const FarmItemDescripition = (props) => {
     return (
         <div className="farmitem-description">
             <p className="farmitem-blurb">
