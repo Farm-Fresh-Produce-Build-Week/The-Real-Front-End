@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
-const RegisterFarmer = ({ values, errors, touched, status, setFieldValue }) => {
+const RegisterFarmer = props => {
+  const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     console.log("status has changed!", status);
-    status && setUsers(users => [...users, status]);
+    status && setUsers([...users, status]);
+    if (status !== undefined) {
+      props.history.push("/dashboard-farmer");
+    }
+    console.log("Status: ", status);
+    console.log("Users: ", users);
   }, [status]);
 
   return (
@@ -79,43 +86,58 @@ const RegisterFarmer = ({ values, errors, touched, status, setFieldValue }) => {
               <p className="errors">{errors.zipCode}</p>
             )}
           </label>
+          <button type="submit">Submit</button>
         </Form>
-        <button type="submit">Submit</button>
+        {errorMsg ? <h3>{errorMsg}</h3> : null}
       </div>
     </div>
   );
 };
 
-const FormikSignUp = withFormik({
-  mapPropsToValues(props) {
-    return {
-      username: props.username || "",
-      password: props.password || "",
-      city: props.city || "",
-      state: props.state || "",
-      zipCode: props.zipCode || ""
-    };
-  },
+const myMapPropsToValues = props => {
+  console.log("myMapPropsToValues", props);
+  return {
+    username: props.username || "",
+    password: props.password || "",
+    city: props.city || "",
+    state: props.state || "",
+    zipCode: props.zipCode || "",
+    props: props
+  };
+};
 
-  validationSchema: Yup.object().shape({
-    username: Yup.string().required("This is required"),
-    password: Yup.string().required("This is required"),
-    city: Yup.string().required("This is required"),
-    state: Yup.string().required("This is required"),
-    zipCode: Yup.string().required("This is required")
-  }),
+const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
+  console.log("RegisterCustomer.js, POST RQ VALUES", values);
+  AxiosWithAuth()
+    .post("/users/register", values)
+    .then(res => {
+      console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
+      localStorage.setItem("token", res.data.token);
+      setStatus(res.data.newUser);
+      resetForm();
+    })
+    .catch(err => {
+      console.log("Register Customer ERROR: ", err.response.data.errorMessage);
+      setErrors(err.response.data.errorMessage);
+    });
+};
 
-  handleSubmit(values, { setStatus, resetForm }) {
-    console.log("submitting", values);
-    axios
-      .post("https://reqres.in/api/users/", values)
-      .then(res => {
-        console.log("success", res);
-        setStatus(res.data);
-        resetForm();
-      })
-      .catch(err => console.log(err.response));
-  }
-})(RegisterFarmer);
+const yupSchema = Yup.object().shape({
+  username: Yup.string().required("This is required"),
+  password: Yup.string().required("This is required"),
+  city: Yup.string().required("This is required"),
+  state: Yup.string().required("This is required"),
+  zipCode: Yup.string().required("This is required")
+});
 
-export default FormikSignUp;
+const formikObj = {
+  mapPropsToValues: myMapPropsToValues,
+  handleSubmit: myHandleSubmit,
+  validationSchema: yupSchema
+};
+
+const EnhancedFormHOC = withFormik(formikObj);
+
+const EnhancedRegisterForm = EnhancedFormHOC(RegisterFarmer);
+
+export default EnhancedRegisterForm;

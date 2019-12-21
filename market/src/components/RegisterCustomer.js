@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
-import axios from "axios";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
-const RegisterCustomer = ({
-  values,
-  errors,
-  touched,
-  status,
-  setFieldValue
-}) => {
+const RegisterCustomer = props => {
+  const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
+    if (status !== undefined) {
+      props.history.push("/dashboard-customer");
+    }
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);
@@ -86,9 +83,6 @@ const RegisterCustomer = ({
   );
 };
 
-const renderRedirect = () => <Redirect to="/dashboard-customer" />;
-
-// const FormikSignUp = withFormik({
 const myMapPropsToValues = props => {
   console.log("myMapPropsToValues", props);
   return {
@@ -109,13 +103,11 @@ const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
       console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
       localStorage.setItem("token", res.data.token);
       setStatus(res.data.newUser);
-      // props.history.push("/dashboard-customer");
       resetForm();
-      renderRedirect();
     })
     .catch(err => {
       console.log("Register Customer ERROR: ", err.response.data.errorMessage);
-      // setErrorMsg(err.response.data.errorMessage);
+      setErrors(err.response.data.errorMessage);
     });
 };
 

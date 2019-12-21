@@ -1,6 +1,15 @@
 import React from "react";
+import { NavLink, Redirect } from "react-router-dom";
 
-const Navigation = () => {
+const Navigation = props => {
+  const logOut = e => {
+    // e.preventDefault();
+    console.log("LOGOUT PRESSED!");
+    localStorage.removeItem("token");
+    // return <Redirect to="/" />;
+    // props.history.push("/");
+  };
+
   return (
     <>
       <div className="Navigation-Area">
@@ -8,13 +17,21 @@ const Navigation = () => {
       </div>
       <div className="nav-bar">
         <nav>
-          {/* Yes, I would change these to NavLinks */}
-          // should these be navlinks or links instead of a hrefs.. YES they
-          should!
-          <a href="#"> Home </a>
-          <a href="#"> Contact </a>
-          <a href="#"> About Us </a>
-          <a href="#"> Sign Up </a>
+          <NavLink to="/">
+            <button>Home</button>
+          </NavLink>
+          <NavLink to="#">
+            <button>Contact</button>
+          </NavLink>
+          <NavLink to="#">
+            <button>About Us</button>
+          </NavLink>
+          <NavLink to="/">
+            <button>Sign Up</button>
+          </NavLink>
+          <NavLink to="/">
+            <button onClick={() => logOut()}>Logout</button>
+          </NavLink>
         </nav>
       </div>
     </>

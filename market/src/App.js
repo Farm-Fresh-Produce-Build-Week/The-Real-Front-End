@@ -23,6 +23,7 @@ import RegisterCustomer from "./components/RegisterCustomer";
 import LoginFarmer from "./components/LoginFarmer";
 import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
+import DashboardCustomer from "./components/DashboardCustomer";
 
 // Styles
 import "./App.css";
@@ -67,9 +68,18 @@ function App() {
           }}
         />
         {/* <Route exact path="/farmer-register" /> */}
-        <Route exact path="/dashboard-customer" />
-        <Route exact path="/dashboard-farmer" component={FarmerLandingPage} />
-        <Route path="dashboard-customer/:id" />
+        <PrivateRoute
+          exact
+          path="/dashboard-customer"
+          component={DashboardCustomer}
+        />
+        <PrivateRoute
+          exact
+          path="/dashboard-farmer"
+          component={FarmerLandingPage}
+        />
+        <PrivateRoute path="dashboard-customer/:id" />
+        <PrivateRoute path="dashboard-farmer/:id" />
         <Footer />
       </div>
     </FarmItemsContext.Provider>
