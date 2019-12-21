@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -8,13 +9,18 @@ const Navigation = () => {
       </div>
       <div className="nav-bar">
         <nav>
-          {/* Yes, I would change these to NavLinks */}
-          // should these be navlinks or links instead of a hrefs.. YES they
-          should!
-          <a href="#"> Home </a>
-          <a href="#"> Contact </a>
-          <a href="#"> About Us </a>
-          <a href="#"> Sign Up </a>
+          <NavLink to="/">
+            <button>Home</button>
+          </NavLink>
+          <NavLink to="#">
+            <button>Contact</button>
+          </NavLink>
+          <NavLink to="#">
+            <button>About Us</button>
+          </NavLink>
+          <NavLink to="/">
+            <button>Sign Up</button>
+          </NavLink>
         </nav>
       </div>
     </>
