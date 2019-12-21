@@ -8,6 +8,7 @@ import axios from "axios"; or   // import axiosWithAuth from "../utils/axiosWith
 
 import FarmItemDescription from "../FarmItemDescription.js";
 import blackberries from "../../Images/Produce/blackberries.jsp"; 
+import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
 
 const FarmItem = (props) => {
     const item = props.item.find(
@@ -22,10 +23,17 @@ const FarmItem = (props) => {
     // farmer functionality 
     const handleDelete = event => {
         event.preventDefault();
+        AxiosWithAuth()
+        .delete(`/farmitems/${item.id}`)
+        .then(res => {
+            console.log("LT: FarmItem.js: handleDelete: res". res);
+            props.updateFarmItems(res.data); //res.data? or res only 
+            props.history.push("/farmitems-list") // not sure if that's the correct route / link to 
+        })
+        .catch(error => console.log("LT: FarmItem.js: handleDelete: error", error))
+    };
 
-    }
-
-
+    // does ha
 
 
 
@@ -44,7 +52,8 @@ const FarmItem = (props) => {
                 <FarmItemDescription /> 
             </div>
             {/* <button className="customer-shopping"> Add To Cart </button>
-            <button className="farmer-item-sell/edit"> Edit </button> 
+            <button className="farmer-edit-farmItem"> Edit </button> 
+            <button className="farmer-delete-farmItem"> Delete </button> 
             
             not sure how to intergrade the functionally for customer and farmer */}
         </div>
