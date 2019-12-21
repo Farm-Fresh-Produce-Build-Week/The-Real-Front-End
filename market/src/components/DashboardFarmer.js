@@ -1,6 +1,6 @@
 import React from "react";
 
-const  = () => {
+const  DashboardFarmer = () => {
   return (
     <>
       <div className="FarmerLandingPage">FarmerLandingPage</div>
@@ -8,4 +8,4 @@ const  = () => {
   );
 };
 
-export default FarmerLandingPage;
+export default DashboardFarmer;
