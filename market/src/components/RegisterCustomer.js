@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
+import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
+import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
 const RegisterCustomer = ({
   values,
@@ -11,10 +13,13 @@ const RegisterCustomer = ({
   setFieldValue
 }) => {
   const [users, setUsers] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     console.log("status has changed!", status);
-    status && setUsers(users => [...users, status]);
+    status && setUsers([...users, status]);
+    console.log("Status: ", status);
+    console.log("Users: ", users);
   }, [status]);
 
   return (
@@ -73,45 +78,70 @@ const RegisterCustomer = ({
               <p className="errors">{errors.zipCode}</p>
             )}
           </label>
+          <button type="submit">Submit</button>
         </Form>
-        <button type="submit">Submit</button>
+        {errorMsg ? <h3>{errorMsg}</h3> : null}
       </div>
     </div>
   );
 };
 
-const FormikSignUp = withFormik({
-  mapPropsToValues(props) {
-    return {
-      username: props.username || "",
+const renderRedirect = () => <Redirect to="/dashboard-customer" />;
 
-      password: props.password || "",
-      city: props.city || "",
-      state: props.state || "",
-      zipCode: props.zipCode || ""
-    };
-  },
+// const FormikSignUp = withFormik({
+const myMapPropsToValues = props => {
+  console.log("myMapPropsToValues", props);
+  return {
+    username: props.username || "",
+    password: props.password || "",
+    city: props.city || "",
+    state: props.state || "",
+    zipCode: props.zipCode || "",
+    props: props
+  };
+};
 
-  validationSchema: Yup.object().shape({
-    username: Yup.string().required("This is required"),
+const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
+  console.log("RegisterCustomer.js, POST RQ VALUES", values);
+  AxiosWithAuth()
+    .post("/users/register", values)
+    .then(res => {
+      console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
+      localStorage.setItem("token", res.data.token);
+      setStatus(res.data.newUser);
+      // props.history.push("/dashboard-customer");
+      resetForm();
+      renderRedirect();
+    })
+    .catch(err => {
+      console.log("Register Customer ERROR: ", err.response.data.errorMessage);
+      // setErrorMsg(err.response.data.errorMessage);
+    });
+};
 
-    password: Yup.string().required("This is required"),
-    city: Yup.string().required("This is required"),
-    state: Yup.string().required("This is required"),
-    zipCode: Yup.string().required("This is required")
-  }),
+const yupSchema = Yup.object().shape({
+  username: Yup.string().required("This is required"),
+  password: Yup.string().required("This is required"),
+  city: Yup.string().required("This is required"),
+  state: Yup.string().required("This is required"),
+  zipCode: Yup.string().required("This is required")
+});
+// const yupSchema: Yup.object().shape({
+//   username: Yup.string().required("This is required"),
+//   password: Yup.string().required("This is required"),
+//   city: Yup.string().required("This is required"),
+//   state: Yup.string().required("This is required"),
+//   zipCode: Yup.string().required("This is required")
+// })
 
-  handleSubmit(values, { setStatus, resetForm }) {
-    console.log("submitting", values);
-    axios
-      .post("https://reqres.in/api/users/", values)
-      .then(res => {
-        console.log("success", res);
-        setStatus(res.data);
-        resetForm();
-      })
-      .catch(err => console.log(err.response));
-  }
-})(RegisterCustomer);
+const formikObj = {
+  mapPropsToValues: myMapPropsToValues,
+  handleSubmit: myHandleSubmit,
+  validationSchema: yupSchema
+};
 
-export default FormikSignUp;
+const EnhancedFormHOC = withFormik(formikObj);
+
+const EnhancedRegisterForm = EnhancedFormHOC(RegisterCustomer);
+
+export default EnhancedRegisterForm;

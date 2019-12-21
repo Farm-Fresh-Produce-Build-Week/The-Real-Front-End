@@ -41,7 +41,7 @@ function App() {
       .catch(err => console.log(err));
   }, []);
 
-  console.log(farmItems);
+  console.log("Apps.js, farmItems: ", farmItems);
 
   const [cart, setCart] = useLocalStorage("cart", []);
 
