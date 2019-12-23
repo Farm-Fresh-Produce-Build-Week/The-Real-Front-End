@@ -5,6 +5,7 @@ import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
 
 import blackberries from "../Images/Produce/blackberries.jpg"; 
 import FarmItemDescription from "../components/FarmItemDescription.js"; 
+import Axios from "axios";
 
 
 // single item/product for sale   !! Mostly mock data right now. 
@@ -51,7 +52,6 @@ const FarmItem = (props) => {
         })
         .catch(error => console.log("LT: FarmItem.js: handleDelete: error", error))
     };
-
 
 
     return (
