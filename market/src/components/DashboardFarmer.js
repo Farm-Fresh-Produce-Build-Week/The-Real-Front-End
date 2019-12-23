@@ -18,7 +18,7 @@ const DashboardFarmer = props => {
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
   useEffect(() => {
-    if (farmer !== undefined) {
+    if (farmer.farmer !== undefined) {
       const id = farmer.farmer[0].id;
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)

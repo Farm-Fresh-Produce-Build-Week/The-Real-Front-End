@@ -5,7 +5,7 @@ const FarmItemList = props => {
   console.log("FarmItemsList.js, props: ", props);
   const routeToFarmItem = (event, item) => {
     // event.prevetDefault();
-    props.history.push(`/farmitem-list/${item.id}`);
+    // props.history.push(`/farmitem-list/${item.id}`); THIS ROUTE NEEDS TO BE UPDATED
   };
   return (
     <div className="farmItemS-Wrapper">
