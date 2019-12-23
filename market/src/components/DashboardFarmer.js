@@ -2,7 +2,10 @@ import React from "react";
 
 import farmer3 from "../Images/Farmer/farmer3.jpg";
 import starfull from "../icons/PNG/starfull.png";
-import starhalf from "../icons/PNG/starhalf.png";
+
+import starhalf from "../icons/PNG/starhalf.png"; 
+import starempty from "../icons/PNG/starempty.png";
+
 
 const DashboardFarmer = props => {
   return (
@@ -11,8 +14,9 @@ const DashboardFarmer = props => {
         <div className="Top-Section">
           <div className="Farmer-Details">
             <img src={farmer3} alt="mockfarmer" />
-            <h1> Farmer Joe </h1>
-          </div>
+            <h1> Farmer Joe </h1>  
+          </div> 
+
           <div className="ratings-area">
             <h3> Your Farm Rating: </h3>
             <div className="stars-rating">
