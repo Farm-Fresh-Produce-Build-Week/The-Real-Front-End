@@ -25,6 +25,8 @@ import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
 
+import FarmItem from "./components/FarmItem"; 
+
 // Styles
 import "./App.css";
 
@@ -80,6 +82,13 @@ function App() {
         />
         <PrivateRoute path="dashboard-customer/:id" />
         <PrivateRoute path="dashboard-farmer/:id" />
+
+        <PrivateRoute path="/farmitem-list?:id"
+          render={props => (
+            <FarmItem {...props} farmItems={farmItems} updatefarmItems={setFarmItems} />
+          )}
+          /> 
+
         <Footer />
       </div>
     </FarmItemsContext.Provider>
