@@ -1,6 +1,8 @@
 import React from "react";
 
-import farmer3 from "../Images/Farmer/farmer3.jpg";
+import styled from "styled-components"; 
+
+import farmer3 from "../Images/Farmer/farmer3.jpg";   // mock data 
 import starfull from "../icons/PNG/starfull.png";
 import starhalf from "../icons/PNG/starhalf.png"; 
 import starempty from "../icons/PNG/starempty.png";
@@ -11,8 +13,9 @@ const  DashboardFarmer = (props) => {
       <div className="FarmerLandingPage">
         <div className="Top-Section">
           <div className="Farmer-Details">
-            <img src={farmer3} alt="mockfarmer" />
-            <h1> Farmer Joe </h1>  
+            <StyledImg src={farmer3} alt="mockfarmer" />
+            <p> NOTE: MOCKPICTURE</p>
+            <h1> Farmer Chris </h1>  
           </div> 
           <div className="ratings-area">
             <h3> Your Farm Rating: </h3>
@@ -45,3 +48,7 @@ const  DashboardFarmer = (props) => {
 };
 
 export default DashboardFarmer;
+
+const StyledImg = styled.img`
+height:  100px; 
+`
