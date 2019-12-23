@@ -1,10 +1,19 @@
+import React from "react";
+import { Route, NavLink } from "react-router-dom";
+import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
+
+
+import blackberries from "../Images/Produce/blackberries.jpg"; 
+import FarmItemDescription from "../components/FarmItemDescription.js"; 
+
+
 // single item/product for sale   !! Mostly mock data right now. 
 
 // farmItems setFarmItems is the App's application state.  
 // cart and setCard are also states being uses. Are they application level or app.js level??
 
 
-{/* <button className="customer-shopping"> Add To Cart </button>
+/* <button className="customer-shopping"> Add To Cart </button>
 
             <button className="farmer-edit-farmItem" 
                 onClick={() => 
@@ -14,17 +23,11 @@
 
             <button className="farmer-delete-farmItem" onClick={handleDelete}> Delete </button> 
 
-            not sure how to intergrade the functionally for customer and farmer. They see different functions. */}
+            not sure how to intergrade the functionally for customer and farmer. They see different functions. */
 
-           // line 70 not sure if routing correctly and able to make it work. Have to set up the farm name with an id? 
+           // line 75 not sure if routing correctly and able to make it work. Have to set up the farm name with an id? 
 
-import React from "react";
-import { Route, NavLink } from "react-router-dom";
-import axiosWithAuth from "../utils/axiosWithAuth";
 
-import FarmItemDescription from "../FarmItemDescription.js";
-import blackberries from "../../Images/Produce/blackberries.jsp"; 
-import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
 
 const FarmItem = (props) => {
     const item = props.item.find(
@@ -42,7 +45,7 @@ const FarmItem = (props) => {
         AxiosWithAuth()
         .delete(`/farmitems/${item.id}`)
         .then(res => {
-            console.log("LT: FarmItem.js: handleDelete: res". res);
+            console.log("LT: FarmItem.js: handleDelete: res", res);
             props.updateFarmItems(res.data); //res.data? or res only 
             props.history.push("/farmitems-list") // not sure if that's the correct route / link to 
         })
@@ -70,14 +73,14 @@ const FarmItem = (props) => {
                 <NavLink exact to={`/farmitem-list/${item.id}`}>
                     Details 
                 </NavLink>
-                <NavLink exact to={`/farms/${farmsname.id}`}>  
+                <NavLink exact to={`/farms/`}>  
                     About the Farm 
                     {/* {farm.name}  ??  */}
                 </NavLink>
             </nav> 
                 {/* end of farmItem-sub-nav */}
 
-            <Route exact path ="item-list/:id"
+            <Route exact path ="farmitem-list/:id"
             render={props => <FarmItemDescription {...props} item={item} /> } />
             </div>
     ); 
