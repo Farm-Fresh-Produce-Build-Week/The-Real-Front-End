@@ -25,12 +25,13 @@ import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
 
-import FarmItem from "./components/FarmItem"; 
-
 // Styles
 import "./App.css";
 
 function App() {
+  // farmer context
+  const [farmer, setFarmer] = useState();
+
   // farm items context
   const [farmItems, setFarmItems] = useState();
 
@@ -49,49 +50,51 @@ function App() {
   const [cart, setCart] = useLocalStorage("cart", []);
 
   return (
-    <FarmItemsContext.Provider value={{ farmItems, setFarmItems }}>
-      <div className="App">
-        <Navigation />
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/login-customer" component={LoginCustomer} />
-        <Route exact path="/login-farmer" component={LoginFarmer} />
-        <Route
-          exact
-          path="/register-farmer"
-          render={props => {
-            return <RegisterFarmer {...props} />;
-          }}
-        />
-        <Route
-          exact
-          path="/register-customer"
-          render={props => {
-            return <RegisterCustomer {...props} />;
-          }}
-        />
-        {/* <Route exact path="/farmer-register" /> */}
-        <PrivateRoute
-          exact
-          path="/dashboard-customer"
-          component={DashboardCustomer}
-        />
-        <PrivateRoute
-          exact
-          path="/dashboard-farmer"
-          component={DashboardFarmer}
-        />
-        <PrivateRoute path="dashboard-customer/:id" />
-        <PrivateRoute path="dashboard-farmer/:id" />
-
-        <PrivateRoute path="/farmitem-list?:id"
-          render={props => (
-            <FarmItem {...props} farmItems={farmItems} updatefarmItems={setFarmItems} />
-          )}
-          /> 
-
-        <Footer />
-      </div>
-    </FarmItemsContext.Provider>
+    <FarmerContext.Provider value={{ farmer }}>
+      <FarmItemsContext.Provider value={{ farmItems, setFarmItems }}>
+        <div className="App">
+          <Navigation />
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/login-customer" component={LoginCustomer} />
+          <Route
+            exact
+            path="/login-farmer"
+            render={props => {
+              return <LoginFarmer {...props} setFarmer={setFarmer} />;
+            }}
+          />
+          <Route
+            exact
+            path="/register-farmer"
+            render={props => {
+              return <RegisterFarmer {...props} setFarmer={setFarmer} />;
+            }}
+          />
+          <Route
+            exact
+            path="/register-customer"
+            render={props => {
+              return <RegisterCustomer {...props} />;
+            }}
+          />
+          {/* <Route exact path="/farmer-register" /> */}
+          <PrivateRoute
+            exact
+            path="/dashboard-customer"
+            component={DashboardCustomer}
+          />
+          <PrivateRoute
+            exact
+            path="/dashboard-farmer"
+            component={DashboardFarmer}
+            farmer={farmer}
+          />
+          <PrivateRoute path="dashboard-customer/:id" />
+          <PrivateRoute path="dashboard-farmer/:id" />
+          <Footer />
+        </div>
+      </FarmItemsContext.Provider>
+    </FarmerContext.Provider>
   );
 }
 
