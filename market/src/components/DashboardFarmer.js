@@ -15,7 +15,7 @@ const  DashboardFarmer = (props) => {
           <div className="Farmer-Details">
             <StyledImg src={farmer3} alt="mockfarmer" />
             <p> NOTE: MOCKPICTURE</p>
-            <h1> Farmer Chris </h1>  
+            <h1> Farmer Chris (mock)  </h1>  
           </div> 
           <div className="ratings-area">
             <h3> Your Farm Rating: </h3>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'; 
 
+// this is making a new item
+
 // import {axiosWithAuth} from "../utils/axiosWithAuth";
 
 const initialItem = {
@@ -27,7 +29,7 @@ const FarmItemForm = props => {
 
     return (
         <div className="NewFarmItem-Form">
-            <h2> Add Produce to Sell </h2>
+            <h2> Add Produce  </h2>
             <form onSubmit={handleSubmit}>
                 <input
                 type="text"
@@ -58,7 +60,7 @@ const FarmItemForm = props => {
                 value={item.description}
                 />
 
-                <button className="button-edit">
+                <button className="button-addNewItem">
                     Add To For Sale 
                 </button>
             </form>
