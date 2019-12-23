@@ -2,7 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom"; 
 
 const FarmItemList = (props) => {
-    const routeToFarmItem = (event, farmItem) => {
+    const routeToFarmItem = (event, item) => {
         event.prevetDefault(); 
         props.history.push(`/farmitem-list/${item.id}`);
     }
