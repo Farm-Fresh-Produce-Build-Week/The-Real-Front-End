@@ -10,6 +10,7 @@ import { CartContext } from "./contexts/CartContext";
 import { FarmItemsContext } from "./contexts/FarmItemsContext";
 import { FarmerContext } from "./contexts/FarmerContext";
 import { UserContext } from "./contexts/UserContext";
+import { OrdersContext } from "./contexts/OrdersContext";
 
 // Custom Hook
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -30,7 +31,19 @@ import "./App.css";
 
 function App() {
   // farmer context
-  const [farmer, setFarmer] = useState();
+  const [farmer, setFarmer] = useLocalStorage("farmer", []);
+
+  const setCurrentFarmer = farmer => {
+    setFarmer(farmer);
+  };
+
+  // user context
+
+  const [user, setUser] = useLocalStorage("user", []);
+
+  const setCurrentUser = user => {
+    setFarmer(user);
+  };
 
   // farm items context
   const [farmItems, setFarmItems] = useState();
@@ -47,52 +60,83 @@ function App() {
 
   console.log("Apps.js, farmItems: ", farmItems);
 
+  // cart context
   const [cart, setCart] = useLocalStorage("cart", []);
 
+  const addToCart = item => {
+    // add the given item to the cart
+    console.log("dw: App.js: addItem: item: ", item);
+    setCart([...cart, item]);
+    console.log("dw: App.js: addItem: cart: ", cart);
+  };
+
+  const removeItem = item => {
+    setCart(cart.filter(i => i.id !== item));
+    console.log("dw: App.js: removeItem: cart: ", cart);
+  };
+
+  // new order context
+  const [orders, setOrders] = useLocalStorage("orders", []);
+
+  const PurchaseOrder = order => {
+    setOrders([...orders, order]);
+  };
+
   return (
-    <FarmerContext.Provider value={{ farmer }}>
-      <FarmItemsContext.Provider value={{ farmItems, setFarmItems }}>
-        <div className="App">
-          <Navigation />
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/login-customer" component={LoginCustomer} />
-          <Route
-            exact
-            path="/login-farmer"
-            render={props => {
-              return <LoginFarmer {...props} setFarmer={setFarmer} />;
-            }}
-          />
-          <Route
-            exact
-            path="/register-farmer"
-            render={props => {
-              return <RegisterFarmer {...props} setFarmer={setFarmer} />;
-            }}
-          />
-          <Route
-            exact
-            path="/register-customer"
-            render={props => {
-              return <RegisterCustomer {...props} />;
-            }}
-          />
-          {/* <Route exact path="/farmer-register" /> */}
-          <PrivateRoute
-            exact
-            path="/dashboard-customer"
-            component={DashboardCustomer}
-          />
-          <PrivateRoute
-            exact
-            path="/dashboard-farmer"
-            component={DashboardFarmer}
-            farmer={farmer}
-          />
-          <PrivateRoute path="dashboard-customer/:id" />
-          <PrivateRoute path="dashboard-farmer/:id" />
-          <Footer />
-        </div>
+    <FarmerContext.Provider value={{ farmer, setCurrentFarmer }}>
+      <FarmItemsContext.Provider value={{ farmItems, setFarmItems, addToCart }}>
+        <UserContext.Provider value={{ user, setCurrentUser }}>
+          <CartContext.Provider value={{ cart, removeItem, PurchaseOrder }}>
+            <OrdersContext.Provider value={{ orders }}>
+              <div className="App">
+                <Navigation />
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/login-customer" component={LoginCustomer} />
+                <Route
+                  exact
+                  path="/login-farmer"
+                  render={props => {
+                    return (
+                      <LoginFarmer
+                        {...props}
+                        setCurrentFarmer={setCurrentFarmer}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path="/register-farmer"
+                  render={props => {
+                    return <RegisterFarmer {...props} setFarmer={setFarmer} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/register-customer"
+                  render={props => {
+                    return <RegisterCustomer {...props} />;
+                  }}
+                />
+                {/* <Route exact path="/farmer-register" /> */}
+                <PrivateRoute
+                  exact
+                  path="/dashboard-customer"
+                  component={DashboardCustomer}
+                />
+                <PrivateRoute
+                  exact
+                  path="/dashboard-farmer"
+                  component={DashboardFarmer}
+                  farmer={farmer}
+                />
+                <PrivateRoute path="dashboard-customer/:id" />
+                <PrivateRoute path="dashboard-farmer/:id" />
+                <Footer />
+              </div>
+            </OrdersContext.Provider>
+          </CartContext.Provider>
+        </UserContext.Provider>
       </FarmItemsContext.Provider>
     </FarmerContext.Provider>
   );

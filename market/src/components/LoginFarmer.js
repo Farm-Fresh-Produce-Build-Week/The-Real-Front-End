@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
 const LoginFarmer = props => {
-  console.log("LoginFarmer.js, props: ", props);
+  // console.log("LoginFarmer.js, props: ", props);
   const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -12,7 +12,7 @@ const LoginFarmer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
-    status && props.setFarmer([status.user]);
+    status && props.setCurrentFarmer(status.user);
     if (status !== undefined) {
       props.history.push("/dashboard-farmer");
     }

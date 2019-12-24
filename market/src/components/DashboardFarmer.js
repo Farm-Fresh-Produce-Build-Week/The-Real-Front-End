@@ -19,7 +19,7 @@ const DashboardFarmer = props => {
 
   useEffect(() => {
     if (farmer.farmer !== undefined) {
-      const id = farmer.farmer[0].id;
+      const id = farmer.farmer.id;
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
@@ -28,7 +28,7 @@ const DashboardFarmer = props => {
         })
         .catch(err => console.log(err));
     }
-  }, []);
+  }, [farmer]);
   console.log("Farm Items: ", farmItems);
 
   return (
@@ -38,7 +38,7 @@ const DashboardFarmer = props => {
           <div className="Farmer-Details">
             <StyledImg src={farmer3} alt="mockfarmer" />
             <p> NOTE: MOCKPICTURE</p>
-            <h1> Farmer Chris (mock) </h1>
+            <h1>{"Farmer Chris (mock)"}</h1>
           </div>
 
           <div className="ratings-area">
@@ -48,7 +48,7 @@ const DashboardFarmer = props => {
               <img src={starfull} alt="star-full" />
               <img src={starfull} alt="star-full" />
               <img src={starhalf} alt="star-half" />
-              {/* <img src={starempty} alt="star-empty" /> */}
+              <img src={starempty} alt="star-empty" />
             </div>
           </div>
           <div className="button-area">
@@ -65,6 +65,7 @@ const DashboardFarmer = props => {
           <div className="Items-For-Sale" />
           <h2>Items for sale</h2>
           {farmItems && <FarmItemsList farmItems={farmItems} />}
+          {!farmItems && <p>Add some items to sell</p>}
           {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
         </div>
         {/* end of sale-section */}

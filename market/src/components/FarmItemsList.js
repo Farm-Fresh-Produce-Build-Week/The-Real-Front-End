@@ -1,5 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const FarmItemList = props => {
   console.log("FarmItemsList.js, props: ", props);
@@ -13,16 +14,18 @@ const FarmItemList = props => {
         <div
           onClick={event => routeToFarmItem(event, item)}
           className="FarmItem-card"
-          key={item.id}
+          key={item.name}
         >
-          <img
+          <StyledImg
             className="farmitem-list-image"
-            src={item.imageURL}
-            // not sure about how to set up img with mock data and regularly
+            src={item.produceImgURL}
             alt={item.name}
           />
           <p>{item.name}</p>
-          <p>${item.price}</p>
+          <p>
+            ${item.price} per {item.increment}
+          </p>
+          <p>Quanity: {item.quantity}</p>
         </div>
       ))}
     </div>
@@ -30,3 +33,7 @@ const FarmItemList = props => {
 };
 
 export default FarmItemList;
+
+const StyledImg = styled.img`
+  height: 100px;
+`;
