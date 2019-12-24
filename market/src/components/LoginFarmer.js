@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink, Redirect } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
@@ -19,6 +20,10 @@ const LoginFarmer = props => {
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);
+
+  if (localStorage.getItem("token")) {
+    return <Redirect to="/dashboard-farmer" />;
+  }
 
   return (
     <div className="card">
