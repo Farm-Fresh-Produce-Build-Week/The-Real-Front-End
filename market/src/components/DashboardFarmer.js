@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { FarmerContext } from "../contexts/FarmerContext";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import FarmItemsList from "./FarmItemsList";
+import FarmAddItem from "./FarmItemForm";
+import FarmItemEdit from "./FarmItemEdit";
 
 import styled from "styled-components";
 
@@ -15,8 +17,10 @@ import starempty from "../icons/PNG/starempty.png";
 const DashboardFarmer = props => {
   const farmer = useContext(FarmerContext);
   const [farmItems, setFarmItems] = useState();
+  const [isAdding, setIsAdding] = useState(false);
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
+  // Sets current farmers inventory to state
   useEffect(() => {
     if (farmer.farmer !== undefined) {
       const id = farmer.farmer.id;
@@ -31,14 +35,32 @@ const DashboardFarmer = props => {
   }, [farmer]);
   console.log("Farm Items: ", farmItems);
 
+  // const addItem = item => {
+  //   setFarmItems([...farmItems, item]);
+  // };
+
+  if (!farmer.farmer) {
+    return <div>Loading farm inventory...</div>;
+  }
+
+  // Toggle add item form
+  if (isAdding) {
+    return (
+      <div className="Adding-Item">
+        <FarmAddItem id={farmer.farmer.id} />;
+        {farmItems && <FarmItemsList farmItems={farmItems} />};
+        {!farmItems && <p>Add some items to sell</p>};
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="FarmerLandingPage">
         <div className="Top-Section">
           <div className="Farmer-Details">
-            <StyledImg src={farmer3} alt="mockfarmer" />
-            <p> NOTE: MOCKPICTURE</p>
-            <h1>{"Farmer Chris (mock)"}</h1>
+            <StyledImg src={farmer.farmer.profileImgURL} alt="mockfarmer" />
+            <h1>{farmer.farmer.username}</h1>
           </div>
 
           <div className="ratings-area">
@@ -52,9 +74,12 @@ const DashboardFarmer = props => {
             </div>
           </div>
           <div className="button-area">
-            <NavLink to="/add-farm-items">
-              <button> Add Items to Sell </button>
-            </NavLink>
+            {/* <NavLink to="/add-farm-items"> */}
+            <button onClick={() => setIsAdding(!isAdding)}>
+              {" "}
+              Add Items to Sell{" "}
+            </button>
+            {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
             <button> Farm Details </button>
             {/* dead button may add page for fun later  */}

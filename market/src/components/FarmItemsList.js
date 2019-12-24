@@ -25,7 +25,9 @@ const FarmItemList = props => {
           <p>
             ${item.price} per {item.increment}
           </p>
-          <p>Quanity: {item.quantity}</p>
+          <p>
+            Quanity: {item.quantity}-{item.increment}
+          </p>
         </div>
       ))}
     </div>
