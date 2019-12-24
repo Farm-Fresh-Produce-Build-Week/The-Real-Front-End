@@ -38,7 +38,6 @@ function App() {
   };
 
   // user context
-
   const [user, setUser] = useLocalStorage("user", []);
 
   const setCurrentUser = user => {
@@ -108,7 +107,12 @@ function App() {
                   exact
                   path="/register-farmer"
                   render={props => {
-                    return <RegisterFarmer {...props} setFarmer={setFarmer} />;
+                    return (
+                      <RegisterFarmer
+                        {...props}
+                        setCurrentFarmer={setCurrentFarmer}
+                      />
+                    );
                   }}
                 />
                 <Route
