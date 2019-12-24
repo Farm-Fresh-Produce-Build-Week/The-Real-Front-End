@@ -47,7 +47,7 @@ const DashboardFarmer = props => {
   if (isAdding) {
     return (
       <div className="Adding-Item">
-        <FarmAddItem id={farmer.farmer.id} />;
+        <FarmAddItem id={farmer.farmer.id} setIsAdding={setIsAdding} />;
         {farmItems && <FarmItemsList farmItems={farmItems} />};
         {!farmItems && <p>Add some items to sell</p>};
       </div>

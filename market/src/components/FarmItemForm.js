@@ -71,7 +71,7 @@ const FarmItemForm = props => {
         </button>
         <button
           className="button-addNewItem"
-          onClick={() => props.history.goBack()}
+          onClick={() => props.setIsAdding(false)}
         >
           Back to Inventory
         </button>
