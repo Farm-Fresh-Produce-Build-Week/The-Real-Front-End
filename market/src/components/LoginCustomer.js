@@ -18,6 +18,11 @@ const LoginCustomer = props => {
     console.log("Users: ", users);
   }, [status]);
 
+  // redirects customer to dashboard if already logged in
+  if (localStorage.getItem("user-token")) {
+    return <Redirect to="/dashboard-customer" />;
+  }
+
   return (
     <div className="card">
       <div className="sign-form">
@@ -75,7 +80,7 @@ const FormikSignUp = withFormik({
       .then(res => {
         console.log("Login Customer success, RES: ", res);
         setStatus(res.data.user);
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user-token", res.data.token);
         resetForm();
       })
       .catch(err => console.log(err.response));

@@ -6,6 +6,7 @@ const Navigation = props => {
     // e.preventDefault();
     console.log("LOGOUT PRESSED!");
     localStorage.removeItem("token");
+    localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
     // return <Redirect to="/" />;
     // props.history.push("/");

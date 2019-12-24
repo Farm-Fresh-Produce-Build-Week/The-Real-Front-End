@@ -21,6 +21,7 @@ const LoginFarmer = props => {
     console.log("Users: ", users);
   }, [status]);
 
+  // redirects farmer to dashboard if already logged in
   if (localStorage.getItem("token")) {
     return <Redirect to="/dashboard-farmer" />;
   }
@@ -81,8 +82,8 @@ const FormikSignUp = withFormik({
       .post("/farmers/login", values)
       .then(res => {
         console.log("Farmer Customer success, RES: ", res);
-        setStatus(res.data);
         localStorage.setItem("token", res.data.token);
+        setStatus(res.data);
         resetForm();
       })
       .catch(err => console.log(err.response));
