@@ -17,7 +17,10 @@ import starempty from "../icons/PNG/starempty.png";
 const DashboardFarmer = props => {
   const farmer = useContext(FarmerContext);
   const [farmItems, setFarmItems] = useState();
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAddingItem, setIsAddingItem] = useState(false);
+  const [isAddingInventory, setIsAddingInventory] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
   // Sets current farmers inventory to state
@@ -35,19 +38,15 @@ const DashboardFarmer = props => {
   }, [farmer]);
   console.log("Farm Items: ", farmItems);
 
-  // const addItem = item => {
-  //   setFarmItems([...farmItems, item]);
-  // };
-
   if (!farmer.farmer) {
     return <div>Loading farm inventory...</div>;
   }
 
   // Toggle add item form
-  if (isAdding) {
+  if (isAddingItem) {
     return (
       <div className="Adding-Item">
-        <FarmAddItem id={farmer.farmer.id} setIsAdding={setIsAdding} />;
+        <FarmAddItem id={farmer.farmer.id} setIsAddingItem={setIsAddingItem} />;
         {farmItems && <FarmItemsList farmItems={farmItems} />};
         {!farmItems && <p>Add some items to sell</p>};
       </div>
@@ -75,9 +74,17 @@ const DashboardFarmer = props => {
           </div>
           <div className="button-area">
             {/* <NavLink to="/add-farm-items"> */}
-            <button onClick={() => setIsAdding(!isAdding)}>
+            <button onClick={() => setIsAddingItem(!setIsAddingItem)}>
               {" "}
-              Add Items to Sell{" "}
+              Add New Farm Item{" "}
+            </button>
+            <button onClick={() => setIsAddingInventory(!isAddingInventory)}>
+              {" "}
+              Add New Inventory{" "}
+            </button>
+            <button onClick={() => setIsEditing(!isEditing)}>
+              {" "}
+              Edit Current Inventory{" "}
             </button>
             {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
@@ -103,5 +110,5 @@ const DashboardFarmer = props => {
 export default DashboardFarmer;
 
 const StyledImg = styled.img`
-  height: 100px;
+  height: 150px;
 `;
