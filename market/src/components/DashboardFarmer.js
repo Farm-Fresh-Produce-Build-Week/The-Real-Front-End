@@ -95,10 +95,10 @@ const DashboardFarmer = props => {
               {" "}
               Add New Inventory{" "}
             </button>
-            <button onClick={() => setIsEditing(!isEditing)}>
+            {/* <button onClick={() => setIsEditing(!isEditing)}>
               {" "}
               Edit Current Inventory{" "}
-            </button>
+            </button> */}
             {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
             <button> Farm Details </button>
@@ -109,7 +109,13 @@ const DashboardFarmer = props => {
         <div className="Sale-Section">
           <div className="Items-For-Sale" />
           <h2>Items for sale</h2>
-          {farmItems && <FarmItemsList farmItems={farmItems} />}
+          {farmItems && (
+            <FarmItemsList
+              farmItems={farmItems}
+              setIsEditing={setIsEditing}
+              isEditing={isEditing}
+            />
+          )}
           {!farmItems && <p>Add some items to sell</p>}
           {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
         </div>
