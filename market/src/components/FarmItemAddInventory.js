@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
 
@@ -14,8 +14,8 @@ const initialItem = {
 
 const FarmItemAddInventory = props => {
   const [newInventory, setNewInventory] = useState(initialItem);
-  const [allFarmItems, setAllFarmItems] = useState(FarmItemsContext);
-  console.log("allFarmItems: ", allFarmItems);
+  const { farmItems } = useContext(FarmItemsContext);
+  console.log("allFarmItems: ", farmItems);
 
   const handleChange = event => {
     let value = event.target.value;
@@ -42,49 +42,53 @@ const FarmItemAddInventory = props => {
       <form onSubmit={handleSubmit}>
         <select>
           <option value="None">-- Select --</option>
+          {farmItems.map(item => (
+            <option value={item.name}>{item.name}</option>
+          ))}
         </select>
         <input
+          type="number"
+          name="quantity"
+          onChange={handleChange}
+          placeholder="quantity"
+          value={newInventory.quantity}
+        />
+        {/* <input
           type="number"
           name="SKU"
           onChange={handleChange}
           placeholder="SKU"
-          value={newFarmItem.SKU}
+          value={newInventory.SKU}
         />
         <input
           type="number"
           name="PLU"
           onChange={handleChange}
           placeholder="PLU"
-          value={newFarmItem.PLU}
-        />
-        <input
-          type="number"
-          name="quantity"
-          onChange={handleChange}
-          placeholder="quantity"
-          value={newFarmItem.quantity}
-        />
-        <input
+          value={newInventory.PLU}
+        /> */}
+
+        {/* <input
           type="string"
           name="increment"
           onChange={handleChange}
           placeholder="increment"
-          value={newFarmItem.increment}
+          value={newInventory.increment}
         />
         <input
           type="price"
           name="price"
           onChange={handleChange}
           placeholder="price"
-          value={newFarmItem.price}
-        />
+          value={newInventory.price}
+        /> */}
 
         <button className="button-addNewItem" type="submit">
           Add Item To Inventory
         </button>
         <button
           className="button-addNewItem"
-          onClick={() => props.history.goBack()}
+          onClick={() => props.setIsAddingInventory(false)}
         >
           Back to Inventory
         </button>

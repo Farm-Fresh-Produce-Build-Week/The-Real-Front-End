@@ -4,7 +4,8 @@ import { FarmerContext } from "../contexts/FarmerContext";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import FarmItemsList from "./FarmItemsList";
 import FarmAddItem from "./FarmItemForm";
-import FarmItemEdit from "./FarmItemEdit";
+import FarmItemAddInventory from "./FarmItemAddInventory";
+import ItemEdit from "./FarmItemEdit";
 
 import styled from "styled-components";
 
@@ -15,7 +16,7 @@ import starhalf from "../icons/PNG/starhalf.png";
 import starempty from "../icons/PNG/starempty.png";
 
 const DashboardFarmer = props => {
-  const farmer = useContext(FarmerContext);
+  const { farmer } = useContext(FarmerContext);
   const [farmItems, setFarmItems] = useState();
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
@@ -25,8 +26,8 @@ const DashboardFarmer = props => {
 
   // Sets current farmers inventory to state
   useEffect(() => {
-    if (farmer.farmer !== undefined) {
-      const id = farmer.farmer.id;
+    if (farmer !== undefined) {
+      const id = farmer.id;
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
@@ -38,7 +39,7 @@ const DashboardFarmer = props => {
   }, [farmer]);
   console.log("Farm Items: ", farmItems);
 
-  if (!farmer.farmer) {
+  if (!farmer) {
     return <div>Loading farm inventory...</div>;
   }
 
@@ -46,9 +47,21 @@ const DashboardFarmer = props => {
   if (isAddingItem) {
     return (
       <div className="Adding-Item">
-        <FarmAddItem id={farmer.farmer.id} setIsAddingItem={setIsAddingItem} />;
-        {farmItems && <FarmItemsList farmItems={farmItems} />};
-        {!farmItems && <p>Add some items to sell</p>};
+        <FarmAddItem id={farmer.id} setIsAddingItem={setIsAddingItem} />;
+        {/* {farmItems && <FarmItemsList farmItems={farmItems} />};
+        {!farmItems && <p>Add some items to sell</p>}; */}
+      </div>
+    );
+  }
+
+  if (isAddingInventory) {
+    return (
+      <div className="Adding-Inventory">
+        <FarmItemAddInventory
+          id={farmer.id}
+          setIsAddingInventory={setIsAddingInventory}
+        />
+        ;
       </div>
     );
   }
@@ -58,8 +71,8 @@ const DashboardFarmer = props => {
       <div className="FarmerLandingPage">
         <div className="Top-Section">
           <div className="Farmer-Details">
-            <StyledImg src={farmer.farmer.profileImgURL} alt="mockfarmer" />
-            <h1>{farmer.farmer.username}</h1>
+            <StyledImg src={farmer.profileImgURL} alt="mockfarmer" />
+            <h1>{farmer.username}</h1>
           </div>
 
           <div className="ratings-area">
