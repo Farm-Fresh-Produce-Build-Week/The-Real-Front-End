@@ -47,7 +47,7 @@ const DashboardFarmer = props => {
   if (isAddingItem) {
     return (
       <div className="Adding-Item">
-        <FarmAddItem id={farmer.id} setIsAddingItem={setIsAddingItem} />;
+        <FarmAddItem id={farmer.id} setIsAddingItem={setIsAddingItem} />
         {/* {farmItems && <FarmItemsList farmItems={farmItems} />};
         {!farmItems && <p>Add some items to sell</p>}; */}
       </div>
@@ -61,7 +61,6 @@ const DashboardFarmer = props => {
           id={farmer.id}
           setIsAddingInventory={setIsAddingInventory}
         />
-        ;
       </div>
     );
   }
@@ -87,7 +86,7 @@ const DashboardFarmer = props => {
           </div>
           <div className="button-area">
             {/* <NavLink to="/add-farm-items"> */}
-            <button onClick={() => setIsAddingItem(!setIsAddingItem)}>
+            <button onClick={() => setIsAddingItem(!isAddingItem)}>
               {" "}
               Add New Farm Item{" "}
             </button>
