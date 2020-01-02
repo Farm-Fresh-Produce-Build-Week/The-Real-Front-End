@@ -18,6 +18,7 @@ import starempty from "../icons/PNG/starempty.png";
 const DashboardFarmer = props => {
   const { farmer } = useContext(FarmerContext);
   const [farmItems, setFarmItems] = useState();
+  const [loading, setLoading] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -28,18 +29,23 @@ const DashboardFarmer = props => {
   useEffect(() => {
     if (farmer !== undefined) {
       const id = farmer.id;
+      setLoading(!loading);
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
           console.log("App.js, GET PRODUCE RES: ", res);
           setFarmItems(res.data);
+          setLoading(!loading);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          setLoading(!loading);
+          console.log(err);
+        });
     }
   }, [farmer]);
   console.log("Farm Items: ", farmItems);
 
-  if (!farmer) {
+  if (loading) {
     return <div>Loading farm inventory...</div>;
   }
 
