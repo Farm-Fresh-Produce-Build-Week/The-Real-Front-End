@@ -29,7 +29,7 @@ const FarmItemList = props => {
             Quanity: {item.quantity}-{item.increment}
           </p>
           <button onClick={() => props.setIsEditing(!props.isEditing)}>
-            Edit Item
+            Update Quanity
           </button>
           <button>Delete</button>
         </div>
