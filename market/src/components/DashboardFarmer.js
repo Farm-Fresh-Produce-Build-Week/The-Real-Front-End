@@ -5,7 +5,6 @@ import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import FarmItemsList from "./FarmItemsList";
 import FarmAddItem from "./FarmItemForm";
 import FarmItemAddInventory from "./FarmItemAddInventory";
-import ItemEdit from "./FarmItemEdit";
 
 import styled from "styled-components";
 
@@ -21,7 +20,6 @@ const DashboardFarmer = props => {
   const [loading, setLoading] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
@@ -60,6 +58,7 @@ const DashboardFarmer = props => {
     );
   }
 
+  // Toggle add inventory form
   if (isAddingInventory) {
     return (
       <div className="Adding-Inventory">
@@ -91,7 +90,6 @@ const DashboardFarmer = props => {
             </div>
           </div>
           <div className="button-area">
-            {/* <NavLink to="/add-farm-items"> */}
             <button onClick={() => setIsAddingItem(!isAddingItem)}>
               {" "}
               Add New Farm Item{" "}
@@ -113,14 +111,8 @@ const DashboardFarmer = props => {
 
         <div className="Sale-Section">
           <div className="Items-For-Sale" />
-          <h2>Items for sale</h2>
-          {farmItems && (
-            <FarmItemsList
-              farmItems={farmItems}
-              setIsEditing={setIsEditing}
-              isEditing={isEditing}
-            />
-          )}
+
+          {farmItems && <FarmItemsList farmItems={farmItems} farmer={farmer} />}
           {!farmItems && <p>Add some items to sell</p>}
           {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
         </div>

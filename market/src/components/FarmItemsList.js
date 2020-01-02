@@ -1,15 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
+import FarmItemEdit from "./FarmItemEdit";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FarmItemList = props => {
   console.log("FarmItemsList.js, props: ", props);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [item, setItem] = useState();
+
+  const handleDelete = item => {
+    setIsDeleting(true);
+    setItem(item);
+  };
+
+  const deleteItem = () => {
+    // AxiosWithAuth.delete(`/farmers/${farmer.id}/inventory/${item.SKU}`);
+  };
+
+  const handleEdit = item => {
+    setIsEditing(true);
+    setItem(item);
+  };
+
+  const editItem = item => {};
+
   const routeToFarmItem = (event, item) => {
     // event.prevetDefault();
     // props.history.push(`/farmitem-list/${item.id}`); THIS ROUTE NEEDS TO BE UPDATED
   };
+
+  // Toggle update item form
+  if (isEditing) {
+    return (
+      <div className="Editing-Inventory">
+        <FarmItemEdit id={props.farmer.id} setIsEditing={setIsEditing} />
+      </div>
+    );
+  }
+
+  // Toggle confirm delete item screen
+  if (isDeleting) {
+    return (
+      <div className="Deleting-Item">
+        <h2>
+          Are you sure you want to delete {item.name} from your inventory?
+        </h2>
+        <button
+          className="yes-btn"
+          onClick={() => {
+            deleteItem();
+            setIsDeleting(false);
+          }}
+        >
+          Yes
+        </button>
+        <button
+          className="no-btn"
+          onClick={() => {
+            setIsDeleting(false);
+          }}
+        >
+          No
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="farmItemS-Wrapper">
+      <h2>Items for sale</h2>
       {props.farmItems.map(item => (
         <div
           onClick={event => routeToFarmItem(event, item)}
@@ -26,12 +86,10 @@ const FarmItemList = props => {
             ${item.price} per {item.increment}
           </p>
           <p>
-            Quanity: {item.quantity}-{item.increment}
+            Quantity: {item.quantity}-{item.increment}
           </p>
-          <button onClick={() => props.setIsEditing(!props.isEditing)}>
-            Update Quanity
-          </button>
-          <button>Delete</button>
+          <button onClick={() => handleEdit(item)}>Update Item</button>
+          <button onClick={() => handleDelete(item)}>Delete Item</button>
         </div>
       ))}
     </div>
