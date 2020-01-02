@@ -101,7 +101,7 @@ const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
     .post("/users/register", values)
     .then(res => {
       console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user-token", res.data.token);
       setStatus(res.data.newUser);
       resetForm();
     })

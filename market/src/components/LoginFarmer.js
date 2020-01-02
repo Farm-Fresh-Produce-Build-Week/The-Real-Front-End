@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { NavLink, Redirect } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
 const LoginFarmer = props => {
+  // console.log("LoginFarmer.js, props: ", props);
   const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -11,12 +13,18 @@ const LoginFarmer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
+    status && props.setCurrentFarmer(status.user);
     if (status !== undefined) {
       props.history.push("/dashboard-farmer");
     }
     console.log("Status: ", status);
     console.log("Users: ", users);
   }, [status]);
+
+  // redirects farmer to dashboard if already logged in
+  if (localStorage.getItem("token")) {
+    return <Redirect to="/dashboard-farmer" />;
+  }
 
   return (
     <div className="card">
@@ -74,8 +82,8 @@ const FormikSignUp = withFormik({
       .post("/farmers/login", values)
       .then(res => {
         console.log("Farmer Customer success, RES: ", res);
-        setStatus(res.data);
         localStorage.setItem("token", res.data.token);
+        setStatus(res.data);
         resetForm();
       })
       .catch(err => console.log(err.response));

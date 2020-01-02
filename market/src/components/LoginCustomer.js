@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { NavLink, Redirect } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
 const LoginCustomer = props => {
+  console.log("Login Customer props: ", props);
   const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -16,7 +18,13 @@ const LoginCustomer = props => {
     }
     console.log("Status: ", status);
     console.log("Users: ", users);
+    // }
   }, [status]);
+
+  // redirects customer to dashboard if already logged in
+  if (localStorage.getItem("user-token")) {
+    return <Redirect to="/dashboard-customer" />;
+  }
 
   return (
     <div className="card">
@@ -68,17 +76,20 @@ const FormikSignUp = withFormik({
     password: Yup.string().required("This is required")
   }),
 
-  handleSubmit(values, { setStatus, resetForm }) {
+  handleSubmit(values, { setStatus, resetForm, setErrors }) {
     console.log("submitting", values);
     AxiosWithAuth()
       .post("/users/login", values)
       .then(res => {
         console.log("Login Customer success, RES: ", res);
         setStatus(res.data.user);
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user-token", res.data.token);
         resetForm();
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        console.log(err);
+        setErrors(err.request.responseText);
+      });
   }
 })(LoginCustomer);
 
