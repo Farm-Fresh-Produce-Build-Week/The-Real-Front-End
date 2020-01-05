@@ -28,7 +28,6 @@ const FarmItemAddInventory = props => {
 
   const handleSelect = event => {
     setNewInventory(farmItems.filter(item => item.name == event.target.value));
-    console.log(newInventory);
   };
   console.log(newInventory);
 
@@ -58,7 +57,7 @@ const FarmItemAddInventory = props => {
           ))}
         </select>
         <input
-          type="number"
+          type="text"
           name="quantity"
           onChange={handleChange}
           placeholder="quantity"
