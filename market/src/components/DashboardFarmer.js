@@ -27,16 +27,16 @@ const DashboardFarmer = props => {
   useEffect(() => {
     if (farmer !== undefined) {
       const id = farmer.id;
-      setLoading(true);
+      // setLoading(true);
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
           console.log("App.js, GET PRODUCE RES: ", res);
           setFarmItems(res.data);
-          setLoading(false);
+          // setLoading(false);
         })
         .catch(err => {
-          setLoading(false);
+          // setLoading(false);
           console.log(err);
         });
     }
