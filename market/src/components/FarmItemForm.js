@@ -5,14 +5,15 @@ import { AxiosWithAuth } from "../utils/axiosWithAuth";
 // this component is for making a new farm item
 
 const initialItem = {
+  PLU: "",
   name: "",
-  price: "",
-  imageURL: "",
-  description: ""
+  description: "",
+  produceImgURL: ""
 };
 
 const FarmItemForm = props => {
   const [newFarmItem, setNewFarmItem] = useState(initialItem);
+  const [message, setMessage] = useState("");
 
   const handleChange = event => {
     let value = event.target.value;
@@ -22,13 +23,17 @@ const FarmItemForm = props => {
       [event.target.name]: value
     });
   };
+  console.log(newFarmItem);
 
   const handleSubmit = event => {
+    console.log("newFarmItem", newFarmItem);
     event.preventDefault();
     AxiosWithAuth()
-      .post(`/farmers/${props.id}/inventory`)
+      .post(`/produce/`, newFarmItem)
       .then(res => {
         console.log(res);
+        setMessage(res.data.message);
+        setNewFarmItem(initialItem);
       })
       .catch(err => console.log(err));
   };
@@ -38,32 +43,40 @@ const FarmItemForm = props => {
       <h2> Add Produce </h2>
       <form onSubmit={handleSubmit}>
         <input
+          type="number"
+          name="PLU"
+          onChange={handleChange}
+          placeholder="PLU"
+          value={newFarmItem.PLU}
+        />
+        <input
           type="text"
           name="name"
           onChange={handleChange}
           placeholder="name"
           value={newFarmItem.name}
         />
-        <input
+        {/* <input
           type="price"
           name="price"
           onChange={handleChange}
           placeholder="price"
           value={newFarmItem.price}
-        />
-        <input
-          type="string"
-          name="imageURL"
-          onChange={handleChange}
-          placeholder="Picture of Product"
-          value={newFarmItem.imageURL}
-        />
+        /> */}
+
         <input
           type="string"
           name="description"
           onChange={handleChange}
           placeholder="description"
           value={newFarmItem.description}
+        />
+        <input
+          type="string"
+          name="produceImgURL"
+          onChange={handleChange}
+          placeholder="Picture of Product URL"
+          value={newFarmItem.produceImgURL}
         />
 
         <button className="button-addNewItem" type="submit">
@@ -76,6 +89,7 @@ const FarmItemForm = props => {
           Back to Inventory
         </button>
       </form>
+      {message && <div>{message}</div>}
     </div>
   );
 };
