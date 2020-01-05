@@ -26,8 +26,14 @@ const FarmItemAddInventory = props => {
     });
   };
 
+  const handleSelect = event => {
+    setNewInventory(farmItems.filter(item => item.name == event.target.value));
+  };
+  console.log(newInventory);
+
   const handleSubmit = event => {
     event.preventDefault();
+    console.log(newInventory);
     AxiosWithAuth()
       .post(`/farmers/${props.id}/inventory`)
       .then(res => {
@@ -40,14 +46,18 @@ const FarmItemAddInventory = props => {
     <div className="NewFarmInventory-Form">
       <h2> Add Inventory </h2>
       <form onSubmit={handleSubmit}>
-        <select>
-          <option value="None">-- Select --</option>
+        <select onChange={handleSelect} value={newInventory.name}>
+          <option name="None" value="None">
+            -- Select --
+          </option>
           {farmItems.map(item => (
-            <option value={item.name}>{item.name}</option>
+            <option name={item.name} value={item.name}>
+              {item.name}
+            </option>
           ))}
         </select>
         <input
-          type="number"
+          type="text"
           name="quantity"
           onChange={handleChange}
           placeholder="quantity"
@@ -68,12 +78,13 @@ const FarmItemAddInventory = props => {
           value={newInventory.PLU}
         /> */}
 
-        {/* <input
+        <input
           type="string"
           name="increment"
           onChange={handleChange}
           placeholder="increment"
           value={newInventory.increment}
+          disabled
         />
         <input
           type="price"
@@ -81,7 +92,8 @@ const FarmItemAddInventory = props => {
           onChange={handleChange}
           placeholder="price"
           value={newInventory.price}
-        /> */}
+          readOnly
+        />
 
         <button className="button-addNewItem" type="submit">
           Add Item To Inventory

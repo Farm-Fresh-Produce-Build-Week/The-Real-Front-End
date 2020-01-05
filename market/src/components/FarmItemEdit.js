@@ -4,22 +4,24 @@ import { AxiosWithAuth } from "../utils/axiosWithAuth";
 // this is updating an item that is already for sale
 
 const initialItem = {
-  name: "",
-  price: "",
-  imageURL: "",
-  description: ""
+  SKU: "",
+  PLU: "",
+  quantity: "",
+  increment: "",
+  price: ""
 };
 
 const FarmItemEdit = props => {
   const [item, setItem] = useState(initialItem);
   const [error, setError] = useState("");
-  useEffect(() => {
-    const itemToEdit = props.items.find(
-      item => `${item.id}` === props.match.params.id
-    );
+  //   useEffect(() => {
+  //     const itemToEdit = props.items.find(
+  //       item => `${item.id}` === props.match.params.id
+  //     );
 
-    if (itemToEdit) setItem(itemToEdit);
-  }, [props.items, props.match.params.id]);
+  //     if (itemToEdit) setItem(itemToEdit);
+  //   }, [props.items]);
+  //   props.match.params.id --> removed dependancy from line above
 
   const handleChange = event => {
     event.preventDefault();
@@ -51,34 +53,49 @@ const FarmItemEdit = props => {
       <h2>Update Produce </h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="name"
-          name="name"
+          type="number"
+          name="quantity"
           onChange={handleChange}
-          placeholder="name"
-          value={item.name}
+          placeholder="quantity"
+          value={item.quantity}
         />
         <input
-          type="number"
+          type="price"
           name="price"
           onChange={handleChange}
           placeholder="price"
           value={item.price}
         />
         <input
-          type="string"
-          name="imageURL"
+          type="number"
+          name="SKU"
           onChange={handleChange}
-          placeholder="image"
-          value={item.imageURL}
+          placeholder="SKU"
+          value={item.SKU}
+        />
+        <input
+          type="number"
+          name="PLU"
+          onChange={handleChange}
+          placeholder="PLU"
+          value={item.PLU}
         />
         <input
           type="string"
-          name="description"
+          name="increment"
           onChange={handleChange}
-          placeholder="description"
-          value={item.description}
+          placeholder="increment"
+          value={item.increment}
         />
+
         <button className="button-UpdateItem"> Update </button>
+        <button
+          className="button-UpdateItem-cancel"
+          onClick={() => props.setIsEditing(false)}
+        >
+          {" "}
+          Cancel{" "}
+        </button>
       </form>
       {error & <div style={{ color: "red" }}> {error}</div>}
     </div>
