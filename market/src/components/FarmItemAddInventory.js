@@ -15,6 +15,9 @@ const initialItem = {
 const FarmItemAddInventory = props => {
   const [newInventory, setNewInventory] = useState(initialItem);
   const { farmItems } = useContext(FarmItemsContext);
+  const [selectItem, setSelectItem] = useState(initialItem);
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   console.log("allFarmItems: ", farmItems);
 
   const handleChange = event => {
@@ -27,19 +30,34 @@ const FarmItemAddInventory = props => {
   };
 
   const handleSelect = event => {
-    setNewInventory(farmItems.filter(item => item.name == event.target.value));
+    setSelectItem(farmItems.find(item => item.name == event.target.value));
   };
-  console.log(newInventory);
+
+  useEffect(() => {
+    setNewInventory({ ...newInventory, PLU: selectItem.PLU });
+  }, [selectItem]);
+  console.log("selectItem", selectItem);
+  console.log("newInventory", newInventory);
 
   const handleSubmit = event => {
     event.preventDefault();
+    let successMsg = `You've added ${newInventory.quantity} ${newInventory.increment} of ${selectItem.name} to your inventory.`;
     console.log(newInventory);
     AxiosWithAuth()
-      .post(`/farmers/${props.id}/inventory`)
+      .post(`/farmers/${props.id}/inventory`, newInventory)
       .then(res => {
         console.log(res);
+        setMessage(successMsg);
+        setErrorMessage("");
+        setNewInventory(initialItem);
+        // props.setIsAddingInventory(false)
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        setErrorMessage(
+          "There was a problem adding your inventory. Make sure this produce is not already in your inventory and that the SKU is unique."
+        );
+      });
   };
 
   return (
@@ -51,11 +69,26 @@ const FarmItemAddInventory = props => {
             -- Select --
           </option>
           {farmItems.map(item => (
-            <option name={item.name} value={item.name}>
+            <option key={item.name} name={item.name} value={item.name}>
               {item.name}
             </option>
           ))}
         </select>
+        <input
+          type="text"
+          name="SKU"
+          onChange={handleChange}
+          placeholder="SKU"
+          value={newInventory.SKU}
+        />
+        <input
+          type="text"
+          name="PLU"
+          onChange={handleChange}
+          placeholder="PLU"
+          value={newInventory.PLU}
+          disabled
+        />
         <input
           type="text"
           name="quantity"
@@ -63,28 +96,12 @@ const FarmItemAddInventory = props => {
           placeholder="quantity"
           value={newInventory.quantity}
         />
-        {/* <input
-          type="number"
-          name="SKU"
-          onChange={handleChange}
-          placeholder="SKU"
-          value={newInventory.SKU}
-        />
         <input
-          type="number"
-          name="PLU"
-          onChange={handleChange}
-          placeholder="PLU"
-          value={newInventory.PLU}
-        /> */}
-
-        <input
-          type="string"
+          type="text"
           name="increment"
           onChange={handleChange}
           placeholder="increment"
           value={newInventory.increment}
-          disabled
         />
         <input
           type="price"
@@ -92,7 +109,6 @@ const FarmItemAddInventory = props => {
           onChange={handleChange}
           placeholder="price"
           value={newInventory.price}
-          readOnly
         />
 
         <button className="button-addNewItem" type="submit">
@@ -105,6 +121,12 @@ const FarmItemAddInventory = props => {
           Back to Inventory
         </button>
       </form>
+      {message ? (
+        <div className="added-message">{message}</div>
+      ) : errorMessage ? (
+        <div className="error-message">{errorMessage}</div>
+      ) : null}
+      {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
     </div>
   );
 };

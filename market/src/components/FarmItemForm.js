@@ -89,7 +89,7 @@ const FarmItemForm = props => {
           Back to Inventory
         </button>
       </form>
-      {message && <div>{message}</div>}
+      {message && <div className="added-message">{message}</div>}
     </div>
   );
 };

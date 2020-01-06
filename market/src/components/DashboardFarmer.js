@@ -40,7 +40,7 @@ const DashboardFarmer = props => {
           console.log(err);
         });
     }
-  }, [farmer]);
+  }, [farmer, isAddingInventory]);
   console.log("Farm Items: ", farmItems);
 
   if (loading) {
@@ -75,7 +75,11 @@ const DashboardFarmer = props => {
       <div className="FarmerLandingPage">
         <div className="Top-Section">
           <div className="Farmer-Details">
-            <StyledImg src={farmer.profileImgURL} alt="mockfarmer" />
+            <StyledImg
+              src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
+              // src={farmer3} // mock
+              alt="mockfarmer"
+            />
             <h1>{farmer.username}</h1>
           </div>
 
