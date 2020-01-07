@@ -32,7 +32,7 @@ import Axios from "axios";
 
 const FarmItem = (props) => {
     const item = props.item.find(
-        thing => `${thing.id}` === props.match.params.id
+        produce => `${produce.id}` === props.match.params.id
     );
 
     if (!props.items.length || !item) {

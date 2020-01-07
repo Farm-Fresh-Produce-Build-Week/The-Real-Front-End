@@ -78,7 +78,7 @@ const DashboardFarmer = props => {
             <StyledImg
               src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
               // src={farmer3} // mock
-              alt="mockfarmer"
+              alt="farmer picture"
             />
             <h1>{farmer.username}</h1>
           </div>
