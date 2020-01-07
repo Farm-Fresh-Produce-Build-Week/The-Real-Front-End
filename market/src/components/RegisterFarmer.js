@@ -11,7 +11,7 @@ const RegisterFarmer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
-    status && props.setCurrentFarmer(status.user);
+    status && props.setCurrentFarmer(status);
     if (status !== undefined) {
       props.history.push("/dashboard-farmer");
     }
@@ -75,16 +75,16 @@ const RegisterFarmer = props => {
               <p className="errors">{errors.zipCode}</p>
             )}
           </label>
-          <label htmlFor="desciption">
-            Description
-            <textarea
-              id="desciption"
-              type="textarea"
-              name="desciption"
-              placeholder="desciption"
+          <label htmlFor="profileImgURL">
+            Profile Image URL
+            <Field
+              id="profileImgURL"
+              type="text"
+              name="profileImgURL"
+              placeholder="Profile Image URL"
             />
             {touched.desciption && errors.desciption && (
-              <p className="errors">{errors.zipCode}</p>
+              <p className="errors">{errors.profileImgURL}</p>
             )}
           </label>
           <button type="submit">Submit</button>
@@ -103,6 +103,7 @@ const myMapPropsToValues = props => {
     city: props.city || "",
     state: props.state || "",
     zipCode: props.zipCode || "",
+    profileImgURL: props.profileImgURL || "",
     props: props
   };
 };
@@ -128,7 +129,8 @@ const yupSchema = Yup.object().shape({
   password: Yup.string().required("This is required"),
   city: Yup.string().required("This is required"),
   state: Yup.string().required("This is required"),
-  zipCode: Yup.string().required("This is required")
+  zipCode: Yup.string().required("This is required"),
+  profileImgURL: Yup.string().required("This is required")
 });
 
 const formikObj = {
