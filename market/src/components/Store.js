@@ -1,9 +1,9 @@
-import React, {useContext, useEffect } from "react";
+import React, {useState, useContext, useEffect } from "react";
 import CartContext from "../contexts/CartContext"; 
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 
-const Shopping = () => {
-    const {Cart} = useContext(CartContext); 
+const Store = () => {
+    // const {Cart} = useContext(CartContext); 
     const [farmers, setFarmers] = useState();
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Shopping = () => {
             console.log("Shopping.js: error", err); 
         }); 
     }, []); 
-console.log("Farmers:", farmers); 
+    console.log("Farmers:", farmers); 
 
 
     // allFarmers.filter(farmer => customer.city === farmer.city);
@@ -32,4 +32,4 @@ console.log("Farmers:", farmers);
 
 }; 
 
-export default Shopping;
+export default Store;

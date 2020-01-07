@@ -25,6 +25,7 @@ import LoginFarmer from "./components/LoginFarmer";
 import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
+import Store from "./components/Store";
 
 // Styles
 import "./App.css";
@@ -136,6 +137,7 @@ function App() {
                 />
                 <PrivateRoute path="dashboard-customer/:id" />
                 <PrivateRoute path="dashboard-farmer/:id" />
+                <PrivateRoute path="shopping" component={Store} />
                 <Footer />
               </div>
             </OrdersContext.Provider>
