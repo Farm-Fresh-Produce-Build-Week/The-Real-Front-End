@@ -1,6 +1,8 @@
 import React, {useState, useContext, useEffect } from "react";
 import CartContext from "../contexts/CartContext"; 
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
+import { NavLink } from "react-router-dom"; 
+import FarmItem from "./FarmItem"; 
 
 const Store = () => {
     // const {Cart} = useContext(CartContext); 
@@ -30,9 +32,11 @@ const Store = () => {
     return(
         <>
         <div ClassName="Shopping-Page">
+            <NavLink to="/dashboard-customer"><button> Dashboard </button></NavLink>
             <h3> Find something new to make today! </h3>
             <div className="produce-listings">
                 {/* empty for now */}
+                <FarmItem /> 
             </div>
         </div>
         </>
