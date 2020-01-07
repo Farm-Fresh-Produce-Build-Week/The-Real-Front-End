@@ -2,11 +2,14 @@ import React from "react";
 import lambs from "../Images/lambs.jpg"; 
 import styled from "styled-components"; 
 import barn3 from "../Images/Farmer/barn3.jpg"; 
+import { NavLink } from "react-router-dom"; 
 
 const FarmCard = props => {
     return (
         <>
         <div className="Farm-Page">
+        <NavLink to="/shopping"> <button> Go Shopping </button></NavLink>
+        <NavLink to="/dashboard-customer"><button> Dashboard </button></NavLink>
             <div className="Top-Section">
                 <StyledImg src={barn3} alt="farm"/>
                 <h2> Farm's Name </h2>
@@ -30,7 +33,7 @@ const FarmCard = props => {
                     salsify pea sprouts fava bean. Dandelion zucchini burdock yarrow chickpea dandelion
                     sorrel courgette turnip greens tigernut soybean radish artichoke wattle seed endive
                     groundnut broccoli arugula.</p>
-                    <StyledImg src={lambs} alt="lambs" />
+                    <Styled src={lambs} alt="lambs" />
             </div>
         </div>
         </>
@@ -40,5 +43,9 @@ const FarmCard = props => {
 export default FarmCard; 
 
 const StyledImg = styled.img`
-height: 100px; 
+height: 250px; 
+`
+
+const Styled = styled.img`
+height: 150px; 
 `

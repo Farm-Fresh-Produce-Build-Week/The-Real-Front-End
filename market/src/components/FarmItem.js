@@ -42,7 +42,7 @@ const FarmItem = props => {
                         blackberries} alt="produce item" />
                 </div> 
                 <div className="Item-Info">
-                    <h5> Item Name: {} </h5>
+                    <h5> Item Name: {item} </h5>
                 </div>
             </div>
                 {/* end of farmItem Header  */}
@@ -57,7 +57,7 @@ const FarmItem = props => {
             </nav> 
                 {/* end of farmItem-sub-nav */}
 
-            <Route exact path ="farmitem-list/:id"
+            <Route exact path ="shopping/:id"
             render={props => <FarmItemDescription {...props} item={item} /> } />
             </div>
     ); 
