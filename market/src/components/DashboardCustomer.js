@@ -22,9 +22,10 @@ const DashboardCustomer = props => {
         </div>
         <div className="Favorite-Area">
           <div className="Fav-Items">
+            {/* empty for now */}
           </div>
           <div className="Fav-Farms">
-
+            {/* empty for now  */}
           </div>
         </div>
         </div>
