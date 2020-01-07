@@ -26,6 +26,7 @@ import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
 import Store from "./components/Store";
+import FarmCard from "./components/FarmCard"; 
 
 // Styles
 import "./App.css";
@@ -47,6 +48,11 @@ function App() {
 
   // farm items context
   const [farmItems, setFarmItems] = useState();
+  // const [farmItems, setFarmItems] = useLocalStorage("items", []);
+
+  // const setFarmItems = items => {
+  //   setFarmItems(items);
+  // }
 
   useEffect(() => {
     AxiosWithAuth()
@@ -138,6 +144,7 @@ function App() {
                 <PrivateRoute path="dashboard-customer/:id" />
                 <PrivateRoute path="dashboard-farmer/:id" />
                 <PrivateRoute path="/shopping" component={Store} />
+                <PrivateRoute path="/farm" component={FarmCard} />
                 <Footer />
               </div>
             </OrdersContext.Provider>

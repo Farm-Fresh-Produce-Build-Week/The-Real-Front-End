@@ -12,11 +12,11 @@ const Store = () => {
         AxiosWithAuth()
         .get(`/farmers`)
         .then(res => {
-            console.log("Shopping.js: GET ALL FARMERS: ", res)
+            console.log("Store.js: GET ALL FARMERS: ", res)
             setFarmers(res.data);
         })
         .catch(err => {
-            console.log("Shopping.js: error", err); 
+            console.log("Store.js: error", err); 
             // getting 401 error 
         }); 
     }, []); 
@@ -31,11 +31,11 @@ const Store = () => {
 
     return(
         <>
-        <div ClassName="Shopping-Page">
+        <div className="Store-Page">
             <NavLink to="/dashboard-customer"><button> Dashboard </button></NavLink>
             <h3> Find something new to make today! </h3>
             <div className="produce-listings">
-                {/* empty for now */}
+                {/* should just be the list of produce pulled from the api */}
                 <FarmItem /> 
             </div>
         </div>
