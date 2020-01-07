@@ -137,7 +137,7 @@ function App() {
                 />
                 <PrivateRoute path="dashboard-customer/:id" />
                 <PrivateRoute path="dashboard-farmer/:id" />
-                <PrivateRoute path="shopping" component={Store} />
+                <PrivateRoute path="/shopping" component={Store} />
                 <Footer />
               </div>
             </OrdersContext.Provider>
