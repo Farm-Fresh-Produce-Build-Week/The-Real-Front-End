@@ -108,7 +108,7 @@ const DashboardFarmer = props => {
             </button> */}
             {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
-            <button> Farm Details </button>
+            <NavLink to="/farm"><button> Farm Details </button> </NavLink>
             {/* dead button may add page for fun later  */}
           </div>
         </div>
