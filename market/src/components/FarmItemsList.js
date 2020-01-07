@@ -69,7 +69,7 @@ const FarmItemList = props => {
 
   return (
     <div className="farmItemS-Wrapper">
-      <h2>Items for sale</h2>
+      <h2>Items for Sale</h2>
       {props.farmItems.map(item => (
         <div
           onClick={event => routeToFarmItem(event, item)}

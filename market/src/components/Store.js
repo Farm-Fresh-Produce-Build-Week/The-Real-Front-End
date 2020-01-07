@@ -15,12 +15,15 @@ const Store = () => {
         })
         .catch(err => {
             console.log("Shopping.js: error", err); 
+            // getting 401 error 
         }); 
     }, []); 
-    console.log("Farmers:", farmers); 
+    console.log("Farmers:", farmers);  //undefined 
 
 
     // allFarmers.filter(farmer => customer.city === farmer.city);
+    
+    
     // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
     // list out all produce for sale.  make a card for each item and list over that to build out the page.
 
