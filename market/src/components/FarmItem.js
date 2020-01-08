@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState } from "react";
 import { Route, NavLink } from "react-router-dom";
-// import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
+import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
-import { FarmerContext } from "../contexts/FarmerContext"; 
 import blackberries from "../Images/Produce/blackberries.jpg"; 
 import FarmItemDescription from "../components/FarmItemDescription.js"; 
-import Axios from "axios";
 import styled from "styled-components"; 
 
 
@@ -16,9 +14,23 @@ import styled from "styled-components";
 
 
 const FarmItem = props => {
-    const { farmer } = useContext(FarmerContext); 
+    // const { farmer } = useContext(FarmerContext); 
     const { item } = useContext(FarmItemsContext);
     const [ farmItems, setFarmItems] = useState();
+
+
+    useEffect(() => {
+    AxiosWithAuth()
+        .get("/produce")
+        .then(res => {
+        console.log("Store.js, GET ALL PRODUCE RES: ", res);
+        setFarmItems(res.data);
+        })
+        .catch(err => console.log(err));
+    }, []); 
+
+    console.log("Store.js, farmItems: ", farmItems);
+
 
 
     return (
@@ -30,7 +42,6 @@ const FarmItem = props => {
                         blackberries} alt="produce item" />
                 </div> 
                 <div className="Item-Info">
-                    {/* <h3> farm name and location here </h3>   */}
                     <h5> Item Name: {item} </h5>
                 </div>
             </div>
@@ -39,14 +50,14 @@ const FarmItem = props => {
                 <NavLink exact to={`/shopping/${item}`}>
                     <h5>Details</h5>
                 </NavLink>
-                <NavLink exact to={`/farmers`}>  
+                <NavLink exact to={`/farm`}>  
                     <h5>About the Farm </h5> 
                     {/* {farm.name}  ??  */}
                 </NavLink>
             </nav> 
                 {/* end of farmItem-sub-nav */}
 
-            <Route exact path ="farmitem-list/:id"
+            <Route exact path ="shopping/:id"
             render={props => <FarmItemDescription {...props} item={item} /> } />
             </div>
     ); 
