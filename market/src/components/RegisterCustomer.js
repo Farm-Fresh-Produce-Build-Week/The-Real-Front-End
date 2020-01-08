@@ -119,13 +119,6 @@ const yupSchema = Yup.object().shape({
   state: Yup.string().required("This is required"),
   zipCode: Yup.string().required("This is required")
 });
-// const yupSchema: Yup.object().shape({
-//   username: Yup.string().required("This is required"),
-//   password: Yup.string().required("This is required"),
-//   city: Yup.string().required("This is required"),
-//   state: Yup.string().required("This is required"),
-//   zipCode: Yup.string().required("This is required")
-// })
 
 const formikObj = {
   mapPropsToValues: myMapPropsToValues,
