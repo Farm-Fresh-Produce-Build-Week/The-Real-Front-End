@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FarmItemList = props => {
-  console.log("FarmItemsList.js, props: ", props);
+  // console.log("FarmItemsList.js, props: ", props);
 
-  // const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [item, setItem] = useState();
 
-  console.log("FarmItemsList, item: ", item);
+  // console.log("FarmItemsList, item: ", item);
 
   const handleDelete = item => {
-    console.log("FarmItemsList.js, handleDelete, item: ", item);
+    // console.log("FarmItemsList.js, handleDelete, item: ", item);
     setItem(item);
     setIsDeleting(true);
   };
@@ -35,15 +33,6 @@ const FarmItemList = props => {
     setIsEditing(true);
     setItem(item);
   };
-
-  // const editItem = item => {
-  //   console.log("FarmItemsList.js, editItem, item: ", item);
-  // };
-
-  // const routeToFarmItem = (event, item) => {
-  // event.prevetDefault();
-  // props.history.push(`/farmitem-list/${item.id}`); THIS ROUTE NEEDS TO BE UPDATED
-  // };
 
   // Toggle update item form
   if (isEditing) {
@@ -101,11 +90,7 @@ const FarmItemList = props => {
         <p>Your inventory is empty. Add some more inventory.</p>
       ) : null}
       {props.farmItems.map(item => (
-        <div
-          // onClick={event => routeToFarmItem(event, item)}
-          className="FarmItem-card"
-          key={item.name}
-        >
+        <div className="FarmItem-card" key={item.name}>
           <StyledImg
             className="farmitem-list-image"
             src={item.produceImgURL}

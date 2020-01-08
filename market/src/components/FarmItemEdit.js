@@ -13,7 +13,7 @@ const initialItem = {
 };
 
 const FarmItemEdit = props => {
-  console.log("FarmItemEdit, props: ", props);
+  //   console.log("FarmItemEdit, props: ", props);
   const [item, setItem] = useState(initialItem);
   const [newItem, setNewItem] = useState();
   const [error, setError] = useState("");
@@ -21,15 +21,12 @@ const FarmItemEdit = props => {
     AxiosWithAuth()
       .get(`farmers/${props.id}/inventory/${props.SKU}`)
       .then(res => {
-        console.log("GET INV BY SKU, res: ", res);
+        // console.log("GET INV BY SKU, res: ", res);
         setItem(res.data);
       })
       .catch(error => {
         console.log(error);
       });
-    //   const itemToEdit = props.items.find(
-    //     item => `${item.id}` === props.match.params.id
-    //   );
   }, []);
 
   const handleChange = event => {
@@ -41,26 +38,18 @@ const FarmItemEdit = props => {
     });
     setNewItem({ ...newItem, [event.target.name]: value });
   };
-  console.log("FarmItemEdit.js, item: ", item);
-  console.log("FarmItemEdit.js, newItem: ", newItem);
+  //   console.log("FarmItemEdit.js, item: ", item);
+  //   console.log("FarmItemEdit.js, newItem: ", newItem);
 
   const handleSubmit = event => {
     event.preventDefault();
     setError("");
-    // setNewItem({
-    //   SKU: item.SKU,
-    //   PLU: item.PLU,
-    //   quantity: item.quantity,
-    //   increment: item.increment,
-    //   price: item.price
-    // });
     AxiosWithAuth()
       .put(`/farmers/${props.id}/inventory/${props.SKU}`, newItem)
       .then(res => {
         console.log("FarmItemEdit: handleSubmit res", res);
         props.setIsEditing(false);
         props.setEditedItem(!props.editedItem);
-        // props.history.push("/dashboard-farmer");
       })
       .catch(error => {
         console.log("FarmItemEdit: handleSubmit error", error);

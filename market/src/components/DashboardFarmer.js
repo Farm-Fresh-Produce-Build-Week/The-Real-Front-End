@@ -104,10 +104,6 @@ const DashboardFarmer = props => {
               {" "}
               Add New Inventory{" "}
             </button>
-            {/* <button onClick={() => setIsEditing(!isEditing)}>
-              {" "}
-              Edit Current Inventory{" "}
-            </button> */}
             {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
             <button> Farm Details </button>
