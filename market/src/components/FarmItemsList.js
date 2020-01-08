@@ -68,30 +68,32 @@ const FarmItemList = props => {
   }
 
   return (
-    <div className="farmItemS-Wrapper">
+    <div>
       <h2>Items for sale</h2>
-      {props.farmItems.map(item => (
-        <div
-          onClick={event => routeToFarmItem(event, item)}
-          className="FarmItem-card"
-          key={item.name}
-        >
-          <StyledImg
-            className="farmitem-list-image"
-            src={item.produceImgURL}
-            alt={item.name}
-          />
-          <p>{item.name}</p>
-          <p>
-            ${item.price} per {item.increment}
-          </p>
-          <p>
-            Quantity: {item.quantity}-{item.increment}
-          </p>
-          <button onClick={() => handleEdit(item)}>Update Item</button>
-          <button onClick={() => handleDelete(item)}>Delete Item</button>
-        </div>
-      ))}
+      <div className="farmItemS-Wrapper">
+        {props.farmItems.map(item => (
+          <div
+            onClick={event => routeToFarmItem(event, item)}
+            className="FarmItem-card"
+            key={item.name}
+          >
+            <StyledImg
+              className="farmitem-list-image"
+              src={item.produceImgURL}
+              alt={item.name}
+            />
+            <p>{item.name}</p>
+            <p>
+              ${item.price} per {item.increment}
+            </p>
+            <p>
+              Quantity: {item.quantity}-{item.increment}
+            </p>
+            <button onClick={() => handleEdit(item)}>Update Item</button>
+            <button onClick={() => handleDelete(item)}>Delete Item</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
