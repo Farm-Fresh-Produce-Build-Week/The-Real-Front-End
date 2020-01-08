@@ -114,7 +114,7 @@ const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
 
 const yupSchema = Yup.object().shape({
   username: Yup.string().required("This is required"),
-  password: Yup.string().required("This is required"),
+  password: Yup.string().required("This is required").min(8, "Your password should be atleast 8 characters"),
   city: Yup.string().required("This is required"),
   state: Yup.string().required("This is required"),
   zipCode: Yup.string().required("This is required")

@@ -74,7 +74,7 @@ const FormikSignUp = withFormik({
 
   validationSchema: Yup.object().shape({
     username: Yup.string().required("This is required"),
-    password: Yup.string().required("This is required")
+    password: Yup.string().required("This is required").min(8, "Password is too short")
   }),
 
   handleSubmit(values, { setStatus, resetForm }) {
