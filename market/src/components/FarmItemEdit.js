@@ -59,6 +59,7 @@ const FarmItemEdit = props => {
       .then(res => {
         console.log("FarmItemEdit: handleSubmit res", res);
         props.setIsEditing(false);
+        props.setEditedItem(!props.editedItem);
         // props.history.push("/dashboard-farmer");
       })
       .catch(error => {

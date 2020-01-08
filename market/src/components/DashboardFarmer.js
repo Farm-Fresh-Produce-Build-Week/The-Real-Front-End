@@ -20,7 +20,8 @@ const DashboardFarmer = props => {
   const [loading, setLoading] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [editedItem, setEditedItem] = useState(false);
+  const [deletedItem, setDeletedItem] = useState(false);
 
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
@@ -28,20 +29,20 @@ const DashboardFarmer = props => {
   useEffect(() => {
     if (farmer !== undefined) {
       const id = farmer.id;
-      // setLoading(true);
+      setLoading(true);
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
           console.log("App.js, GET PRODUCE RES: ", res);
+          setLoading(false);
           setFarmItems(res.data);
-          // setLoading(false);
         })
         .catch(err => {
-          // setLoading(false);
+          setLoading(false);
           console.log(err);
         });
     }
-  }, [farmer, isAddingInventory, isEditing]);
+  }, [farmer, isAddingInventory, editedItem, deletedItem]);
   console.log("Farm Items: ", farmItems);
 
   if (loading) {
@@ -116,17 +117,16 @@ const DashboardFarmer = props => {
 
         <div className="Sale-Section">
           <div className="Items-For-Sale" />
-
           {farmItems && (
             <FarmItemsList
               farmItems={farmItems}
               farmer={farmer}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
+              editedItem={editedItem}
+              setEditedItem={setEditedItem}
+              deletedItem={deletedItem}
+              setDeletedItem={setDeletedItem}
             />
           )}
-          {!farmItems && <p>Add some items to sell</p>}
-          {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
         </div>
         {/* end of sale-section */}
       </div>

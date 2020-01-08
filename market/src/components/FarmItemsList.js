@@ -1,46 +1,60 @@
 import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
+import { AxiosWithAuth } from "../utils/axiosWithAuth";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FarmItemList = props => {
   console.log("FarmItemsList.js, props: ", props);
+
   // const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [item, setItem] = useState();
+
+  console.log("FarmItemsList, item: ", item);
 
   const handleDelete = item => {
     console.log("FarmItemsList.js, handleDelete, item: ", item);
-    setIsDeleting(true);
     setItem(item);
+    setIsDeleting(true);
   };
 
-  const deleteItem = () => {
-    // AxiosWithAuth.delete(`/farmers/${farmer.id}/inventory/${item.SKU}`);
+  const deleteItem = item => {
+    AxiosWithAuth()
+      .delete(`/farmers/${props.farmer.id}/inventory/${item.SKU}`)
+      .then(res => {
+        console.log(res);
+        setIsDeleting(false);
+        props.setDeletedItem(!props.deletedItem);
+      })
+      .catch(error => console.log(error));
   };
 
   const handleEdit = item => {
-    props.setIsEditing(true);
+    setIsEditing(true);
     setItem(item);
   };
 
-  const editItem = item => {
-    console.log("FarmItemsList.js, editItem, item: ", item);
-  };
+  // const editItem = item => {
+  //   console.log("FarmItemsList.js, editItem, item: ", item);
+  // };
 
-  const routeToFarmItem = (event, item) => {
-    // event.prevetDefault();
-    // props.history.push(`/farmitem-list/${item.id}`); THIS ROUTE NEEDS TO BE UPDATED
-  };
+  // const routeToFarmItem = (event, item) => {
+  // event.prevetDefault();
+  // props.history.push(`/farmitem-list/${item.id}`); THIS ROUTE NEEDS TO BE UPDATED
+  // };
 
   // Toggle update item form
-  if (props.isEditing) {
+  if (isEditing) {
     return (
       <div className="Editing-Inventory">
         <FarmItemEdit
           id={props.farmer.id}
-          setIsEditing={props.setIsEditing}
           SKU={item.SKU}
+          setIsEditing={setIsEditing}
+          editedItem={props.editedItem}
+          setEditedItem={props.setEditedItem}
         />
       </div>
     );
@@ -53,11 +67,17 @@ const FarmItemList = props => {
         <h2>
           Are you sure you want to delete {item.name} from your inventory?
         </h2>
+        <div>
+          <StyledImg
+            src={item.produceImgURL}
+            alt={"No item picture available"}
+          />
+        </div>
+
         <button
           className="yes-btn"
           onClick={() => {
-            deleteItem();
-            setIsDeleting(false);
+            deleteItem(item);
           }}
         >
           Yes
@@ -77,9 +97,12 @@ const FarmItemList = props => {
   return (
     <div className="farmItemS-Wrapper">
       <h2>Items for Sale</h2>
+      {props.farmItems.length == 0 ? (
+        <p>Your inventory is empty. Add some more inventory.</p>
+      ) : null}
       {props.farmItems.map(item => (
         <div
-          onClick={event => routeToFarmItem(event, item)}
+          // onClick={event => routeToFarmItem(event, item)}
           className="FarmItem-card"
           key={item.name}
         >
@@ -106,5 +129,5 @@ const FarmItemList = props => {
 export default FarmItemList;
 
 const StyledImg = styled.img`
-  height: 100px;
+  height: 150px;
 `;
