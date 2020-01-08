@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 const FarmItemList = props => {
   console.log("FarmItemsList.js, props: ", props);
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [item, setItem] = useState();
 
   const handleDelete = item => {
+    console.log("FarmItemsList.js, handleDelete, item: ", item);
     setIsDeleting(true);
     setItem(item);
   };
@@ -19,11 +20,13 @@ const FarmItemList = props => {
   };
 
   const handleEdit = item => {
-    setIsEditing(true);
+    props.setIsEditing(true);
     setItem(item);
   };
 
-  const editItem = item => {};
+  const editItem = item => {
+    console.log("FarmItemsList.js, editItem, item: ", item);
+  };
 
   const routeToFarmItem = (event, item) => {
     // event.prevetDefault();
@@ -31,10 +34,14 @@ const FarmItemList = props => {
   };
 
   // Toggle update item form
-  if (isEditing) {
+  if (props.isEditing) {
     return (
       <div className="Editing-Inventory">
-        <FarmItemEdit id={props.farmer.id} setIsEditing={setIsEditing} />
+        <FarmItemEdit
+          id={props.farmer.id}
+          setIsEditing={props.setIsEditing}
+          SKU={item.SKU}
+        />
       </div>
     );
   }

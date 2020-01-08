@@ -20,6 +20,7 @@ const DashboardFarmer = props => {
   const [loading, setLoading] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
@@ -40,7 +41,7 @@ const DashboardFarmer = props => {
           console.log(err);
         });
     }
-  }, [farmer, isAddingInventory]);
+  }, [farmer, isAddingInventory, isEditing]);
   console.log("Farm Items: ", farmItems);
 
   if (loading) {
@@ -116,7 +117,14 @@ const DashboardFarmer = props => {
         <div className="Sale-Section">
           <div className="Items-For-Sale" />
 
-          {farmItems && <FarmItemsList farmItems={farmItems} farmer={farmer} />}
+          {farmItems && (
+            <FarmItemsList
+              farmItems={farmItems}
+              farmer={farmer}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+            />
+          )}
           {!farmItems && <p>Add some items to sell</p>}
           {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
         </div>
