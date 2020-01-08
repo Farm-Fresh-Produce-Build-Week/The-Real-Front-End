@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 // import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
-import { AxiosWithAuth } from "../utils/axiosWithAuth";
+// import { AxiosWithAuth } from "../utils/axiosWithAuth";
+import axios from "axios";
 
 const RegisterCustomer = props => {
   const { values, errors, touched, status, setFieldValue } = props;
@@ -97,8 +98,8 @@ const myMapPropsToValues = props => {
 
 const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
   console.log("RegisterCustomer.js, POST RQ VALUES", values);
-  AxiosWithAuth()
-    .post("/users/register", values)
+  axios
+    .post("https://farmers-fresh-api.herokuapp.com/api/users/register", values)
     .then(res => {
       console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
       localStorage.setItem("user-token", res.data.token);
@@ -118,13 +119,6 @@ const yupSchema = Yup.object().shape({
   state: Yup.string().required("This is required"),
   zipCode: Yup.string().required("This is required")
 });
-// const yupSchema: Yup.object().shape({
-//   username: Yup.string().required("This is required"),
-//   password: Yup.string().required("This is required"),
-//   city: Yup.string().required("This is required"),
-//   state: Yup.string().required("This is required"),
-//   zipCode: Yup.string().required("This is required")
-// })
 
 const formikObj = {
   mapPropsToValues: myMapPropsToValues,

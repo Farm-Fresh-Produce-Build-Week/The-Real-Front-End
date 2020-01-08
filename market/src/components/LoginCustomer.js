@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { AxiosWithAuth } from "../utils/axiosWithAuth";
+// import { AxiosWithAuth } from "../utils/axiosWithAuth";
+import axios from "axios";
 
 const LoginCustomer = props => {
   console.log("Login Customer props: ", props);
@@ -78,8 +79,8 @@ const FormikSignUp = withFormik({
 
   handleSubmit(values, { setStatus, resetForm, setErrors }) {
     console.log("submitting", values);
-    AxiosWithAuth()
-      .post("/users/login", values)
+    axios
+      .post("https://farmers-fresh-api.herokuapp.com/api/users/login", values)
       .then(res => {
         console.log("Login Customer success, RES: ", res);
         setStatus(res.data.user);

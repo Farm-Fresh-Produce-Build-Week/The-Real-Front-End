@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { AxiosWithAuth } from "../utils/axiosWithAuth";
+// import { AxiosWithAuth } from "../utils/axiosWithAuth";
+import axios from "axios";
 
 const RegisterFarmer = props => {
   const { values, errors, touched, status, setFieldValue } = props;
@@ -110,12 +111,15 @@ const myMapPropsToValues = props => {
 
 const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
   console.log("RegisterCustomer.js, POST RQ VALUES", values);
-  AxiosWithAuth()
-    .post("/users/register", values)
+  axios
+    .post(
+      "https://farmers-fresh-api.herokuapp.com/api/farmers/register",
+      values
+    )
     .then(res => {
-      console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
+      console.log("RegisterFarmer.js, POST RES: ", res.data, res.data.token);
       localStorage.setItem("token", res.data.token);
-      setStatus(res.data.newUser);
+      setStatus(res.data.newFarmer);
       resetForm();
     })
     .catch(err => {
