@@ -47,8 +47,8 @@ const FarmItemAddInventory = props => {
   useEffect(() => {
     setNewInventory({ ...newInventory, PLU: selectItem.PLU });
   }, [selectItem]);
-  console.log("selectItem", selectItem);
-  console.log("newInventory", newInventory);
+  // console.log("selectItem", selectItem);
+  // console.log("newInventory", newInventory);
 
   const handleSubmit = event => {
     event.preventDefault();
