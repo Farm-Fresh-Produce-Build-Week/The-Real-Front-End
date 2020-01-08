@@ -97,7 +97,19 @@ function App() {
               <div className="App">
                 <Navigation />
                 <Route exact path="/" component={Landing} />
-                <Route exact path="/login-customer" component={LoginCustomer} />
+                
+                {/* <Route exact path="/login-customer" component={LoginCustomer} /> */}
+
+                <Route exact path="/login-customer" render={props => {
+                  return(
+                    <LoginCustomer
+                    {...props}
+                    setCurrentUser={setCurrentUser}
+                    />
+                  );
+                }}
+                />
+
                 <Route
                   exact
                   path="/login-farmer"
