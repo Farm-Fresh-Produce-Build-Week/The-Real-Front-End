@@ -96,20 +96,27 @@ const myMapPropsToValues = props => {
   };
 };
 
-const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
-  console.log("RegisterCustomer.js, POST RQ VALUES", values);
-  axios
-    .post("https://farmers-fresh-api.herokuapp.com/api/users/register", values)
+const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) 
+{
+  if (username.includes(values.username)){
+    setErrors({username:"That username is already taken"})
+  } else {
+    axios
+    .post(
+      "https://farmers-fresh-api.herokuapp.com/api/farmers/register",
+      values
+    )
     .then(res => {
-      console.log("RegisterCustomer.js, POST RES: ", res.data, res.data.token);
-      localStorage.setItem("user-token", res.data.token);
-      setStatus(res.data.newUser);
+      console.log("RegisterFarmer.js, POST RES: ", res.data, res.data.token);
+      localStorage.setItem("token", res.data.token);
+      setStatus(res.data.newFarmer);
       resetForm();
     })
     .catch(err => {
       console.log("Register Customer ERROR: ", err.response.data.errorMessage);
       setErrors(err.response.data.errorMessage);
     });
+  }
 };
 
 const yupSchema = Yup.object().shape({

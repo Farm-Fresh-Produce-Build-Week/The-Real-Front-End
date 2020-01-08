@@ -109,9 +109,11 @@ const myMapPropsToValues = props => {
   };
 };
 
-const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
-  console.log("RegisterCustomer.js, POST RQ VALUES", values);
-  axios
+const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) {
+  if (username.includes(values.username)){
+    setErrors({username:"That username is already taken"})
+  } else {
+    axios
     .post(
       "https://farmers-fresh-api.herokuapp.com/api/farmers/register",
       values
@@ -126,11 +128,12 @@ const myHandleSubmit = (values, { setStatus, resetForm, setErrors }) => {
       console.log("Register Customer ERROR: ", err.response.data.errorMessage);
       setErrors(err.response.data.errorMessage);
     });
+  }
 };
 
 const yupSchema = Yup.object().shape({
   username: Yup.string().required("This is required"),
-  password: Yup.string().required("This is required"),
+  password: Yup.string().required("This is required").min(8,"Your password should be atleast 8 characters"),
   city: Yup.string().required("This is required"),
   state: Yup.string().required("This is required"),
   zipCode: Yup.string().required("This is required"),
