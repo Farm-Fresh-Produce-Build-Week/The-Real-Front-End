@@ -20,6 +20,8 @@ const DashboardFarmer = props => {
   const [loading, setLoading] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [isAddingInventory, setIsAddingInventory] = useState(false);
+  const [editedItem, setEditedItem] = useState(false);
+  const [deletedItem, setDeletedItem] = useState(false);
 
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
@@ -27,20 +29,20 @@ const DashboardFarmer = props => {
   useEffect(() => {
     if (farmer !== undefined) {
       const id = farmer.id;
-      // setLoading(true);
+      setLoading(true);
       AxiosWithAuth()
         .get(`/farmers/${id}/inventory`)
         .then(res => {
           console.log("App.js, GET PRODUCE RES: ", res);
+          setLoading(false);
           setFarmItems(res.data);
-          // setLoading(false);
         })
         .catch(err => {
-          // setLoading(false);
+          setLoading(false);
           console.log(err);
         });
     }
-  }, [farmer, isAddingInventory]);
+  }, [farmer, isAddingInventory, editedItem, deletedItem]);
   console.log("Farm Items: ", farmItems);
 
   if (loading) {
@@ -102,10 +104,6 @@ const DashboardFarmer = props => {
               {" "}
               Add New Inventory{" "}
             </button>
-            {/* <button onClick={() => setIsEditing(!isEditing)}>
-              {" "}
-              Edit Current Inventory{" "}
-            </button> */}
             {/* </NavLink> */}
             {/* sends to another component not named yet..  */}
             <button> Farm Details </button>
@@ -115,10 +113,16 @@ const DashboardFarmer = props => {
 
         <div className="Sale-Section">
           <div className="Items-For-Sale" />
-
-          {farmItems && <FarmItemsList farmItems={farmItems} farmer={farmer} />}
-          {!farmItems && <p>Add some items to sell</p>}
-          {/* Throw is in A) <itemlistcomponent /> that lists over each item for sale  B) a <itemcomponent /> of mock data?   */}
+          {farmItems && (
+            <FarmItemsList
+              farmItems={farmItems}
+              farmer={farmer}
+              editedItem={editedItem}
+              setEditedItem={setEditedItem}
+              deletedItem={deletedItem}
+              setDeletedItem={setDeletedItem}
+            />
+          )}
         </div>
         {/* end of sale-section */}
       </div>
