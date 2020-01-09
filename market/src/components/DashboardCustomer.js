@@ -1,28 +1,34 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../contexts/UserContext"; 
-import blankcustomer from "../Images/blankcustomer.jpg"; 
-import {NavLink} from "react-router-dom"; 
-import FarmItem from "./FarmItem"; 
+import { UserContext } from "../contexts/UserContext";
+import blankcustomer from "../Images/blankcustomer.jpg";
+import { NavLink } from "react-router-dom";
+import FarmItem from "./FarmItem";
 import barn3 from "../Images/Farmer/barn3.jpg";
-import styled from "styled-components"; 
+import styled from "styled-components";
 
 const DashboardCustomer = props => {
   const { user } = useContext(UserContext);
 
+  console.log("DashboardCustomer: user", user);
 
   return (
     <>
       <div className="Customer-LandingPage">
         <div className="Top-Section">
           <div className="Customer-Details">
-            <StyledImg src={user.profileImgUrl ? user.profileImgURL : blankcustomer }
-            alt="customer picture" />
-            <h2> Name:  {user.username}</h2>    
-              {/* won't show username on customer dashboard.... */}
+            <StyledImg
+              src={user.profileImgUrl ? user.profileImgURL : blankcustomer}
+              alt="customer picture"
+            />
+            <h2> Name: {user.username}</h2>
+            {/* won't show username on customer dashboard.... */}
           </div>
         </div>
         <div className="Button-area">
-          <NavLink to="/shopping"> <button> Go Shopping </button></NavLink>
+          <NavLink to="/shopping">
+            {" "}
+            <button> Go Shopping </button>
+          </NavLink>
         </div>
         <div className="Favorite-Area">
           <div className="Fav-Items">
@@ -34,7 +40,7 @@ const DashboardCustomer = props => {
             <StyledFarm src={barn3} alt="farm" />
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 };
@@ -42,9 +48,9 @@ const DashboardCustomer = props => {
 export default DashboardCustomer;
 
 const StyledImg = styled.img`
-  height: 150px; 
-`
+  height: 150px;
+`;
 
 const StyledFarm = styled.img`
-  height: 50px; 
-`
+  height: 50px;
+`;
