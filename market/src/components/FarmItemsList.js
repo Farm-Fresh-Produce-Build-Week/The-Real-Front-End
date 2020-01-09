@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
+import Title from "../styling/Title"; 
+import ShoppingButton from "../styling/ShoppingButton"; 
 
 const FarmItemList = props => {
   // console.log("FarmItemsList.js, props: ", props);
@@ -84,8 +86,8 @@ const FarmItemList = props => {
   }
 
   return (
-    <div className="farmItemS-Wrapper">
-      <h2>Items for Sale</h2>
+    <StyledList className="farmItems-Wrapper">
+      <Title>Items Your Selling </Title>
       {props.farmItems.length == 0 ? (
         <p>Your inventory is empty. Add some more inventory.</p>
       ) : null}
@@ -107,7 +109,7 @@ const FarmItemList = props => {
           <button onClick={() => handleDelete(item)}>Delete Item</button>
         </div>
       ))}
-    </div>
+    </StyledList>
   );
 };
 
@@ -116,3 +118,13 @@ export default FarmItemList;
 const StyledImg = styled.img`
   height: 150px;
 `;
+
+
+const StyledList = styled.div`
+display: inline-flex;
+flex-direction: row;
+width: 80%;
+flex-flow: wrap;
+justify-content: center;
+margin: auto;
+`
