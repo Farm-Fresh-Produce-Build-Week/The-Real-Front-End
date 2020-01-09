@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import blankcustomer from "../Images/blankcustomer.jpg";
 import { NavLink } from "react-router-dom";
-import FarmItem from "./FarmItem";
-import barn3 from "../Images/Farmer/barn3.jpg";
+// import FarmItem from "./FarmItem";
+// import barn3 from "../Images/Farmer/barn3.jpg";
 import styled from "styled-components";
+import Wrapper from "../styling/Wrapper"; 
+import Title from "../styling/Title"; 
 
 const DashboardCustomer = props => {
   const { user } = useContext(UserContext);
@@ -14,14 +16,14 @@ const DashboardCustomer = props => {
   return (
     <>
       <div className="Customer-LandingPage">
+      <Wrapper>
         <div className="Top-Section">
           <div className="Customer-Details">
+          <Title> Hello, {user.username}!</Title>
             <StyledImg
               src={user.profileImgUrl ? user.profileImgURL : blankcustomer}
               alt="customer picture"
             />
-            <h2> Name: {user.username}</h2>
-            {/* won't show username on customer dashboard.... */}
           </div>
         </div>
         <div className="Button-area">
@@ -30,7 +32,8 @@ const DashboardCustomer = props => {
             <button> Go Shopping </button>
           </NavLink>
         </div>
-        <div className="Favorite-Area">
+        </Wrapper>
+        {/* <div className="Favorite-Area">
           <div className="Fav-Items">
             <h3> Favorite Produce: </h3>
             <FarmItem />
@@ -39,7 +42,8 @@ const DashboardCustomer = props => {
             <h3> Favorite Farms: </h3>
             <StyledFarm src={barn3} alt="farm" />
           </div>
-        </div>
+        </div> */}
+          
       </div>
     </>
   );
@@ -48,9 +52,9 @@ const DashboardCustomer = props => {
 export default DashboardCustomer;
 
 const StyledImg = styled.img`
-  height: 150px;
+  height: 250px;
 `;
 
-const StyledFarm = styled.img`
-  height: 50px;
-`;
+// const StyledFarm = styled.img`
+//   height: 50px;
+// `;
