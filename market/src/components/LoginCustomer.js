@@ -22,7 +22,6 @@ const LoginCustomer = props => {
 
     // }
   }, [status]);
-  console.log("Users: ", users);
 
   // redirects customer to dashboard if already logged in
   if (localStorage.getItem("user-token")) {

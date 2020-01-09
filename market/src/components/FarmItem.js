@@ -16,33 +16,34 @@ const FarmItem = props => {
   const { farmItems, addToCart } = useContext(FarmItemsContext);
 
   return (
-    <div className="FarmItem-Wrapper">
-      <div className="FarmItem-Header">
-        <div className="image-wrapper">
-          <StyledImg
-            src={
-              // item.produceImgURL ? item.produceImgURL :
-              blackberries
-            }
-            alt="produce item"
-          />
+    <>
+      <div className="FarmItem-Wrapper">
+        <div className="FarmItem-Header">
+          <h3>Local Produce for sale:</h3>
+          <div className="image-wrapper">
+            {props.item.produceImgURL !== undefined && (
+              <StyledImg
+                src={
+                  props.item.produceImgURL
+                    ? props.item.produceImgURL
+                    : blackberries
+                }
+                alt="produce item"
+              />
+            )}
+          </div>
+          <div className="Item-Info">
+            <p>{props.item.name}</p>
+            <p>
+              ${props.item.price} per {props.item.increment}
+            </p>
+            <p>Quantity: {props.item.quantity}</p>
+            <p>{props.item.description}</p>
+          </div>
         </div>
-        <div className="Item-Info">
-          <h5> Item Name: {props.item} </h5>
-        </div>
+        <button>Add to Cart</button>
       </div>
-      {/* end of farmItem Header  */}
-      <nav className="farmItem-sub-nav">
-        <NavLink exact to={`/shopping/${props.item}`}>
-          <h5>Details</h5>
-        </NavLink>
-        <NavLink exact to={`/farm`}>
-          <h5>About the Farm </h5>
-          {/* {farm.name}  ??  */}
-        </NavLink>
-      </nav>
-      {/* end of farmItem-sub-nav */}
-    </div>
+    </>
   );
 };
 

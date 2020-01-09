@@ -30,7 +30,7 @@ const DashboardCustomer = props => {
             <button> Go Shopping </button>
           </NavLink>
         </div>
-        <div className="Favorite-Area">
+        {/* <div className="Favorite-Area">
           <div className="Fav-Items">
             <h3> Favorite Produce: </h3>
             <FarmItem />
@@ -39,7 +39,7 @@ const DashboardCustomer = props => {
             <h3> Favorite Farms: </h3>
             <StyledFarm src={barn3} alt="farm" />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -10,6 +10,7 @@ const Store = props => {
   const { user } = useContext(UserContext);
   const [farmers, setFarmers] = useState();
   const [localFarmers, setLocalFarmers] = useState();
+  const [localItems, setLocalItems] = useState();
 
   const getLocalFarmers = () => {
     setLocalFarmers(
@@ -29,7 +30,6 @@ const Store = props => {
       })
       .catch(err => {
         console.log("Store.js: error", err);
-        // getting 401 error
       });
   }, []);
 
@@ -39,9 +39,24 @@ const Store = props => {
     }
   }, [farmers]);
 
+  useEffect(() => {
+    if (localFarmers !== undefined) {
+      localFarmers.forEach(farmer => {
+        AxiosWithAuthUser()
+          .get(`farmers/${farmer.id}/inventory`)
+          .then(res => {
+            console.log(res);
+            setLocalItems(res.data);
+          })
+          .catch(error => console.log(error));
+      });
+    }
+  }, [localFarmers]);
+
   console.log("user", user);
   console.log("farmers:", farmers);
   console.log("localFarmers", localFarmers);
+  console.log("localItems", localItems);
 
   // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
   // list out all produce for sale.  make a card for each item and list over that to build out the page.
@@ -52,10 +67,24 @@ const Store = props => {
         <NavLink to="/dashboard-customer">
           <button> Dashboard </button>
         </NavLink>
-        <h3> Find something new to make today! </h3>
+        {localFarmers ? (
+          <div>
+            <h3>Your local farmers:</h3>
+            {localFarmers.map(farmer => (
+              <div key={farmer.id}>{farmer.username}</div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            I'm sorry there are no farms available in the city of {user.city}
+          </div>
+        )}
         <div className="produce-listings">
           {/* should just be the list of produce pulled from the api */}
-          {/* <FarmItem item={item} /> */}
+          {localItems &&
+            localItems.map(item => {
+              return <FarmItem item={item} />;
+            })}
         </div>
       </div>
     </>
