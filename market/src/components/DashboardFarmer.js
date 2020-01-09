@@ -10,6 +10,7 @@ import styled from "styled-components";
 import Title from "../styling/Title"; 
 import SubTitle from "../styling/SubTitle"; 
 import Wrapper from "../styling/Wrapper"; 
+import StyledButton from "../styling/StyledButton"; 
 import farmer3 from "../Images/Farmer/farmer3.jpg"; // mock data
 import starfull from "../icons/PNG/starfull.png";
 
@@ -85,8 +86,7 @@ const DashboardFarmer = props => {
               src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
               alt="farmer picture"
             />
-          </div>
-
+          
           <div className="ratings-area">
             <SubTitle> Your Farm Rating: </SubTitle>
             <div className="stars-rating">
@@ -97,18 +97,19 @@ const DashboardFarmer = props => {
               <img src={starempty} alt="star-empty" />
             </div>
           </div>
-          <div className="button-area">
-            <button onClick={() => setIsAddingItem(!isAddingItem)}>
+          </div>
+          <StyledButtonArea className="button-area">
+            <StyledButton onClick={() => setIsAddingItem(!isAddingItem)}>
               {" "}
               Add New Farm Item{" "}
-            </button>
-            <button onClick={() => setIsAddingInventory(!isAddingInventory)}>
+            </StyledButton>
+            <StyledButton onClick={() => setIsAddingInventory(!isAddingInventory)}>
               {" "}
               Add New Inventory{" "}
-            </button>
+            </StyledButton>
           
-            {/* <NavLink to="/farm"><button> Farm Details </button> </NavLink>           */}
-          </div>
+            {/* <NavLink to="/farm"><StyledButton> Farm Details </StyledButton> </NavLink>           */}
+          </StyledButtonArea>
           </Wrapper> 
         </div>
 
@@ -139,3 +140,7 @@ const StyledImg = styled.img`
   border-radius: 20px;
   border: 5px solid #5c9ead;
 `;
+
+const StyledButtonArea = styled.div`
+width: 40%; 
+`
