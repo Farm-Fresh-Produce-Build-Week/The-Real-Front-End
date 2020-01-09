@@ -77,7 +77,7 @@ const FormikSignUp = withFormik({
     password: Yup.string().required("This is required")
   }),
 
-  handleSubmit(values, { setStatus, resetForm }) {
+  handleSubmit(values, { setStatus, resetForm, setErrors }) {
     console.log("submitting", values);
     axios
       .post("https://farmers-fresh-api.herokuapp.com/api/farmers/login", values)

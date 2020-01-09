@@ -11,7 +11,7 @@ const Store = props => {
   const { user } = useContext(UserContext);
   const [farmers, setFarmers] = useState();
   const [localFarmers, setLocalFarmers] = useState();
-  const [localItems, setLocalItems] = useState();
+  const [localItems, setLocalItems] = useState("");
 
   const getLocalFarmers = () => {
     setLocalFarmers(
@@ -42,12 +42,14 @@ const Store = props => {
 
   useEffect(() => {
     if (localFarmers !== undefined) {
+      let currentData = [];
       localFarmers.forEach(farmer => {
         AxiosWithAuthUser()
           .get(`farmers/${farmer.id}/inventory`)
           .then(res => {
             console.log(res);
-            setLocalItems(res.data);
+            currentData = [...currentData, ...res.data];
+            setLocalItems(currentData);
           })
           .catch(error => console.log(error));
       });
@@ -73,8 +75,9 @@ const Store = props => {
             <h3>Your local farmers:</h3>
             {localFarmers.map(farmer => (
               <div key={farmer.id}>
-                {farmer.username} - {farmer.city}, {farmer.state}{" "}
-                {farmer.zipCode} <StyledImg src={farmer.profileImgURL} alt="" />
+                {farmer.username} - Farm#{farmer.id} - {farmer.city},{" "}
+                {farmer.state} {farmer.zipCode}{" "}
+                <StyledImg src={farmer.profileImgURL} alt="" />
               </div>
             ))}
           </div>

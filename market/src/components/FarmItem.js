@@ -38,6 +38,7 @@ const FarmItem = props => {
             </p>
             <p>Quantity: {props.item.quantity}</p>
             <p>{props.item.description}</p>
+            <p>Provided by Farm# {props.item.farmer_id}</p>
           </div>
         </div>
         <button>Add to Cart</button>
