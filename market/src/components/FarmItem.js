@@ -13,41 +13,41 @@ import styled from "styled-components";
 
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
-  const { farmItems, addToCart } = useContext(FarmItemsContext);
+    const { farmItems, addToCart } = useContext(FarmItemsContext);
 
-  return (
+    return (
     <div className="FarmItem-Wrapper">
-      <div className="FarmItem-Header">
+        <div className="FarmItem-Header">
         <div className="image-wrapper">
-          <StyledImg
+            <StyledImg
             src={
               // item.produceImgURL ? item.produceImgURL :
-              blackberries
+                blackberries
             }
             alt="produce item"
-          />
+            />
         </div>
         <div className="Item-Info">
-          <h5> Item Name: {props.item} </h5>
+            <h5> Item Name: {props.item} </h5>
+            </div>
         </div>
-      </div>
       {/* end of farmItem Header  */}
-      <nav className="farmItem-sub-nav">
+        <nav className="farmItem-sub-nav">
         <NavLink exact to={`/shopping/${props.item}`}>
-          <h5>Details</h5>
+            <h5>Details</h5>
         </NavLink>
         <NavLink exact to={`/farm`}>
-          <h5>About the Farm </h5>
+            <h5>About the Farm </h5>
           {/* {farm.name}  ??  */}
         </NavLink>
-      </nav>
+    </nav>
       {/* end of farmItem-sub-nav */}
     </div>
-  );
+    );
 };
 
 export default FarmItem;
 
 const StyledImg = styled.img`
-  height: 50px;
+    height: 50px;
 `;
