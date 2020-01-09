@@ -72,7 +72,7 @@ const Store = props => {
           <button> Dashboard </button>
         </NavLink>
         <NavLink to="/cart">
-          <button> Cart </button>
+          <button> View Cart </button>
         </NavLink>
         {localFarmers ? (
           <div>
@@ -100,6 +100,9 @@ const Store = props => {
                   return <FarmItem key={item.name} item={item} />;
                 })}
               </div>
+              <NavLink to="/cart">
+                <button> View Cart </button>
+              </NavLink>
             </div>
           )}
         </div>

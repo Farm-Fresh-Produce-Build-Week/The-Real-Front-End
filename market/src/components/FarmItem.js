@@ -6,11 +6,29 @@ import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
 import styled from "styled-components";
 
-
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
-    const { farmItems, addToCart } = useContext(FarmItemsContext);
+  const { farmItems, addToCart } = useContext(FarmItemsContext);
+  const [message, setMessage] = useState();
+  const [itemToAdd, setItemToAdd] = useState({
+    SKU: props.item.SKU,
+    quantity: 1
+  });
 
+  console.log("FarmItem.js, props: ", props);
+
+  const handleChange = event => {
+    setItemToAdd({
+      ...itemToAdd,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setMessage(`Added ${itemToAdd.quantity} ${props.item.name} to your cart`);
+    console.log("FarmItem.js, itemToAdd: ", itemToAdd);
+  };
 
   return (
     <>
@@ -38,15 +56,24 @@ const FarmItem = props => {
             <p>Provided by Farm# {props.item.farmer_id}</p>
           </div>
         </div>
-        <button>Add to Cart</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="number"
+            name="quantity"
+            value={itemToAdd.quantity}
+            onChange={handleChange}
+            style={{ width: "50px", margin: "0 auto" }}
+          />
+          <button type="submit">Add to Cart</button>
+        </form>
+        {message && <div>{message}</div>}
       </div>
     </>
   );
-
 };
 
 export default FarmItem;
 
 const StyledImg = styled.img`
-    height: 50px;
+  height: 50px;
 `;

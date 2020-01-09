@@ -3,14 +3,11 @@ import { NavLink } from "react-router-dom";
 
 const Navigation = props => {
   const logOut = e => {
-    // e.preventDefault();
     console.log("LOGOUT PRESSED!");
     localStorage.removeItem("token");
     localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
     localStorage.removeItem("user");
-    // return <Redirect to="/" />;
-    // props.history.push("/");
   };
 
   return (

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
-import Title from "../styling/Title"; 
-import ShoppingButton from "../styling/ShoppingButton"; 
+import Title from "../styling/Title";
+import ShoppingButton from "../styling/ShoppingButton";
 
 const FarmItemList = props => {
   // console.log("FarmItemsList.js, props: ", props);
@@ -87,7 +87,7 @@ const FarmItemList = props => {
 
   return (
     <StyledList className="farmItems-Wrapper">
-      <Title>Items Your Selling </Title>
+      <Title>Items You're Selling </Title>
       {props.farmItems.length == 0 ? (
         <p>Your inventory is empty. Add some more inventory.</p>
       ) : null}
@@ -119,12 +119,11 @@ const StyledImg = styled.img`
   height: 150px;
 `;
 
-
 const StyledList = styled.div`
-display: inline-flex;
-flex-direction: row;
-width: 80%;
-flex-flow: wrap;
-justify-content: center;
-margin: auto;
-`
+  display: inline-flex;
+  flex-direction: row;
+  width: 80%;
+  flex-flow: wrap;
+  justify-content: center;
+  margin: auto;
+`;

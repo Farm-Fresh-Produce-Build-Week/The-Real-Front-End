@@ -40,7 +40,7 @@ const FarmItemForm = props => {
 
   const goToPLU = () => {
     const URL = `https://www.ifpsglobal.com/PLU-Codes/PLU-codes-Search`;
-    window.open(URL, "PLU CODES", "width=1100,height=850");
+    window.open(URL, "PLU CODES", "width=900,height=700");
   };
 
   return (
