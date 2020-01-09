@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 
 const LoginCustomer = props => {
-  console.log("Login Customer props: ", props);
+  // console.log("Login Customer props: ", props);
   const { values, errors, touched, status, setFieldValue } = props;
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,11 +14,14 @@ const LoginCustomer = props => {
   useEffect(() => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
+    status && props.setCurrentUser(status);
+    // errors && setErrorMsg(errors);
     if (status !== undefined) {
       props.history.push("/dashboard-customer");
     }
     console.log("Status: ", status);
-    console.log("Users: ", users);
+    console.log("errors", errors);
+
     // }
   }, [status]);
 
@@ -59,6 +62,7 @@ const LoginCustomer = props => {
           </label>
           <button type="submit">Submit</button>
         </Form>
+        {/* {errorMsg && <p>{errorMsg}</p>} */}
       </div>
     </div>
   );
@@ -83,13 +87,13 @@ const FormikSignUp = withFormik({
       .post("https://farmers-fresh-api.herokuapp.com/api/users/login", values)
       .then(res => {
         console.log("Login Customer success, RES: ", res);
-        setStatus(res.data.user);
         localStorage.setItem("user-token", res.data.token);
+        setStatus(res.data.user);
         resetForm();
       })
       .catch(err => {
-        console.log(err);
-        setErrors(err.request.responseText);
+        console.log(err.response.data.errorMessage);
+        // setErrors(err.response.data.errorMessage);
       });
   }
 })(LoginCustomer);

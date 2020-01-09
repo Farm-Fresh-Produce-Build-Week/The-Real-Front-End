@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
+import Title from "../styling/Title"; 
+import ShoppingButton from "../styling/ShoppingButton"; 
 
 const FarmItemList = props => {
   // console.log("FarmItemsList.js, props: ", props);
@@ -84,33 +86,30 @@ const FarmItemList = props => {
   }
 
   return (
-    <div>
-      <h2>Items for sale</h2>
-      <div className="farmItemS-Wrapper">
-        {props.farmItems.map(item => (
-          <div
-            onClick={event => routeToFarmItem(event, item)}
-            className="FarmItem-card"
-            key={item.name}
-          >
-            <StyledImg
-              className="farmitem-list-image"
-              src={item.produceImgURL}
-              alt={item.name}
-            />
-            <p>{item.name}</p>
-            <p>
-              ${item.price} per {item.increment}
-            </p>
-            <p>
-              Quantity: {item.quantity}-{item.increment}
-            </p>
-            <button onClick={() => handleEdit(item)}>Update Item</button>
-            <button onClick={() => handleDelete(item)}>Delete Item</button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <StyledList className="farmItems-Wrapper">
+      <Title>Items Your Selling </Title>
+      {props.farmItems.length == 0 ? (
+        <p>Your inventory is empty. Add some more inventory.</p>
+      ) : null}
+      {props.farmItems.map(item => (
+        <div className="FarmItem-card" key={item.name}>
+          <StyledImg
+            className="farmitem-list-image"
+            src={item.produceImgURL}
+            alt={item.name}
+          />
+          <p>{item.name}</p>
+          <p>
+            ${item.price} per {item.increment}
+          </p>
+          <p>
+            Quantity: {item.quantity}-{item.increment}
+          </p>
+          <button onClick={() => handleEdit(item)}>Update Item</button>
+          <button onClick={() => handleDelete(item)}>Delete Item</button>
+        </div>
+      ))}
+    </StyledList>
   );
 };
 
@@ -119,3 +118,13 @@ export default FarmItemList;
 const StyledImg = styled.img`
   height: 150px;
 `;
+
+
+const StyledList = styled.div`
+display: inline-flex;
+flex-direction: row;
+width: 80%;
+flex-flow: wrap;
+justify-content: center;
+margin: auto;
+`

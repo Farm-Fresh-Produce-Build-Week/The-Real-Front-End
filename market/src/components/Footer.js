@@ -36,7 +36,7 @@ const Footer = () => {
         <img src={linkedin} alt="linkedin" />
       </div>
       <div className="Credits">
-      <p><strong>&#9400; 2020 Fresh Finds Farmers Market</strong></p>
+        <p><strong>&#9400; 2020 Fresh Finds Farmers Market</strong></p>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import logo from "../icons/PNG/logo.svg";
 
@@ -10,6 +10,7 @@ const Navigation = props => {
     localStorage.removeItem("token");
     localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
+    localStorage.removeItem("user");
     // return <Redirect to="/" />;
     // props.history.push("/");
   };
