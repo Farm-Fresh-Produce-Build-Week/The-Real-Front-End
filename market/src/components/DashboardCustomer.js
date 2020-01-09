@@ -20,14 +20,14 @@ const DashboardCustomer = props => {
               src={user.profileImgUrl ? user.profileImgURL : blankcustomer}
               alt="customer picture"
             />
-            <h2> Name: {user.username}</h2>
+            <h2> Hello {user.username}</h2>
             {/* won't show username on customer dashboard.... */}
           </div>
         </div>
         <div className="Button-area">
           <NavLink to="/shopping">
             {" "}
-            <button> Go Shopping </button>
+            <button> Shop for local produce </button>
           </NavLink>
         </div>
         {/* <div className="Favorite-Area">

@@ -4,6 +4,7 @@ import { UserContext } from "../contexts/UserContext";
 import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { NavLink } from "react-router-dom";
 import FarmItem from "./FarmItem";
+import styled from "styled-components";
 
 const Store = props => {
   // const {Cart} = useContext(CartContext);
@@ -71,7 +72,10 @@ const Store = props => {
           <div>
             <h3>Your local farmers:</h3>
             {localFarmers.map(farmer => (
-              <div key={farmer.id}>{farmer.username}</div>
+              <div key={farmer.id}>
+                {farmer.username} - {farmer.city}, {farmer.state}{" "}
+                {farmer.zipCode} <StyledImg src={farmer.profileImgURL} alt="" />
+              </div>
             ))}
           </div>
         ) : (
@@ -81,10 +85,16 @@ const Store = props => {
         )}
         <div className="produce-listings">
           {/* should just be the list of produce pulled from the api */}
-          {localItems &&
-            localItems.map(item => {
-              return <FarmItem item={item} />;
-            })}
+          {localItems && (
+            <div>
+              <h3>Local Produce for sale:</h3>
+              <div>
+                {localItems.map(item => {
+                  return <FarmItem key={item.name} item={item} />;
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -92,3 +102,7 @@ const Store = props => {
 };
 
 export default Store;
+
+const StyledImg = styled.img`
+  height: 2rem;
+`;

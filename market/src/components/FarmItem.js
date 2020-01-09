@@ -19,7 +19,6 @@ const FarmItem = props => {
     <>
       <div className="FarmItem-Wrapper">
         <div className="FarmItem-Header">
-          <h3>Local Produce for sale:</h3>
           <div className="image-wrapper">
             {props.item.produceImgURL !== undefined && (
               <StyledImg

@@ -87,7 +87,7 @@ const FormikSignUp = withFormik({
         setStatus(res.data);
         resetForm();
       })
-      .catch(err => console.log(err.response));
+      .catch(err => console.log(err.response.data.errorMessage));
   }
 })(LoginFarmer);
 
