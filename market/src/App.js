@@ -28,6 +28,7 @@ import DashboardCustomer from "./components/DashboardCustomer";
 import Store from "./components/Store";
 import FarmCard from "./components/FarmCard";
 import FarmItemDescription from "./components/FarmItemDescription";
+import Cart from "./components/Cart";
 
 // Styles
 import "./App.css";
@@ -160,6 +161,7 @@ function App() {
                 <PrivateRoute path="dashboard-customer/:id" />
                 <PrivateRoute path="dashboard-farmer/:id" />
                 <PrivateRoute path="/shopping" component={Store} />
+                <PrivateRoute path="/cart" component={Cart} />
                 <PrivateRoute path="/farm" component={FarmCard} />
                 <Route
                   exact
