@@ -4,17 +4,25 @@ import { UserContext } from "../contexts/UserContext";
 import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { NavLink } from "react-router-dom";
 import FarmItem from "./FarmItem";
+import styled from "styled-components";
 
 const Store = props => {
   // const {Cart} = useContext(CartContext);
-    const { user } = useContext(UserContext);
-    const [farmers, setFarmers] = useState();
-    const [localFarmers, setLocalFarmers] = useState();
 
-    const getLocalFarmers = () => {
-    const local = farmers.filter(farmer => user.city == farmer.city);
-    setLocalFarmers(local);
-    };
+  const { user } = useContext(UserContext);
+  const [farmers, setFarmers] = useState();
+  const [localFarmers, setLocalFarmers] = useState();
+  const [localItems, setLocalItems] = useState("");
+
+  const getLocalFarmers = () => {
+    setLocalFarmers(
+      farmers.filter(farmer => {
+        return user.city.toLowerCase() === farmer.city.toLowerCase();
+      })
+    );
+    console.log("localFarmers", localFarmers);
+  };
+
 
     useEffect(() => {
     AxiosWithAuthUser()
@@ -22,21 +30,39 @@ const Store = props => {
         .then(res => {
         console.log("Store.js: GET ALL FARMERS: ", res);
         setFarmers(res.data);
-        getLocalFarmers();
-        })
-        .catch(err => {
+      })
+      .catch(err => {
         console.log("Store.js: error", err);
-    
-        });
-    }, []);
-    console.log("user", user);
-    console.log("farmers:", farmers);
-    console.log("localFarmers", localFarmers);
+      });
+  }, []);
 
-  //   useEffect(() => {
-  //     const local = farmers.filter(farmer => user.city === farmer.city);
-  //     setLocalFarmers(local);
-  //   }, []);
+  useEffect(() => {
+    if (farmers !== undefined) {
+      getLocalFarmers();
+    }
+  }, [farmers]);
+
+  useEffect(() => {
+    if (localFarmers !== undefined) {
+      let currentData = [];
+      localFarmers.forEach(farmer => {
+        AxiosWithAuthUser()
+          .get(`farmers/${farmer.id}/inventory`)
+          .then(res => {
+            console.log(res);
+            currentData = [...currentData, ...res.data];
+            setLocalItems(currentData);
+          })
+          .catch(error => console.log(error));
+      });
+    }
+  }, [localFarmers]);
+
+  console.log("user", user);
+  console.log("farmers:", farmers);
+  console.log("localFarmers", localFarmers);
+  console.log("localItems", localItems);
+
 
   // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
   // list out all produce for sale.  make a card for each item and list over that to build out the page.
@@ -47,10 +73,34 @@ const Store = props => {
         <NavLink to="/dashboard-customer">
             <button> Dashboard </button>
         </NavLink>
-        <h3> Find something new to make today! </h3>
+        {localFarmers ? (
+          <div>
+            <h3>Your local farmers:</h3>
+            {localFarmers.map(farmer => (
+              <div key={farmer.id}>
+                {farmer.username} - Farm#{farmer.id} - {farmer.city},{" "}
+                {farmer.state} {farmer.zipCode}{" "}
+                <StyledImg src={farmer.profileImgURL} alt="" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            I'm sorry there are no farms available in the city of {user.city}
+          </div>
+        )}
         <div className="produce-listings">
           {/* should just be the list of produce pulled from the api */}
-          {/* <FarmItem item={item} /> */}
+          {localItems && (
+            <div>
+              <h3>Local Produce for sale:</h3>
+              <div>
+                {localItems.map(item => {
+                  return <FarmItem key={item.name} item={item} />;
+                })}
+              </div>
+            </div>
+          )}
         </div>
         </div>
     </>
@@ -58,3 +108,7 @@ const Store = props => {
 };
 
 export default Store;
+
+const StyledImg = styled.img`
+  height: 2rem;
+`;

@@ -26,16 +26,21 @@ const DashboardCustomer = props => {
               src={user.profileImgUrl ? user.profileImgURL : blankcustomer}
               alt="customer picture"
             />
+
+            <h2> Hello {user.username}</h2>
             <SubTitle> Member since 2019 </SubTitle>
+
           </div>
         </StyledCustomer>
         <StyledButtonArea className="Button-area">
           <NavLink to="/shopping">
             {" "}
+
             <StyledButton> Go Shopping </StyledButton>
           </NavLink>
         </StyledButtonArea>
         </Wrapper>
+
         {/* <div className="Favorite-Area">
           <div className="Fav-Items">
             <h3> Favorite Produce: </h3>
@@ -46,7 +51,9 @@ const DashboardCustomer = props => {
             <StyledFarm src={barn3} alt="farm" />
           </div>
         </div> */}
+
           
+
       </div>
     </>
   );

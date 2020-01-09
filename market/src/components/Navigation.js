@@ -8,6 +8,7 @@ const Navigation = props => {
     localStorage.removeItem("token");
     localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
+    localStorage.removeItem("user");
     // return <Redirect to="/" />;
     // props.history.push("/");
   };

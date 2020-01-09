@@ -15,14 +15,15 @@ const LoginCustomer = props => {
     console.log("status has changed!", status);
     status && setUsers([...users, status]);
     status && props.setCurrentUser(status);
+    // errors && setErrorMsg(errors);
     if (status !== undefined) {
       props.history.push("/dashboard-customer");
     }
     console.log("Status: ", status);
+    console.log("errors", errors);
 
     // }
   }, [status]);
-  console.log("Users: ", users);
 
   // redirects customer to dashboard if already logged in
   if (localStorage.getItem("user-token")) {
@@ -61,6 +62,7 @@ const LoginCustomer = props => {
           </label>
           <button type="submit">Submit</button>
         </Form>
+        {/* {errorMsg && <p>{errorMsg}</p>} */}
       </div>
     </div>
   );
@@ -90,8 +92,8 @@ const FormikSignUp = withFormik({
         resetForm();
       })
       .catch(err => {
-        console.log(err);
-        // setErrors(err.request.responseText);
+        console.log(err.response.data.errorMessage);
+        // setErrors(err.response.data.errorMessage);
       });
   }
 })(LoginCustomer);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
+import styled from "styled-components";
 
 // this component is for adding to farm inventory from existing items
 
@@ -19,6 +20,7 @@ const FarmItemAddInventory = props => {
   const [selectItem, setSelectItem] = useState(initialItem);
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   console.log("allFarmItems: ", farmItems);
 
   useEffect(() => {
@@ -74,10 +76,11 @@ const FarmItemAddInventory = props => {
   return (
     <div className="NewFarmInventory-Form">
       <h2> Add Inventory </h2>
+
       <form onSubmit={handleSubmit}>
-        <select onChange={handleSelect} value={newInventory.name}>
+        <StyledSelect onChange={handleSelect} value={newInventory.name}>
           <option name="None" value="None">
-            -- Select --
+            -- Select Item --
           </option>
           {farmItems &&
             farmItems.map(item => (
@@ -85,43 +88,58 @@ const FarmItemAddInventory = props => {
                 {item.name}
               </option>
             ))}
-        </select>
-        <input
-          type="text"
-          name="SKU"
-          onChange={handleChange}
-          placeholder="SKU"
-          value={newInventory.SKU}
-        />
-        <input
-          type="text"
-          name="PLU"
-          onChange={handleChange}
-          placeholder="PLU"
-          value={newInventory.PLU}
-          disabled
-        />
-        <input
-          type="text"
-          name="quantity"
-          onChange={handleChange}
-          placeholder="quantity"
-          value={newInventory.quantity}
-        />
-        <input
-          type="text"
-          name="increment"
-          onChange={handleChange}
-          placeholder="increment"
-          value={newInventory.increment}
-        />
-        <input
-          type="price"
-          name="price"
-          onChange={handleChange}
-          placeholder="price"
-          value={newInventory.price}
-        />
+        </StyledSelect>
+        <label>
+          SKU
+          <input
+            type="text"
+            name="SKU"
+            onChange={handleChange}
+            placeholder="SKU"
+            value={newInventory.SKU}
+          />
+        </label>
+        <label>
+          PLU
+          <input
+            type="text"
+            name="PLU"
+            onChange={handleChange}
+            placeholder="PLU"
+            value={newInventory.PLU}
+            disabled
+          />
+        </label>
+        <label>
+          Quantity
+          <input
+            type="text"
+            name="quantity"
+            onChange={handleChange}
+            placeholder="quantity"
+            value={newInventory.quantity}
+          />
+        </label>
+        <label>
+          Increment
+          <input
+            type="text"
+            name="increment"
+            onChange={handleChange}
+            placeholder="increment"
+            value={newInventory.increment}
+          />
+        </label>
+        <label>
+          Price
+          <input
+            type="price"
+            name="price"
+            onChange={handleChange}
+            placeholder="price"
+            value={newInventory.price}
+          />
+        </label>
 
         <button className="button-addNewItem" type="submit">
           Add Item To Inventory
@@ -144,3 +162,8 @@ const FarmItemAddInventory = props => {
 };
 
 export default FarmItemAddInventory;
+
+const StyledSelect = styled.select`
+  width: 150px;
+  margin: 20px;
+`;
