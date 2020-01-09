@@ -26,7 +26,8 @@ import LoginCustomer from "./components/LoginCustomer";
 import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
 import Store from "./components/Store";
-import FarmCard from "./components/FarmCard"; 
+import FarmCard from "./components/FarmCard";
+import FarmItemDescription from "./components/FarmItemDescription";
 
 // Styles
 import "./App.css";
@@ -43,7 +44,7 @@ function App() {
   const [user, setUser] = useLocalStorage("user", []);
 
   const setCurrentUser = user => {
-    setFarmer(user);
+    setUser(user);
   };
 
   // farm items context
@@ -97,17 +98,20 @@ function App() {
               <div className="App">
                 <Navigation />
                 <Route exact path="/" component={Landing} />
-                
+
                 {/* <Route exact path="/login-customer" component={LoginCustomer} /> */}
 
-                <Route exact path="/login-customer" render={props => {
-                  return(
-                    <LoginCustomer
-                    {...props}
-                    setCurrentUser={setCurrentUser}
-                    />
-                  );
-                }}
+                <Route
+                  exact
+                  path="/login-customer"
+                  render={props => {
+                    return (
+                      <LoginCustomer
+                        {...props}
+                        setCurrentUser={setCurrentUser}
+                      />
+                    );
+                  }}
                 />
 
                 <Route
@@ -157,6 +161,13 @@ function App() {
                 <PrivateRoute path="dashboard-farmer/:id" />
                 <PrivateRoute path="/shopping" component={Store} />
                 <PrivateRoute path="/farm" component={FarmCard} />
+                <Route
+                  exact
+                  path="shopping/:id"
+                  render={props => (
+                    <FarmItemDescription {...props} item={props.item} />
+                  )}
+                />
                 <Footer />
               </div>
             </OrdersContext.Provider>
