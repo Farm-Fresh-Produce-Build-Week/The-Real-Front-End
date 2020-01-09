@@ -12,8 +12,12 @@ const Store = props => {
   const [localFarmers, setLocalFarmers] = useState();
 
   const getLocalFarmers = () => {
-    const local = farmers.filter(farmer => user.city == farmer.city);
-    setLocalFarmers(local);
+    setLocalFarmers(
+      farmers.filter(farmer => {
+        return user.city.toLowerCase() === farmer.city.toLowerCase();
+      })
+    );
+    console.log("localFarmers", localFarmers);
   };
 
   useEffect(() => {
@@ -22,21 +26,22 @@ const Store = props => {
       .then(res => {
         console.log("Store.js: GET ALL FARMERS: ", res);
         setFarmers(res.data);
-        getLocalFarmers();
       })
       .catch(err => {
         console.log("Store.js: error", err);
         // getting 401 error
       });
   }, []);
+
+  useEffect(() => {
+    if (farmers !== undefined) {
+      getLocalFarmers();
+    }
+  }, [farmers]);
+
   console.log("user", user);
   console.log("farmers:", farmers);
   console.log("localFarmers", localFarmers);
-
-  //   useEffect(() => {
-  //     const local = farmers.filter(farmer => user.city === farmer.city);
-  //     setLocalFarmers(local);
-  //   }, []);
 
   // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
   // list out all produce for sale.  make a card for each item and list over that to build out the page.
