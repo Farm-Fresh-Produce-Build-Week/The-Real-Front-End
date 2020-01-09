@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import blankcustomer from "../Images/blankcustomer.jpg";
 import { NavLink } from "react-router-dom";
