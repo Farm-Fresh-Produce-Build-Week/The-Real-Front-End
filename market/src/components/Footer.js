@@ -32,7 +32,7 @@ const Footer = () => {
         <img src={phone} alt="phone" />
       </div>
       <div className="Credits">
-        <p>Built with coffee, time and love by Lambda Students</p>
+        <p>Built with coffee, time and love by Lambda Students, copyright: 2020</p>
       </div>
     </>
   );
