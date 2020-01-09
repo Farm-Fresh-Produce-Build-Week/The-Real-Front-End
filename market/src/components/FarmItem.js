@@ -20,18 +20,23 @@ const FarmItem = props => {
   const handleChange = event => {
     setItemToAdd({
       ...itemToAdd,
-      [event.target.name]: event.target.value
+      [event.target.name]: parseInt(event.target.value)
     });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    setMessage(`Added ${itemToAdd.quantity} ${props.item.name} to your cart`);
     console.log("FarmItem.js, itemToAdd: ", itemToAdd);
-    addToCart(itemToAdd);
+
     AxiosWithAuthUser()
       .post(`users/${props.user.id}/cart`, itemToAdd)
-      .then(res => console.log(res.response))
+      .then(res => {
+        console.log(res.response);
+        setMessage(
+          `Added ${itemToAdd.quantity} ${props.item.name} to your cart`
+        );
+        addToCart(props.user.id);
+      })
       .catch(err => {
         console.log(err.response.data.errorMessage);
         setMessage(err.response.data.errorMessage);

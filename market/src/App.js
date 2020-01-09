@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 // Utils
 import PrivateRoute from "./utils/PrivateRoute";
 import { AxiosWithAuth } from "./utils/axiosWithAuth";
+import { AxiosWithAuthUser } from "./utils/axiosWithAuthUser";
 
 // Context
 import { CartContext } from "./contexts/CartContext";
@@ -71,16 +72,25 @@ function App() {
   // cart context
   const [cart, setCart] = useLocalStorage("cart", []);
 
-  const addToCart = item => {
+  const getUserCart = userID => {
     // add the given item to the cart
-    console.log("dw: App.js: addItem: item: ", item);
-    setCart([...cart, item]);
-    console.log("dw: App.js: addItem: cart: ", cart);
+    console.log("dw: App.js: addItem: userID: ", userID);
+    AxiosWithAuthUser()
+      .get(`users/${userID}/cart`)
+      .then(res => {
+        console.log("App.js, addToCart(), res: ", res);
+        setCart(res.data);
+      })
+      .catch(err => console.log(err));
   };
 
   const removeItem = item => {
-    setCart(cart.filter(i => i.id !== item));
+    setCart(cart.filter(i => i.SKU !== item));
     console.log("dw: App.js: removeItem: cart: ", cart);
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   // new order context
@@ -92,9 +102,13 @@ function App() {
 
   return (
     <FarmerContext.Provider value={{ farmer, setCurrentFarmer }}>
-      <FarmItemsContext.Provider value={{ farmItems, setFarmItems, addToCart }}>
+      <FarmItemsContext.Provider
+        value={{ farmItems, setFarmItems, getUserCart }}
+      >
         <UserContext.Provider value={{ user, setCurrentUser }}>
-          <CartContext.Provider value={{ cart, removeItem, PurchaseOrder }}>
+          <CartContext.Provider
+            value={{ cart, removeItem, clearCart, getUserCart, PurchaseOrder }}
+          >
             <OrdersContext.Provider value={{ orders }}>
               <div className="App">
                 <Navigation />

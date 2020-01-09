@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { FarmerContext } from "../contexts/FarmerContext";
+import { OrdersContext } from "../contexts/OrdersContext";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import FarmItemsList from "./FarmItemsList";
 import FarmAddItem from "./FarmItemForm";
 import FarmItemAddInventory from "./FarmItemAddInventory";
 
 import styled from "styled-components";
-import Title from "../styling/Title"; 
-import SubTitle from "../styling/SubTitle"; 
-import Wrapper from "../styling/Wrapper"; 
-import StyledButton from "../styling/StyledButton"; 
+import Title from "../styling/Title";
+import SubTitle from "../styling/SubTitle";
+import Wrapper from "../styling/Wrapper";
+import StyledButton from "../styling/StyledButton";
 import farmer3 from "../Images/Farmer/farmer3.jpg"; // mock data
 import starfull from "../icons/PNG/starfull.png";
 
@@ -25,6 +26,7 @@ const DashboardFarmer = props => {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
   const [editedItem, setEditedItem] = useState(false);
   const [deletedItem, setDeletedItem] = useState(false);
+  const { orders } = useContext(OrdersContext);
 
   console.log("DashboardFarmer: props, farmer", props, farmer);
 
@@ -80,37 +82,42 @@ const DashboardFarmer = props => {
       <div className="FarmerLandingPage">
         <div className="Top-Section">
           <Wrapper>
-          <div className="Farmer-Details">
-          <Title> Hello, {farmer.username}!</Title>
-            <StyledImg
-              src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
-              alt="farmer picture"
-            />
-          
-          <div className="ratings-area">
-            <SubTitle> Your Farm Rating: </SubTitle>
-            <div className="stars-rating">
-              <img src={starfull} alt="star-full" />
-              <img src={starfull} alt="star-full" />
-              <img src={starfull} alt="star-full" />
-              <img src={starhalf} alt="star-half" />
-              <img src={starempty} alt="star-empty" />
+            <div className="Farmer-Details">
+              <Title> Hello, {farmer.username}!</Title>
+              <StyledImg
+                src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
+                alt="farmer picture"
+              />
+
+              <div className="ratings-area">
+                <SubTitle> Your Farm Rating: </SubTitle>
+                <div className="stars-rating">
+                  <img src={starfull} alt="star-full" />
+                  <img src={starfull} alt="star-full" />
+                  <img src={starfull} alt="star-full" />
+                  <img src={starhalf} alt="star-half" />
+                  <img src={starempty} alt="star-empty" />
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
-          <StyledButtonArea className="button-area">
-            <StyledButton onClick={() => setIsAddingItem(!isAddingItem)}>
-              {" "}
-              Add New Farm Item{" "}
-            </StyledButton>
-            <StyledButton onClick={() => setIsAddingInventory(!isAddingInventory)}>
-              {" "}
-              Add New Inventory{" "}
-            </StyledButton>
-          
-            {/* <NavLink to="/farm"><StyledButton> Farm Details </StyledButton> </NavLink>           */}
-          </StyledButtonArea>
-          </Wrapper> 
+            <StyledButtonArea className="button-area">
+              <StyledButton onClick={() => setIsAddingItem(!isAddingItem)}>
+                {" "}
+                Add New Farm Item{" "}
+              </StyledButton>
+              <StyledButton
+                onClick={() => setIsAddingInventory(!isAddingInventory)}
+              >
+                {" "}
+                Add New Inventory{" "}
+              </StyledButton>
+              <NavLink to="/orders">
+                <StyledButton> View Orders ({orders.length})</StyledButton>
+              </NavLink>
+
+              {/* <NavLink to="/farm"><StyledButton> Farm Details </StyledButton> </NavLink>           */}
+            </StyledButtonArea>
+          </Wrapper>
         </div>
 
         <div className="Sale-Section">
@@ -142,5 +149,5 @@ const StyledImg = styled.img`
 `;
 
 const StyledButtonArea = styled.div`
-width: 40%; 
-`
+  width: 40%;
+`;

@@ -1,10 +1,18 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
+import { UserContext } from "../contexts/UserContext";
 import { NavLink } from "react-router-dom";
 import blackberries from "../Images/Produce/blackberries.jpg";
 
 const Cart = props => {
-  const { cart } = useContext(CartContext);
+  const { cart, getUserCart, PurchaseOrder } = useContext(CartContext);
+  const { user } = useContext(UserContext);
+  console.log("Cart.js, cart: ", cart);
+
+  useEffect(() => {
+    getUserCart(user.id);
+  }, []);
+
   return (
     <>
       <div className="Cart-Page">

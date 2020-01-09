@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
 
 const Navigation = props => {
+  const { clearCart } = useContext(CartContext);
+
   const logOut = e => {
     console.log("LOGOUT PRESSED!");
     localStorage.removeItem("token");
     localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
     localStorage.removeItem("user");
+    localStorage.removeItem("cart");
+    clearCart();
   };
 
   return (
