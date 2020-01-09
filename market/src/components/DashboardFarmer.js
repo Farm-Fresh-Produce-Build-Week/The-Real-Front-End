@@ -7,7 +7,9 @@ import FarmAddItem from "./FarmItemForm";
 import FarmItemAddInventory from "./FarmItemAddInventory";
 
 import styled from "styled-components";
-
+import Title from "../styling/Title"; 
+import SubTitle from "../styling/SubTitle"; 
+import Wrapper from "../styling/Wrapper"; 
 import farmer3 from "../Images/Farmer/farmer3.jpg"; // mock data
 import starfull from "../icons/PNG/starfull.png";
 
@@ -76,17 +78,17 @@ const DashboardFarmer = props => {
     <>
       <div className="FarmerLandingPage">
         <div className="Top-Section">
+          <Wrapper>
           <div className="Farmer-Details">
+          <Title> Hello, {farmer.username}!</Title>
             <StyledImg
               src={farmer.profileImgURL ? farmer.profileImgURL : farmer3}
-              // src={farmer3} // mock
               alt="farmer picture"
             />
-            <h1>{farmer.username}</h1>
           </div>
 
           <div className="ratings-area">
-            <h3> Your Farm Rating: </h3>
+            <SubTitle> Your Farm Rating: </SubTitle>
             <div className="stars-rating">
               <img src={starfull} alt="star-full" />
               <img src={starfull} alt="star-full" />
@@ -104,11 +106,10 @@ const DashboardFarmer = props => {
               {" "}
               Add New Inventory{" "}
             </button>
-            {/* </NavLink> */}
-            {/* sends to another component not named yet..  */}
-            <NavLink to="/farm"><button> Farm Details </button> </NavLink>
-            {/* dead button may add page for fun later  */}
+          
+            {/* <NavLink to="/farm"><button> Farm Details </button> </NavLink>           */}
           </div>
+          </Wrapper> 
         </div>
 
         <div className="Sale-Section">
@@ -134,5 +135,7 @@ const DashboardFarmer = props => {
 export default DashboardFarmer;
 
 const StyledImg = styled.img`
-  height: 150px;
+  height: 350px;
+  border-radius: 20px;
+  border: 5px solid #5c9ead;
 `;
