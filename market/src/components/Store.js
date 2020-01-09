@@ -39,6 +39,7 @@ const [farmers, setFarmers] = useState();
         </div>
         </>
     )
-    }
-    
+};
+
+
 export default Store;
