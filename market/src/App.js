@@ -27,6 +27,7 @@ import Landing from "./components/Landing";
 import DashboardCustomer from "./components/DashboardCustomer";
 import Store from "./components/Store";
 import FarmCard from "./components/FarmCard";
+import FarmItemDescription from "./components/FarmItemDescription";
 
 // Styles
 import "./App.css";
@@ -160,6 +161,13 @@ function App() {
                 <PrivateRoute path="dashboard-farmer/:id" />
                 <PrivateRoute path="/shopping" component={Store} />
                 <PrivateRoute path="/farm" component={FarmCard} />
+                <Route
+                  exact
+                  path="shopping/:id"
+                  render={props => (
+                    <FarmItemDescription {...props} item={props.item} />
+                  )}
+                />
                 <Footer />
               </div>
             </OrdersContext.Provider>
