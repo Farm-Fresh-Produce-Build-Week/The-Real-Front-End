@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useContext, useEffect, useState } from "react";
 import { Route, NavLink } from "react-router-dom";
 import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
-
-
+import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import blackberries from "../Images/Produce/blackberries.jpg"; 
 import FarmItemDescription from "../components/FarmItemDescription.js"; 
-import Axios from "axios";
+import styled from "styled-components"; 
 
 
 // single item/product for sale   !! Mostly mock data right now. 
@@ -14,76 +13,58 @@ import Axios from "axios";
 // cart and setCard are also states being uses. Are they application level or app.js level??
 
 
-/* <button className="customer-shopping"> Add To Cart </button>
-
-            <button className="farmer-edit-farmItem" 
-                onClick={() => 
-                props.history.push(`/edit-item/${item.id}`)}>
-                Edit 
-            </button>
-
-            <button className="farmer-delete-farmItem" onClick={handleDelete}> Delete </button> 
-
-            not sure how to intergrade the functionally for customer and farmer. They see different functions. */
-
-           // line 75 not sure if routing correctly and able to make it work. Have to set up the farm name with an id? 
+const FarmItem = props => {
+    // const { farmer } = useContext(FarmerContext); 
+    const { item } = useContext(FarmItemsContext);
+    const [ farmItems, setFarmItems] = useState();
 
 
-
-const FarmItem = (props) => {
-    const item = props.item.find(
-        thing => `${thing.id}` === props.match.params.id
-    );
-
-    if (!props.items.length || !item) {
-        return <h2> Loading ... ...   </h2>; 
-        // could change this to a react-spinner later
-    }
-
-    // farmer functionality 
-    const handleDelete = event => {
-        event.preventDefault();
-        AxiosWithAuth()
-        .delete(`/farmitems/${item.id}`)
+    useEffect(() => {
+    AxiosWithAuth()
+        .get("/produce")
         .then(res => {
-            console.log("LT: FarmItem.js: handleDelete: res", res);
-            props.updateFarmItems(res.data); //res.data? or res only 
-            props.history.push("/farmitems-list") // not sure if that's the correct route / link to 
+        console.log("Store.js, GET ALL PRODUCE RES: ", res);
+        setFarmItems(res.data);
         })
-        .catch(error => console.log("LT: FarmItem.js: handleDelete: error", error))
-    };
+        .catch(err => console.log(err));
+    }, []); 
+
+    console.log("Store.js, farmItems: ", farmItems);
+
 
 
     return (
         <div className="FarmItem-Wrapper">
             <div className="FarmItem-Header">
                 <div className="image-wrapper">
-                    <img src={blackberries} alt="blackberries" />
+                    <StyledImg src={ 
+                        // item.produceImgURL ? item.produceImgURL :
+                        blackberries} alt="produce item" />
                 </div> 
-                    {/* end of image div  */}
                 <div className="Item-Info">
-                    {/* <h3> farm name and location here </h3>   */}
-                    <h2> Blackberries </h2>
-                    <h3>  $   </h3>
-                    <h3> Amount available </h3>
+                    <h5> Item Name: {item} </h5>
                 </div>
             </div>
                 {/* end of farmItem Header  */}
             <nav className="farmItem-sub-nav">
-                <NavLink exact to={`/farmitem-list/${item.id}`}>
-                    Details 
+                <NavLink exact to={`/shopping/${item}`}>
+                    <h5>Details</h5>
                 </NavLink>
-                <NavLink exact to={`/farms/`}>  
-                    About the Farm 
+                <NavLink exact to={`/farm`}>  
+                    <h5>About the Farm </h5> 
                     {/* {farm.name}  ??  */}
                 </NavLink>
             </nav> 
                 {/* end of farmItem-sub-nav */}
 
-            <Route exact path ="farmitem-list/:id"
+            <Route exact path ="shopping/:id"
             render={props => <FarmItemDescription {...props} item={item} /> } />
             </div>
     ); 
 }
 
 export default FarmItem; 
+
+const StyledImg = styled.img`
+height: 50px; 
+`

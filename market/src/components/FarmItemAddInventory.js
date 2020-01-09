@@ -14,11 +14,22 @@ const initialItem = {
 
 const FarmItemAddInventory = props => {
   const [newInventory, setNewInventory] = useState(initialItem);
-  const { farmItems } = useContext(FarmItemsContext);
+  // const { farmItems } = useContext(FarmItemsContext);
+  const [farmItems, setFarmItems] = useState();
   const [selectItem, setSelectItem] = useState(initialItem);
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   console.log("allFarmItems: ", farmItems);
+
+  useEffect(() => {
+    AxiosWithAuth()
+      .get("/produce")
+      .then(res => {
+        console.log("App.js, GET PRODUCE RES: ", res);
+        setFarmItems(res.data);
+      })
+      .catch(err => console.log(err));
+  }, [newInventory]);
 
   const handleChange = event => {
     let value = event.target.value;
@@ -36,8 +47,8 @@ const FarmItemAddInventory = props => {
   useEffect(() => {
     setNewInventory({ ...newInventory, PLU: selectItem.PLU });
   }, [selectItem]);
-  console.log("selectItem", selectItem);
-  console.log("newInventory", newInventory);
+  // console.log("selectItem", selectItem);
+  // console.log("newInventory", newInventory);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -68,11 +79,12 @@ const FarmItemAddInventory = props => {
           <option name="None" value="None">
             -- Select --
           </option>
-          {farmItems.map(item => (
-            <option key={item.name} name={item.name} value={item.name}>
-              {item.name}
-            </option>
-          ))}
+          {farmItems &&
+            farmItems.map(item => (
+              <option key={item.name} name={item.name} value={item.name}>
+                {item.name}
+              </option>
+            ))}
         </select>
         <input
           type="text"
