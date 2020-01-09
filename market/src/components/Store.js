@@ -97,7 +97,7 @@ const Store = props => {
               <h3>Local Produce for sale:</h3>
               <div>
                 {localItems.map(item => {
-                  return <FarmItem key={item.name} item={item} />;
+                  return <FarmItem key={item.name} item={item} user={user} />;
                 })}
               </div>
               <NavLink to="/cart">

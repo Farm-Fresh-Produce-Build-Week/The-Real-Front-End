@@ -35,7 +35,7 @@ const FarmItemForm = props => {
         setMessage(res.data.message);
         setNewFarmItem(initialItem);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.response));
   };
 
   const goToPLU = () => {

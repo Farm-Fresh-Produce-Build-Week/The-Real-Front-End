@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, NavLink } from "react-router-dom";
-import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
+import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
@@ -28,6 +28,14 @@ const FarmItem = props => {
     e.preventDefault();
     setMessage(`Added ${itemToAdd.quantity} ${props.item.name} to your cart`);
     console.log("FarmItem.js, itemToAdd: ", itemToAdd);
+    addToCart(itemToAdd);
+    AxiosWithAuthUser()
+      .post(`users/${props.user.id}/cart`, itemToAdd)
+      .then(res => console.log(res.response))
+      .catch(err => {
+        console.log(err.response.data.errorMessage);
+        setMessage(err.response.data.errorMessage);
+      });
   };
 
   return (
