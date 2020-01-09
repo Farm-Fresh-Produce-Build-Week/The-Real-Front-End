@@ -6,10 +6,6 @@ import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
 import styled from "styled-components";
 
-// single item/product for sale   !! Mostly mock data right now.
-
-// farmItems setFarmItems is the App's application state.
-// cart and setCard are also states being uses. Are they application level or app.js level??
 
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
