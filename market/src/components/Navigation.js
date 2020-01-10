@@ -20,7 +20,7 @@ const Navigation = props => {
       {/* <div className="Navigation-Area">
         <h1> Fresh Finds Farmers Market</h1>
       </div> */}
-      <nav>
+      <nav className="navigation-BG">
         <div className= "logo">
             <h1 style={{ width: "200px", color: "#a85f1a" }}> Fresh Finds Farmers Market</h1>
             <img style={{ height: "100px", width: "70px" }} src={logo} alt="logo icon" />
