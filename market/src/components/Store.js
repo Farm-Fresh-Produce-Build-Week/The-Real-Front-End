@@ -104,12 +104,14 @@ const Store = props => {
           {/* should just be the list of produce pulled from the api */}
           {localItems && (
             <div>
-              <SubTitle>Local Produce for sale:</SubTitle>
-              <div>
+              <HeaderWrapper> 
+              <Title>Local Produce for Sale</Title>
+              </HeaderWrapper>
+              <StyledItems className="Item-List">
                 {localItems.map(item => {
                   return <FarmItem key={item.name} item={item} />;
                 })}
-              </div>
+              </StyledItems>
             </div>
           )}
         </div>
@@ -132,6 +134,15 @@ font-size: 1.25rem;
 
 const Farmers = styled(Wrapper)`
 width: 50%; 
+`
+
+const StyledItems = styled.div`
+display: flex;
+width: 75%;
+margin: auto;
+justify-content: center;
+align-items: center;
+flex-flow: wrap;
 `
 
 
