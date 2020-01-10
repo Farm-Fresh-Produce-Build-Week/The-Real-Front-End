@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
-
-// this is updating an item that is already for sale
+import Title from "../styling/Title"; 
+import HeaderWrapper from "../styling/HeaderWraper"; 
+import SubTitle from "../styling/SubTitle";
+import FormStyled from "../styling/FormStyled"; 
+import FormInput from "../styling/FormInput";
+import StyledButton from "../styling/StyledButton"; 
 
 const initialItem = {
   SKU: "",
@@ -59,15 +63,18 @@ const FarmItemEdit = props => {
 
   return (
     <div className="EditFarmItem-Form">
-      <h2>Update Produce </h2>
+      <HeaderWrapper>
+      <Title>Update Produce </Title>
+      </HeaderWrapper>
       {item.produceImgURL && (
         <StyledImg src={item.produceImgURL} alt={"No item picture available"} />
       )}
-      {item.name && <h3>{item.name}</h3>}
+      {item.name && <ProduceTitle>{item.name}</ProduceTitle>}
+      <FormStyled className="Edit-Form-Section"> 
       <form onSubmit={handleSubmit}>
         <label>
           SKU
-          <input
+          <FormInput
             type="number"
             name="SKU"
             onChange={handleChange}
@@ -78,7 +85,7 @@ const FarmItemEdit = props => {
         </label>
         <label>
           PLU
-          <input
+          <FormInput
             type="number"
             name="PLU"
             onChange={handleChange}
@@ -89,7 +96,7 @@ const FarmItemEdit = props => {
         </label>
         <label>
           Quantity
-          <input
+          <FormInput
             type="number"
             name="quantity"
             onChange={handleChange}
@@ -99,7 +106,7 @@ const FarmItemEdit = props => {
         </label>
         <label>
           Increment
-          <input
+          <FormInput
             type="text"
             name="increment"
             onChange={handleChange}
@@ -109,7 +116,7 @@ const FarmItemEdit = props => {
         </label>
         <label>
           Price
-          <input
+          <FormInput
             type="price"
             name="price"
             onChange={handleChange}
@@ -118,17 +125,19 @@ const FarmItemEdit = props => {
           />
         </label>
 
-        <button className="button-UpdateItem" type="submit">
+
+        <StyledButton className="button-UpdateItem" type="submit">
           Update
-        </button>
-        <button
+        </StyledButton>
+        <StyledButton
           className="button-UpdateItem-cancel"
           onClick={() => props.setIsEditing(false)}
         >
           Cancel
-        </button>
+        </StyledButton>
       </form>
       {error && <div style={{ color: "red" }}> {error}</div>}
+      </FormStyled>
     </div>
   );
 };
@@ -137,4 +146,11 @@ export default FarmItemEdit;
 
 const StyledImg = styled.img`
   height: 200px;
+  border-radius: 5px; 
 `;
+
+
+const ProduceTitle = styled(SubTitle)`
+padding: .5rem;
+font-size: 2.5rem; 
+`
