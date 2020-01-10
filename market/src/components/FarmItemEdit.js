@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
 import Title from "../styling/Title"; 
-import HeaderWrapper from "../styling/HeaderWraper"; 
+import HeaderWrapper from "../styling/HeaderWrapper"; 
 import SubTitle from "../styling/SubTitle";
 import FormStyled from "../styling/FormStyled"; 
 import FormInput from "../styling/FormInput";

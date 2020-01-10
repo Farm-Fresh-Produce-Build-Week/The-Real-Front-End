@@ -5,6 +5,10 @@ import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { NavLink } from "react-router-dom";
 import FarmItem from "./FarmItem";
 import styled from "styled-components";
+import SubTitle from "../styling/SubTitle"; 
+import HeaderWrapper from "../styling/HeaderWrapper"; 
+import StyledButton from "../styling/StyledButton"; 
+import PStyled from "../styling/PStyled"; 
 
 const Store = props => {
   // const {Cart} = useContext(CartContext);
@@ -71,11 +75,13 @@ const Store = props => {
     <>
         <div className="Store-Page">
         <NavLink to="/dashboard-customer">
-            <button> Dashboard </button>
+            <StyledButton> Dashboard </StyledButton>
         </NavLink>
         {localFarmers ? (
           <div>
-            <h3>Your local farmers:</h3>
+            <HeaderWrapper>
+            <StoreTitle>Your local farmers:</StoreTitle>
+            </HeaderWrapper>
             {localFarmers.map(farmer => (
               <div key={farmer.id}>
                 {farmer.username} - Farm#{farmer.id} - {farmer.city},{" "}
@@ -86,14 +92,14 @@ const Store = props => {
           </div>
         ) : (
           <div>
-            I'm sorry there are no farms available in the city of {user.city}
+            <PStyled>I'm sorry there are no farms available in the city of {user.city} </PStyled>
           </div>
         )}
         <div className="produce-listings">
           {/* should just be the list of produce pulled from the api */}
           {localItems && (
             <div>
-              <h3>Local Produce for sale:</h3>
+              <SubTitle>Local Produce for sale:</SubTitle>
               <div>
                 {localItems.map(item => {
                   return <FarmItem key={item.name} item={item} />;
@@ -112,3 +118,7 @@ export default Store;
 const StyledImg = styled.img`
   height: 2rem;
 `;
+
+const StoreTitle = styled(SubTitle)`
+font-size: 3rem; 
+`
