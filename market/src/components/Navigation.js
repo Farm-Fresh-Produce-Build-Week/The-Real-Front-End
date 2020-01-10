@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
 
 import logo from "../icons/PNG/logo.svg";
 
 const Navigation = props => {
+  const { clearCart } = useContext(CartContext);
+
   const logOut = e => {
-    // e.preventDefault();
     console.log("LOGOUT PRESSED!");
     localStorage.removeItem("token");
     localStorage.removeItem("user-token");
     localStorage.removeItem("farmer");
     localStorage.removeItem("user");
-    // return <Redirect to="/" />;
-    // props.history.push("/");
+    localStorage.removeItem("cart");
+    clearCart();
   };
 
   return (

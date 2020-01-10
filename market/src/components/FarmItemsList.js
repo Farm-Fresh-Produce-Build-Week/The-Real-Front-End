@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
+
 import Title from "../styling/Title"; 
 import HeaderWrapper from "../styling/HeaderWrapper"; 
 import ShoppingButton from "../styling/ShoppingButton"; 
 import PStyled from "../styling/PStyled"; 
 import SubTitle from "../styling/SubTitle"; 
 import StyledButton from "../styling/StyledButton"; 
+
 
 
 const FarmItemList = props => {
@@ -100,6 +102,8 @@ const FarmItemList = props => {
         </HeaderWrapper>
       </div>
     <StyledList className="farmItems-Wrapper">
+      <Title>Items You're Selling </Title>
+
       {props.farmItems.length == 0 ? (
         <PStyled>Your inventory is empty. Add some more inventory.</PStyled>
       ) : null}
@@ -133,7 +137,6 @@ const StyledImg = styled.img`
   border-radius: 5px;
 `;
 
-
 const StyledList = styled.div`
 display: inline-flex;
 flex-direction: row;
@@ -155,3 +158,4 @@ padding: 1rem;
 const DeleteTitle = styled(Title)`
 font-size: 3rem; 
 `
+

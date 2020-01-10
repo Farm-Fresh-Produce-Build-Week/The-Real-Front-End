@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, NavLink } from "react-router-dom";
-import { AxiosWithAuth } from "../utils/axiosWithAuth.js";
+import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
@@ -9,11 +9,42 @@ import SubTitle from "../styling/SubTitle";
 import PStyled from "../styling/PStyled"; 
 import ShoppingButton from "../styling/ShoppingButton"; 
 
-
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
-    const { farmItems, addToCart } = useContext(FarmItemsContext);
+  const { farmItems, addToCart } = useContext(FarmItemsContext);
+  const [message, setMessage] = useState();
+  const [itemToAdd, setItemToAdd] = useState({
+    SKU: props.item.SKU,
+    quantity: 1
+  });
 
+  console.log("FarmItem.js, props: ", props);
+
+  const handleChange = event => {
+    setItemToAdd({
+      ...itemToAdd,
+      [event.target.name]: parseInt(event.target.value)
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log("FarmItem.js, itemToAdd: ", itemToAdd);
+
+    AxiosWithAuthUser()
+      .post(`users/${props.user.id}/cart`, itemToAdd)
+      .then(res => {
+        console.log(res.response);
+        setMessage(
+          `Added ${itemToAdd.quantity} ${props.item.name} to your cart`
+        );
+        addToCart(props.user.id);
+      })
+      .catch(err => {
+        console.log(err.response.data.errorMessage);
+        setMessage(err.response.data.errorMessage);
+      });
+  };
 
   return (
     <>
@@ -41,20 +72,31 @@ const FarmItem = props => {
             <PStyled>Provided by Farm #{props.item.farmer_id}</PStyled>
           </div>
         </div>
-        <ShoppingButton>Add to Cart</ShoppingButton>
-      </FarmCard>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="number"
+            name="quantity"
+            value={itemToAdd.quantity}
+            onChange={handleChange}
+            style={{ width: "50px", margin: "0 auto" }}
+          />
+          <button type="submit">Add to Cart</button>
+        </form>
+        {message && <div>{message}</div>}
+      </div>
+
     </>
   );
-
 };
 
 export default FarmItem;
 
 const StyledImg = styled.img`
+
   height: 175px;
   border-radius: 5px; 
-  &:hover {
-   
+  &:hover {   
   }
 `;
 

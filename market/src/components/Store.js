@@ -16,6 +16,7 @@ const Store = props => {
   // const {Cart} = useContext(CartContext);
 
   const { user } = useContext(UserContext);
+  const { cart, getUserCart } = useContext(CartContext);
   const [farmers, setFarmers] = useState();
   const [localFarmers, setLocalFarmers] = useState();
   const [localItems, setLocalItems] = useState("");
@@ -29,11 +30,10 @@ const Store = props => {
     console.log("localFarmers", localFarmers);
   };
 
-
-    useEffect(() => {
+  useEffect(() => {
     AxiosWithAuthUser()
-        .get(`/farmers/`)
-        .then(res => {
+      .get(`/farmers/`)
+      .then(res => {
         console.log("Store.js: GET ALL FARMERS: ", res);
         setFarmers(res.data);
       })
@@ -69,15 +69,21 @@ const Store = props => {
   console.log("localFarmers", localFarmers);
   console.log("localItems", localItems);
 
+  useEffect(() => {
+    getUserCart(user.id);
+  }, []);
 
   // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
   // list out all produce for sale.  make a card for each item and list over that to build out the page.
 
-    return (
+  return (
     <>
-        <div className="Store-Page">
+      <div className="Store-Page">
         <NavLink to="/dashboard-customer">
-            <StyledButton> Dashboard </StyledButton>
+          <StyledButton> Dashboard </StyledButton>
+        </NavLink>
+        <NavLink to="/cart">
+          <StyledButton> View Cart ({cart.length}) </StyledButton>
         </NavLink>
         {localFarmers ? (
           <div>
@@ -109,15 +115,19 @@ const Store = props => {
               </HeaderWrapper>
               <StyledItems className="Item-List">
                 {localItems.map(item => {
-                  return <FarmItem key={item.name} item={item} />;
+                  return <FarmItem key={item.name} item={item} user={user} />;
                 })}
               </StyledItems>
+              <NavLink to="/cart">
+                <button> View Cart ({cart.length}) </button>
+              </NavLink>        
+
             </div>
           )}
         </div>
-        </div>
+      </div>
     </>
-    );
+  );
 };
 
 export default Store;

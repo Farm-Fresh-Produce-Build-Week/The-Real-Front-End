@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 // Utils
 import PrivateRoute from "./utils/PrivateRoute";
 import { AxiosWithAuth } from "./utils/axiosWithAuth";
+import { AxiosWithAuthUser } from "./utils/axiosWithAuthUser";
 
 // Context
 import { CartContext } from "./contexts/CartContext";
@@ -28,6 +29,8 @@ import DashboardCustomer from "./components/DashboardCustomer";
 import Store from "./components/Store";
 import FarmCard from "./components/FarmCard";
 import FarmItemDescription from "./components/FarmItemDescription";
+import Cart from "./components/Cart";
+import Orders from "./components/Orders";
 
 // Styles
 import "./App.css";
@@ -70,31 +73,52 @@ function App() {
   // cart context
   const [cart, setCart] = useLocalStorage("cart", []);
 
-  const addToCart = item => {
+  const getUserCart = userID => {
     // add the given item to the cart
-    console.log("dw: App.js: addItem: item: ", item);
-    setCart([...cart, item]);
-    console.log("dw: App.js: addItem: cart: ", cart);
+    console.log("dw: App.js: addItem: userID: ", userID);
+    AxiosWithAuthUser()
+      .get(`users/${userID}/cart`)
+      .then(res => {
+        console.log("App.js, addToCart(), res: ", res);
+        setCart(res.data);
+      })
+      .catch(err => console.log(err));
   };
 
-  const removeItem = item => {
-    setCart(cart.filter(i => i.id !== item));
-    console.log("dw: App.js: removeItem: cart: ", cart);
+  const removeItem = (userID, itemSKU) => {
+    let SKU = { data: { SKU: parseInt(itemSKU) } };
+    console.log("removeItem", userID, SKU);
+    AxiosWithAuthUser()
+      .delete(`users/${userID}/cart`, SKU)
+      .then(res => {
+        console.log("App.js, removeItem(), res.data: ", res.data);
+        // setCart(res.data);
+      })
+      .catch(err => console.log(err.response.data.errorMessage));
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   // new order context
-  const [orders, setOrders] = useLocalStorage("orders", []);
+  const [orders, setOrders] = useState([]);
 
   const PurchaseOrder = order => {
-    setOrders([...orders, order]);
+    console.log("App.js, PurchaseOrder, order: ", order);
+    setOrders([...orders, ...order]);
   };
 
   return (
     <FarmerContext.Provider value={{ farmer, setCurrentFarmer }}>
-      <FarmItemsContext.Provider value={{ farmItems, setFarmItems, addToCart }}>
+      <FarmItemsContext.Provider
+        value={{ farmItems, setFarmItems, getUserCart }}
+      >
         <UserContext.Provider value={{ user, setCurrentUser }}>
-          <CartContext.Provider value={{ cart, removeItem, PurchaseOrder }}>
-            <OrdersContext.Provider value={{ orders }}>
+          <CartContext.Provider
+            value={{ cart, removeItem, clearCart, getUserCart, PurchaseOrder }}
+          >
+            <OrdersContext.Provider value={{ orders, setOrders }}>
               <div className="App">
                 <Navigation />
                 <Route exact path="/" component={Landing} />
@@ -160,7 +184,9 @@ function App() {
                 <PrivateRoute path="dashboard-customer/:id" />
                 <PrivateRoute path="dashboard-farmer/:id" />
                 <PrivateRoute path="/shopping" component={Store} />
+                <PrivateRoute path="/cart" component={Cart} />
                 <PrivateRoute path="/farm" component={FarmCard} />
+                <PrivateRoute path="/orders" component={Orders} />
                 <Route
                   exact
                   path="shopping/:id"
