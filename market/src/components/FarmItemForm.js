@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import FormStyled from "../styling/FormStyled"; 
+import ShoppingButton from "../styling/ShoppingButton"; 
+import StyledButton from "../styling/StyledButton";
+import FormInput from "../styling/FormInput"; 
+import Title from "../styling/Title";
+import HeaderWrapper from "../styling/HeaderWrapper";
 
 
 const initialItem = {
@@ -44,26 +49,29 @@ const FarmItemForm = props => {
 
   return (
     <div className="NewFarmItem-Form">
-      <h2> Add Produce </h2>
-      <button onClick={goToPLU} className="plu-btn">
+      <HeaderWrapper>
+      <Title> Add Produce </Title>
+      </HeaderWrapper>
+      <StyledButton onClick={goToPLU} className="plu-btn">
         PLU Codes
-      </button>
+      </StyledButton>
+      <FormStyled className="Form-Section">
       <form onSubmit={handleSubmit}>
-        <input
+        <FormInput
           type="number"
           name="PLU"
           onChange={handleChange}
           placeholder="PLU"
           value={newFarmItem.PLU}
         />
-        <input
+        <FormInput
           type="text"
           name="name"
           onChange={handleChange}
           placeholder="name"
           value={newFarmItem.name}
         />
-        {/* <input
+        {/* <FormInput
           type="price"
           name="price"
           onChange={handleChange}
@@ -71,14 +79,14 @@ const FarmItemForm = props => {
           value={newFarmItem.price}
         /> */}
 
-        <input
+        <FormInput
           type="string"
           name="description"
           onChange={handleChange}
           placeholder="description"
           value={newFarmItem.description}
         />
-        <input
+        <FormInput
           type="string"
           name="produceImgURL"
           onChange={handleChange}
@@ -86,17 +94,18 @@ const FarmItemForm = props => {
           value={newFarmItem.produceImgURL}
         />
 
-        <button className="button-addNewItem" type="submit">
+        <ShoppingButton className="button-addNewItem" type="submit">
           Add Item For Sale
-        </button>
-        <button
+        </ShoppingButton>
+        <StyledButton
           className="button-addNewItem"
           onClick={() => props.setIsAddingItem(false)}
         >
           Back to Inventory
-        </button>
+        </StyledButton>
       </form>
       {message && <div className="added-message">{message}</div>}
+      </FormStyled>
     </div>
   );
 };

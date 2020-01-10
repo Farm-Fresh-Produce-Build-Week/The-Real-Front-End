@@ -26,8 +26,6 @@ const DashboardCustomer = props => {
               src={user.profileImgUrl ? user.profileImgURL : blankcustomer}
               alt="customer picture"
             />
-
-            <h2> Hello {user.username}</h2>
             <SubTitle> Member since 2019 </SubTitle>
 
           </div>

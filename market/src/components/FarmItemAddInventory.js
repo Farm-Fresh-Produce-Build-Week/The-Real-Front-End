@@ -2,8 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import styled from "styled-components";
-
-// this component is for adding to farm inventory from existing items
+import Title from "../styling/Title";
+import FormStyled from "../styling/FormStyled";
+import FormInput from "../styling/FormInput"; 
+import HeaderWrapper from "../styling/HeaderWrapper"; 
+import StyledButton from "../styling/StyledButton";
+import ShoppingButton from "../styling/ShoppingButton";
 
 const initialItem = {
   SKU: "",
@@ -75,8 +79,10 @@ const FarmItemAddInventory = props => {
 
   return (
     <div className="NewFarmInventory-Form">
-      <h2> Add Inventory </h2>
-
+      <HeaderWrapper>
+      <Title> Add Inventory </Title>
+      </HeaderWrapper>
+      <FormStyled className="AddInventory-Form">
       <form onSubmit={handleSubmit}>
         <StyledSelect onChange={handleSelect} value={newInventory.name}>
           <option name="None" value="None">
@@ -91,7 +97,7 @@ const FarmItemAddInventory = props => {
         </StyledSelect>
         <label>
           SKU
-          <input
+          <FormInput
             type="text"
             name="SKU"
             onChange={handleChange}
@@ -101,7 +107,7 @@ const FarmItemAddInventory = props => {
         </label>
         <label>
           PLU
-          <input
+          <FormInput
             type="text"
             name="PLU"
             onChange={handleChange}
@@ -112,7 +118,7 @@ const FarmItemAddInventory = props => {
         </label>
         <label>
           Quantity
-          <input
+          <FormInput
             type="text"
             name="quantity"
             onChange={handleChange}
@@ -122,7 +128,7 @@ const FarmItemAddInventory = props => {
         </label>
         <label>
           Increment
-          <input
+          <FormInput
             type="text"
             name="increment"
             onChange={handleChange}
@@ -132,7 +138,7 @@ const FarmItemAddInventory = props => {
         </label>
         <label>
           Price
-          <input
+          <FormInput
             type="price"
             name="price"
             onChange={handleChange}
@@ -141,15 +147,15 @@ const FarmItemAddInventory = props => {
           />
         </label>
 
-        <button className="button-addNewItem" type="submit">
+        <ShoppingButton className="button-addNewItem" type="submit">
           Add Item To Inventory
-        </button>
-        <button
+        </ShoppingButton>
+        <StyledButton
           className="button-addNewItem"
           onClick={() => props.setIsAddingInventory(false)}
         >
           Back to Inventory
-        </button>
+        </StyledButton>
       </form>
       {message ? (
         <div className="added-message">{message}</div>
@@ -157,6 +163,7 @@ const FarmItemAddInventory = props => {
         <div className="error-message">{errorMessage}</div>
       ) : null}
       {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
+      </FormStyled>
     </div>
   );
 };
@@ -165,5 +172,6 @@ export default FarmItemAddInventory;
 
 const StyledSelect = styled.select`
   width: 150px;
-  margin: 20px;
+  margin: 25px;
+  padding: .3rem;
 `;

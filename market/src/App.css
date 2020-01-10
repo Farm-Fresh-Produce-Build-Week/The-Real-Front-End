@@ -9,14 +9,24 @@ body,
 
 .App {
   text-align: center;
+
+  /* background-image: url("./Images/goats.jpg"); */
+
   background-color: #90a955;
+  development
   height: 100%;
   width: 100%;
 }
 
+
+/* .FarmerLandingPage {
+  background-image: url("./Images/lambs.jpg");
+}  */
+
 .navigation-BG {
   background-color: #f6f4d2;
 }
+
 
 nav {
   display: flex;

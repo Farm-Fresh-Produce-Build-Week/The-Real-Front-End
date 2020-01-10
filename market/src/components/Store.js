@@ -5,6 +5,12 @@ import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { NavLink } from "react-router-dom";
 import FarmItem from "./FarmItem";
 import styled from "styled-components";
+import Title from "../styling/Title"; 
+import HeaderWrapper from "../styling/HeaderWrapper"; 
+import StyledButton from "../styling/StyledButton"; 
+import PStyled from "../styling/PStyled"; 
+import SubTitle from "../styling/SubTitle"; 
+import Wrapper from "../styling/Wrapper";
 
 const Store = props => {
   // const {Cart} = useContext(CartContext);
@@ -71,34 +77,41 @@ const Store = props => {
     <>
         <div className="Store-Page">
         <NavLink to="/dashboard-customer">
-            <button> Dashboard </button>
+            <StyledButton> Dashboard </StyledButton>
         </NavLink>
         {localFarmers ? (
           <div>
-            <h3>Your local farmers:</h3>
+            <HeaderWrapper>
+            <Title>Your Local Farmers</Title>
+            </HeaderWrapper>
+            <Farmers>
             {localFarmers.map(farmer => (
               <div key={farmer.id}>
-                {farmer.username} - Farm#{farmer.id} - {farmer.city},{" "}
-                {farmer.state} {farmer.zipCode}{" "}
+                <FarmerInfo>{farmer.username} - Farm #{farmer.id} - {farmer.city},{" "}
+                {farmer.state} {farmer.zipCode}{" "} 
+                </FarmerInfo>
                 <StyledImg src={farmer.profileImgURL} alt="" />
               </div>
             ))}
+            </Farmers>
           </div>
         ) : (
           <div>
-            I'm sorry there are no farms available in the city of {user.city}
+            <PStyled>I'm sorry there are no farms available in the city of {user.city} </PStyled>
           </div>
         )}
         <div className="produce-listings">
           {/* should just be the list of produce pulled from the api */}
           {localItems && (
             <div>
-              <h3>Local Produce for sale:</h3>
-              <div>
+              <HeaderWrapper> 
+              <Title>Local Produce for Sale</Title>
+              </HeaderWrapper>
+              <StyledItems className="Item-List">
                 {localItems.map(item => {
                   return <FarmItem key={item.name} item={item} />;
                 })}
-              </div>
+              </StyledItems>
             </div>
           )}
         </div>
@@ -110,5 +123,26 @@ const Store = props => {
 export default Store;
 
 const StyledImg = styled.img`
-  height: 2rem;
+  height: 4rem;
+  margin: auto;
+  padding: .25rem; 
 `;
+
+const FarmerInfo = styled(PStyled)`
+font-size: 1.25rem; 
+`
+
+const Farmers = styled(Wrapper)`
+width: 50%; 
+`
+
+const StyledItems = styled.div`
+display: flex;
+width: 75%;
+margin: auto;
+justify-content: center;
+align-items: center;
+flex-flow: wrap;
+`
+
+

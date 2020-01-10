@@ -3,7 +3,7 @@ import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
 import Title from "../styling/Title"; 
-import HeaderWrapper from "../styling/HeaderWraper"; 
+import HeaderWrapper from "../styling/HeaderWrapper"; 
 import ShoppingButton from "../styling/ShoppingButton"; 
 import PStyled from "../styling/PStyled"; 
 import SubTitle from "../styling/SubTitle"; 
@@ -101,7 +101,7 @@ const FarmItemList = props => {
       </div>
     <StyledList className="farmItems-Wrapper">
       {props.farmItems.length == 0 ? (
-        <p>Your inventory is empty. Add some more inventory.</p>
+        <PStyled>Your inventory is empty. Add some more inventory.</PStyled>
       ) : null}
       {props.farmItems.map(item => (
         <FarmCard className="FarmItem-card" key={item.name}>
