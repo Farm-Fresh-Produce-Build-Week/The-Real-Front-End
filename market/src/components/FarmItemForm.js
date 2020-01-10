@@ -37,9 +37,17 @@ const FarmItemForm = props => {
       .catch(err => console.log(err));
   };
 
+  const goToPLU = () => {
+    const URL = `https://www.ifpsglobal.com/PLU-Codes/PLU-codes-Search`;
+    window.open(URL, "PLU CODES", "width=1100,height=850");
+  };
+
   return (
     <div className="NewFarmItem-Form">
       <h2> Add Produce </h2>
+      <button onClick={goToPLU} className="plu-btn">
+        PLU Codes
+      </button>
       <form onSubmit={handleSubmit}>
         <input
           type="number"
