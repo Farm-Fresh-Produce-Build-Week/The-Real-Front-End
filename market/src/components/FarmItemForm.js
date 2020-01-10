@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
+import FormStyled from "../styling/FormStyled"; 
 
-// this component is for making a new farm item
 
 const initialItem = {
   PLU: "",

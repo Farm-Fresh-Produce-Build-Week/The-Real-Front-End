@@ -7,6 +7,8 @@ import HeaderWrapper from "../styling/HeaderWraper";
 import ShoppingButton from "../styling/ShoppingButton"; 
 import PStyled from "../styling/PStyled"; 
 import SubTitle from "../styling/SubTitle"; 
+import StyledButton from "../styling/StyledButton"; 
+
 
 const FarmItemList = props => {
   // console.log("FarmItemsList.js, props: ", props);
@@ -58,9 +60,11 @@ const FarmItemList = props => {
   if (isDeleting) {
     return (
       <div className="Deleting-Item">
-        <h2>
+        <HeaderWrapper>
+        <DeleteTitle>
           Are you sure you want to delete {item.name} from your inventory?
-        </h2>
+        </DeleteTitle>
+        </HeaderWrapper>
         <div>
           <StyledImg
             src={item.produceImgURL}
@@ -68,22 +72,22 @@ const FarmItemList = props => {
           />
         </div>
 
-        <ShoppingButton
+        <StyledButton
           className="yes-btn"
           onClick={() => {
             deleteItem(item);
           }}
         >
           Yes
-        </ShoppingButton>
-        <button
+        </StyledButton>
+        <StyledButton
           className="no-btn"
           onClick={() => {
             setIsDeleting(false);
           }}
         >
           No
-        </button>
+        </StyledButton>
       </div>
     );
   }
@@ -126,6 +130,7 @@ export default FarmItemList;
 
 const StyledImg = styled.img`
   height: 175px;
+  border-radius: 5px;
 `;
 
 
@@ -145,4 +150,8 @@ font-size: 2.5rem;
 
 const FarmCard = styled.div`
 padding: 1rem;
+`
+
+const DeleteTitle = styled(Title)`
+font-size: 3rem; 
 `
