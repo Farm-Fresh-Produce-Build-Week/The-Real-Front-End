@@ -7,16 +7,26 @@ import styled from "styled-components";
 import blackberries from "../Images/Produce/blackberries.jpg";
 
 const Cart = props => {
-  const { cart, getUserCart, removeItem, PurchaseOrder } = useContext(
-    CartContext
-  );
+  const {
+    cart,
+    getUserCart,
+    removeItem,
+    clearCart,
+    PurchaseOrder
+  } = useContext(CartContext);
   const { user } = useContext(UserContext);
+  const [isComplete, setIsComplete] = useState(false);
   console.log("Cart.js, user: ", user);
   console.log("Cart.js, cart: ", cart);
 
   useEffect(() => {
     getUserCart(user.id);
   }, []);
+
+  const handlePurchase = cart => {
+    PurchaseOrder(cart);
+    clearCart();
+  };
 
   return (
     <>
