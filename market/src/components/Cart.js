@@ -7,7 +7,9 @@ import styled from "styled-components";
 import blackberries from "../Images/Produce/blackberries.jpg";
 
 const Cart = props => {
-  const { cart, getUserCart, PurchaseOrder } = useContext(CartContext);
+  const { cart, getUserCart, removeItem, PurchaseOrder } = useContext(
+    CartContext
+  );
   const { user } = useContext(UserContext);
   console.log("Cart.js, user: ", user);
   console.log("Cart.js, cart: ", cart);
@@ -56,6 +58,9 @@ const Cart = props => {
                     {/* <p>{item.description}</p> */}
                     <p>Provided by Farm# {item.farmer_id}</p>
                   </div>
+                  <button onClick={() => removeItem(user.id, item.SKU)}>
+                    X
+                  </button>
                 </div>
               </div>
             ))}
@@ -68,7 +73,10 @@ const Cart = props => {
         </div>
         <div className="totals">
           <h3> Total: $ </h3>
-          <button onClick={() => PurchaseOrder()}> Purchase Produce </button>
+          <button onClick={() => PurchaseOrder(cart)}>
+            {" "}
+            Purchase Produce{" "}
+          </button>
         </div>
       </div>
     </>

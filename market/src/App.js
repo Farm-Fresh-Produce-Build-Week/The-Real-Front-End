@@ -85,9 +85,16 @@ function App() {
       .catch(err => console.log(err));
   };
 
-  const removeItem = item => {
-    setCart(cart.filter(i => i.SKU !== item));
-    console.log("dw: App.js: removeItem: cart: ", cart);
+  const removeItem = (userID, itemSKU) => {
+    let SKU = { SKU: itemSKU };
+    console.log("removeItem", userID, SKU);
+    AxiosWithAuthUser()
+      .delete(`users/${userID}/cart/`, SKU)
+      .then(res => {
+        console.log("App.js, removeItem(), res.data: ", res.data);
+        // setCart(res.data);
+      })
+      .catch(err => console.log(err.response.data.errorMessage));
   };
 
   const clearCart = () => {

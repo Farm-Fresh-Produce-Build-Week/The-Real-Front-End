@@ -10,7 +10,7 @@ const Store = props => {
   // const {Cart} = useContext(CartContext);
 
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart, getUserCart } = useContext(CartContext);
   const [farmers, setFarmers] = useState();
   const [localFarmers, setLocalFarmers] = useState();
   const [localItems, setLocalItems] = useState("");
@@ -62,6 +62,10 @@ const Store = props => {
   console.log("farmers:", farmers);
   console.log("localFarmers", localFarmers);
   console.log("localItems", localItems);
+
+  useEffect(() => {
+    getUserCart(user.id);
+  }, []);
 
   // Want to get all farmers and filter for city to match customer/user and then grab produce from farmers
   // list out all produce for sale.  make a card for each item and list over that to build out the page.
