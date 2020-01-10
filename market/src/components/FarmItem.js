@@ -5,9 +5,9 @@ import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
 import styled from "styled-components";
-import SubTitle from "../styling/SubTitle"; 
-import PStyled from "../styling/PStyled"; 
-import ShoppingButton from "../styling/ShoppingButton"; 
+import SubTitle from "../styling/SubTitle";
+import PStyled from "../styling/PStyled";
+import ShoppingButton from "../styling/ShoppingButton";
 
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
@@ -84,8 +84,7 @@ const FarmItem = props => {
           <button type="submit">Add to Cart</button>
         </form>
         {message && <div>{message}</div>}
-      </div>
-
+      </FarmCard>
     </>
   );
 };
@@ -93,13 +92,12 @@ const FarmItem = props => {
 export default FarmItem;
 
 const StyledImg = styled.img`
-
   height: 175px;
-  border-radius: 5px; 
-  &:hover {   
+  border-radius: 5px;
+  &:hover {
   }
 `;
 
 const FarmCard = styled.div`
-padding: 1rem;
-`
+  padding: 1rem;
+`;
