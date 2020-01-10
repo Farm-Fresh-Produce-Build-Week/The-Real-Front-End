@@ -24,6 +24,7 @@ const DashboardCustomer = props => {
   return (
     <>
       <div className="Customer-LandingPage">
+
         <Wrapper>
           <StyledCustomer className="Top-Section">
             <div className="Customer-Details">

@@ -5,6 +5,9 @@ import { FarmItemsContext } from "../contexts/FarmItemsContext";
 import blackberries from "../Images/Produce/blackberries.jpg";
 import FarmItemDescription from "../components/FarmItemDescription.js";
 import styled from "styled-components";
+import SubTitle from "../styling/SubTitle"; 
+import PStyled from "../styling/PStyled"; 
+import ShoppingButton from "../styling/ShoppingButton"; 
 
 const FarmItem = props => {
   // const { farmer } = useContext(FarmerContext);
@@ -45,7 +48,7 @@ const FarmItem = props => {
 
   return (
     <>
-      <div className="FarmItem-Wrapper">
+      <FarmCard className="FarmItem-Wrapper">
         <div className="FarmItem-Header">
           <div className="image-wrapper">
             {props.item.produceImgURL !== undefined && (
@@ -60,15 +63,16 @@ const FarmItem = props => {
             )}
           </div>
           <div className="Item-Info">
-            <p>{props.item.name}</p>
-            <p>
+            <SubTitle>{props.item.name}</SubTitle>
+            <PStyled>
               ${props.item.price} per {props.item.increment}
-            </p>
-            <p>Quantity: {props.item.quantity}</p>
-            <p>{props.item.description}</p>
-            <p>Provided by Farm# {props.item.farmer_id}</p>
+            </PStyled>
+            <PStyled>Quantity: {props.item.quantity}</PStyled>
+            <PStyled>{props.item.description}</PStyled>
+            <PStyled>Provided by Farm #{props.item.farmer_id}</PStyled>
           </div>
         </div>
+
         <form onSubmit={handleSubmit}>
           <input
             type="number"
@@ -81,6 +85,7 @@ const FarmItem = props => {
         </form>
         {message && <div>{message}</div>}
       </div>
+
     </>
   );
 };
@@ -88,5 +93,13 @@ const FarmItem = props => {
 export default FarmItem;
 
 const StyledImg = styled.img`
-  height: 50px;
+
+  height: 175px;
+  border-radius: 5px; 
+  &:hover {   
+  }
 `;
+
+const FarmCard = styled.div`
+padding: 1rem;
+`
