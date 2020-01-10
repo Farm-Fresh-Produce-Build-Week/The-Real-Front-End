@@ -86,7 +86,7 @@ function App() {
   };
 
   const removeItem = (userID, itemSKU) => {
-    let SKU = { SKU: parseInt(itemSKU) };
+    let SKU = { data: { SKU: parseInt(itemSKU) } };
     console.log("removeItem", userID, SKU);
     AxiosWithAuthUser()
       .delete(`users/${userID}/cart`, SKU)
