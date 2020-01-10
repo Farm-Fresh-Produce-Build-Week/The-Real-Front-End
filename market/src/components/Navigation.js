@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+import logo from "../icons/PNG/logo.svg";
+
 const Navigation = props => {
   const logOut = e => {
     // e.preventDefault();
@@ -15,11 +17,15 @@ const Navigation = props => {
 
   return (
     <>
-      <div className="Navigation-Area">
+      {/* <div className="Navigation-Area">
         <h1> Fresh Finds Farmers Market</h1>
-      </div>
-      <div className="nav-bar">
-        <nav>
+      </div> */}
+      <nav>
+        <div className= "logo">
+            <h1 style={{ width: "200px", color: "#a85f1a" }}> Fresh Finds Farmers Market</h1>
+            <img style={{ height: "100px", width: "70px" }} src={logo} alt="logo icon" />
+        </div>
+        <div className="nav-bar">
           <NavLink to="/">
             <button>Home</button>
           </NavLink>
@@ -35,8 +41,8 @@ const Navigation = props => {
           <NavLink to="/">
             <button onClick={() => logOut()}>Logout</button>
           </NavLink>
-        </nav>
-      </div>
+        </div>
+      </nav>
     </>
   );
 };
