@@ -102,10 +102,11 @@ function App() {
   };
 
   // new order context
-  const [orders, setOrders] = useLocalStorage("orders", []);
+  const [orders, setOrders] = useState([]);
 
   const PurchaseOrder = order => {
-    setOrders([...orders, order]);
+    console.log("App.js, PurchaseOrder, order: ", order);
+    setOrders([...orders, ...order]);
   };
 
   return (
@@ -117,7 +118,7 @@ function App() {
           <CartContext.Provider
             value={{ cart, removeItem, clearCart, getUserCart, PurchaseOrder }}
           >
-            <OrdersContext.Provider value={{ orders }}>
+            <OrdersContext.Provider value={{ orders, setOrders }}>
               <div className="App">
                 <Navigation />
                 <Route exact path="/" component={Landing} />

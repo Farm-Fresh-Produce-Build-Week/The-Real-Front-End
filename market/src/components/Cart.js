@@ -21,12 +21,29 @@ const Cart = props => {
 
   useEffect(() => {
     getUserCart(user.id);
+    setIsComplete(false);
   }, []);
 
   const handlePurchase = cart => {
+    console.log("Cart.js, handlePurchase(), cart: ", cart);
     PurchaseOrder(cart);
     clearCart();
+    setIsComplete(true);
   };
+
+  if (isComplete) {
+    return (
+      <div>
+        <h3>Thank you for your purchase!</h3>
+        <NavLink to="/dashboard-customer">
+          <button> Dashboard </button>
+        </NavLink>
+        <NavLink to="/shopping">
+          <button> Store </button>
+        </NavLink>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -43,7 +60,7 @@ const Cart = props => {
         <div className="want-to-purchase">
           {cart &&
             cart.map(item => (
-              <div className={item.id}>
+              <div className={item.id} key={item.name}>
                 <div className="FarmItem-Header">
                   <div className="image-wrapper">
                     {/* {item.produceImgURL !== undefined && (
@@ -62,10 +79,9 @@ const Cart = props => {
                     <p>
                       ${item.price} per {item.increment}
                     </p>
-                    <p>
+                    {/* <p>
                       Quantity: {item.quantity} {item.increment}
-                    </p>
-                    {/* <p>{item.description}</p> */}
+                    </p> */}
                     <p>Provided by Farm# {item.farmer_id}</p>
                   </div>
                   <button onClick={() => removeItem(user.id, item.SKU)}>
@@ -82,8 +98,8 @@ const Cart = props => {
           {/* <h4> $ {props.item.price} </h4> */}
         </div>
         <div className="totals">
-          <h3> Total: $ </h3>
-          <button onClick={() => PurchaseOrder(cart)}>
+          {/* <h3> Total: $ </h3> */}
+          <button onClick={() => handlePurchase(cart)}>
             {" "}
             Purchase Produce{" "}
           </button>

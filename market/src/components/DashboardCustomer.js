@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { CartContext } from "../contexts/CartContext";
 import blankcustomer from "../Images/blankcustomer.jpg";
@@ -13,7 +13,11 @@ import StyledButton from "../styling/StyledButton";
 
 const DashboardCustomer = props => {
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart, getUserCart } = useContext(CartContext);
+
+  // useEffect(() => {
+  //   getUserCart(user.id);
+  // }, []);
 
   console.log("DashboardCustomer: user", user);
 

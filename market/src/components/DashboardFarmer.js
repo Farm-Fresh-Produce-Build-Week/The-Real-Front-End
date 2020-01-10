@@ -28,7 +28,7 @@ const DashboardFarmer = props => {
   const [deletedItem, setDeletedItem] = useState(false);
   const { orders } = useContext(OrdersContext);
 
-  console.log("DashboardFarmer: props, farmer", props, farmer);
+  console.log("DashboardFarmer: props, farmer, orders", props, farmer, orders);
 
   // Sets current farmers inventory to state
   useEffect(() => {
