@@ -2,11 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
 import { UserContext } from "../contexts/UserContext";
 import { NavLink } from "react-router-dom";
+import FarmItem from "./FarmItem";
+import styled from "styled-components";
 import blackberries from "../Images/Produce/blackberries.jpg";
 
 const Cart = props => {
   const { cart, getUserCart, PurchaseOrder } = useContext(CartContext);
   const { user } = useContext(UserContext);
+  console.log("Cart.js, user: ", user);
   console.log("Cart.js, cart: ", cart);
 
   useEffect(() => {
@@ -26,6 +29,36 @@ const Cart = props => {
           <h2>Your Cart: </h2>
         </div>
         <div className="want-to-purchase">
+          {cart &&
+            cart.map(item => (
+              <div className={item.id}>
+                <div className="FarmItem-Header">
+                  <div className="image-wrapper">
+                    {/* {item.produceImgURL !== undefined && (
+                    <StyledImg
+                      src={
+                        item.produceImgURL
+                          ? props.item.produceImgURL
+                          : blackberries
+                      }
+                      alt="produce item"
+                    />
+                  )} */}
+                  </div>
+                  <div className="Item-Info">
+                    <p>{item.name}</p>
+                    <p>
+                      ${item.price} per {item.increment}
+                    </p>
+                    <p>
+                      Quantity: {item.quantity} {item.increment}
+                    </p>
+                    {/* <p>{item.description}</p> */}
+                    <p>Provided by Farm# {item.farmer_id}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           {/* This should be the list of items wanting to purchase,
                 do we want an image/price. And do we need to build it out,
                 in a single card and then map to show it? */}
@@ -35,7 +68,7 @@ const Cart = props => {
         </div>
         <div className="totals">
           <h3> Total: $ </h3>
-          <button> Purchase Produce </button>
+          <button onClick={() => PurchaseOrder()}> Purchase Produce </button>
         </div>
       </div>
     </>
@@ -43,3 +76,7 @@ const Cart = props => {
 };
 
 export default Cart;
+
+const StyledImg = styled.img`
+  height: 100px;
+`;

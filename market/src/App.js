@@ -30,6 +30,7 @@ import Store from "./components/Store";
 import FarmCard from "./components/FarmCard";
 import FarmItemDescription from "./components/FarmItemDescription";
 import Cart from "./components/Cart";
+import Orders from "./components/Orders";
 
 // Styles
 import "./App.css";
@@ -177,6 +178,7 @@ function App() {
                 <PrivateRoute path="/shopping" component={Store} />
                 <PrivateRoute path="/cart" component={Cart} />
                 <PrivateRoute path="/farm" component={FarmCard} />
+                <PrivateRoute path="/orders" component={Orders} />
                 <Route
                   exact
                   path="shopping/:id"

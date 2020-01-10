@@ -10,6 +10,7 @@ const Store = props => {
   // const {Cart} = useContext(CartContext);
 
   const { user } = useContext(UserContext);
+  const { cart } = useContext(CartContext);
   const [farmers, setFarmers] = useState();
   const [localFarmers, setLocalFarmers] = useState();
   const [localItems, setLocalItems] = useState("");
@@ -72,7 +73,7 @@ const Store = props => {
           <button> Dashboard </button>
         </NavLink>
         <NavLink to="/cart">
-          <button> View Cart </button>
+          <button> View Cart ({cart.length}) </button>
         </NavLink>
         {localFarmers ? (
           <div>
@@ -101,7 +102,7 @@ const Store = props => {
                 })}
               </div>
               <NavLink to="/cart">
-                <button> View Cart </button>
+                <button> View Cart ({cart.length}) </button>
               </NavLink>
             </div>
           )}

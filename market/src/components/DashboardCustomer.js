@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { CartContext } from "../contexts/CartContext";
 import blankcustomer from "../Images/blankcustomer.jpg";
 import { NavLink } from "react-router-dom";
 // import FarmItem from "./FarmItem";
@@ -12,6 +13,7 @@ import StyledButton from "../styling/StyledButton";
 
 const DashboardCustomer = props => {
   const { user } = useContext(UserContext);
+  const { cart } = useContext(CartContext);
 
   console.log("DashboardCustomer: user", user);
 
@@ -34,6 +36,9 @@ const DashboardCustomer = props => {
               <StyledButton> Go Shopping </StyledButton>
             </NavLink>
           </StyledButtonArea>
+          <NavLink to="/cart">
+            <StyledButton> View Cart ({cart.length}) </StyledButton>
+          </NavLink>
         </Wrapper>
 
         {/* <div className="Favorite-Area">
