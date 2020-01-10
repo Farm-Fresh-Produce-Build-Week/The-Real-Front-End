@@ -5,10 +5,12 @@ import { AxiosWithAuthUser } from "../utils/axiosWithAuthUser";
 import { NavLink } from "react-router-dom";
 import FarmItem from "./FarmItem";
 import styled from "styled-components";
-import SubTitle from "../styling/SubTitle"; 
+import Title from "../styling/Title"; 
 import HeaderWrapper from "../styling/HeaderWrapper"; 
 import StyledButton from "../styling/StyledButton"; 
 import PStyled from "../styling/PStyled"; 
+import SubTitle from "../styling/SubTitle"; 
+import Wrapper from "../styling/Wrapper";
 
 const Store = props => {
   // const {Cart} = useContext(CartContext);
@@ -80,15 +82,18 @@ const Store = props => {
         {localFarmers ? (
           <div>
             <HeaderWrapper>
-            <StoreTitle>Your local farmers:</StoreTitle>
+            <Title>Your Local Farmers</Title>
             </HeaderWrapper>
+            <Farmers>
             {localFarmers.map(farmer => (
               <div key={farmer.id}>
-                {farmer.username} - Farm#{farmer.id} - {farmer.city},{" "}
-                {farmer.state} {farmer.zipCode}{" "}
+                <FarmerInfo>{farmer.username} - Farm #{farmer.id} - {farmer.city},{" "}
+                {farmer.state} {farmer.zipCode}{" "} 
+                </FarmerInfo>
                 <StyledImg src={farmer.profileImgURL} alt="" />
               </div>
             ))}
+            </Farmers>
           </div>
         ) : (
           <div>
@@ -116,9 +121,17 @@ const Store = props => {
 export default Store;
 
 const StyledImg = styled.img`
-  height: 2rem;
+  height: 4rem;
+  margin: auto;
+  padding: .25rem; 
 `;
 
-const StoreTitle = styled(SubTitle)`
-font-size: 3rem; 
+const FarmerInfo = styled(PStyled)`
+font-size: 1.25rem; 
 `
+
+const Farmers = styled(Wrapper)`
+width: 50%; 
+`
+
+
