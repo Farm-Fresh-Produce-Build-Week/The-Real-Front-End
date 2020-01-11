@@ -27,7 +27,7 @@ const Orders = props => {
       )}
       {orders &&
         orders.map(item => (
-          <div>
+          <div key={item.user_id}>
             Customer Number: {item.user_id} - {item.name}
           </div>
         ))}
