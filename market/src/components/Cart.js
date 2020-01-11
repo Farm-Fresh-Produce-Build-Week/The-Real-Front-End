@@ -16,19 +16,26 @@ const Cart = props => {
   } = useContext(CartContext);
   const { user } = useContext(UserContext);
   const [isComplete, setIsComplete] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   console.log("Cart.js, user: ", user);
   console.log("Cart.js, cart: ", cart);
 
   useEffect(() => {
     getUserCart(user.id);
     setIsComplete(false);
-  }, []);
+  }, [refresh]);
 
   const handlePurchase = cart => {
     console.log("Cart.js, handlePurchase(), cart: ", cart);
     PurchaseOrder(cart);
     clearCart();
     setIsComplete(true);
+  };
+
+  const handleDelete = (id, SKU) => {
+    // e.preventDefault;
+    setRefresh(!refresh);
+    removeItem(id, SKU);
   };
 
   if (isComplete) {
@@ -84,7 +91,7 @@ const Cart = props => {
                     </p> */}
                     <p>Provided by Farm# {item.farmer_id}</p>
                   </div>
-                  <button onClick={() => removeItem(user.id, item.SKU)}>
+                  <button onClick={() => handleDelete(user.id, item.SKU)}>
                     X
                   </button>
                 </div>
