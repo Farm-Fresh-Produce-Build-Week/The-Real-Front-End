@@ -3,14 +3,12 @@ import FarmItemEdit from "./FarmItemEdit";
 import { AxiosWithAuth } from "../utils/axiosWithAuth";
 import styled from "styled-components";
 
-import Title from "../styling/Title"; 
-import HeaderWrapper from "../styling/HeaderWrapper"; 
-import ShoppingButton from "../styling/ShoppingButton"; 
-import PStyled from "../styling/PStyled"; 
-import SubTitle from "../styling/SubTitle"; 
-import StyledButton from "../styling/StyledButton"; 
-
-
+import Title from "../styling/Title";
+import HeaderWrapper from "../styling/HeaderWrapper";
+import ShoppingButton from "../styling/ShoppingButton";
+import PStyled from "../styling/PStyled";
+import SubTitle from "../styling/SubTitle";
+import StyledButton from "../styling/StyledButton";
 
 const FarmItemList = props => {
   // console.log("FarmItemsList.js, props: ", props);
@@ -63,9 +61,9 @@ const FarmItemList = props => {
     return (
       <div className="Deleting-Item">
         <HeaderWrapper>
-        <DeleteTitle>
-          Are you sure you want to delete {item.name} from your inventory?
-        </DeleteTitle>
+          <DeleteTitle>
+            Are you sure you want to delete {item.name} from your inventory?
+          </DeleteTitle>
         </HeaderWrapper>
         <div>
           <StyledImg
@@ -97,35 +95,37 @@ const FarmItemList = props => {
   return (
     <div className="Selling-Area">
       <div className="Selling-Header">
-        <HeaderWrapper> 
-        <Title>Items Your Selling </Title>
+        <HeaderWrapper>
+          <Title>Items You're Selling </Title>
         </HeaderWrapper>
       </div>
-    <StyledList className="farmItems-Wrapper">
-      <Title>Items You're Selling </Title>
-
-      {props.farmItems.length == 0 ? (
-        <PStyled>Your inventory is empty. Add some more inventory.</PStyled>
-      ) : null}
-      {props.farmItems.map(item => (
-        <FarmCard className="FarmItem-card" key={item.name}>
-          <StyledImg
-            className="farmitem-list-image"
-            src={item.produceImgURL}
-            alt={item.name}
-          />
-          <ProduceTitle>{item.name}</ProduceTitle>
-          <PStyled>
-            ${item.price} per {item.increment}
-          </PStyled>
-          <PStyled>
-            Quantity: {item.quantity}-{item.increment}
-          </PStyled>
-          <ShoppingButton onClick={() => handleEdit(item)}>Update Item</ShoppingButton>
-          <ShoppingButton onClick={() => handleDelete(item)}>Delete Item</ShoppingButton>
-        </FarmCard>
-      ))}
-    </StyledList>
+      <StyledList className="farmItems-Wrapper">
+        {props.farmItems.length == 0 ? (
+          <PStyled>Your inventory is empty. Add some more inventory.</PStyled>
+        ) : null}
+        {props.farmItems.map(item => (
+          <FarmCard className="FarmItem-card" key={item.name}>
+            <StyledImg
+              className="farmitem-list-image"
+              src={item.produceImgURL}
+              alt={item.name}
+            />
+            <ProduceTitle>{item.name}</ProduceTitle>
+            <PStyled>
+              ${item.price} per {item.increment}
+            </PStyled>
+            <PStyled>
+              Quantity: {item.quantity}-{item.increment}
+            </PStyled>
+            <ShoppingButton onClick={() => handleEdit(item)}>
+              Update Item
+            </ShoppingButton>
+            <ShoppingButton onClick={() => handleDelete(item)}>
+              Delete Item
+            </ShoppingButton>
+          </FarmCard>
+        ))}
+      </StyledList>
     </div>
   );
 };
@@ -138,24 +138,23 @@ const StyledImg = styled.img`
 `;
 
 const StyledList = styled.div`
-display: inline-flex;
-flex-direction: row;
-width: 80%;
-flex-flow: wrap;
-justify-content: center;
-margin: auto;
-`
+  display: inline-flex;
+  flex-direction: row;
+  width: 80%;
+  flex-flow: wrap;
+  justify-content: center;
+  margin: auto;
+`;
 
 const ProduceTitle = styled(SubTitle)`
-padding: .5rem;
-font-size: 2.5rem; 
-`
+  padding: 0.5rem;
+  font-size: 2.5rem;
+`;
 
 const FarmCard = styled.div`
-padding: 1rem;
-`
+  padding: 1rem;
+`;
 
 const DeleteTitle = styled(Title)`
-font-size: 3rem; 
-`
-
+  font-size: 3rem;
+`;

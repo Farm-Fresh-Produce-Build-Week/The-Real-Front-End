@@ -29,6 +29,7 @@ const FarmItem = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    props.setRefreshOnAdd(!props.setRefreshOnAdd);
     console.log("FarmItem.js, itemToAdd: ", itemToAdd);
 
     AxiosWithAuthUser()
@@ -41,8 +42,10 @@ const FarmItem = props => {
         addToCart(props.user.id);
       })
       .catch(err => {
-        console.log(err.response.data.errorMessage);
-        setMessage(err.response.data.errorMessage);
+        console.log(err.response);
+        if (err) {
+          setMessage(`${props.item.name} are already in your cart`);
+        }
       });
   };
 

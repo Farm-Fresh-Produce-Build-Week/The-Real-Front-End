@@ -16,19 +16,34 @@ const Cart = props => {
   } = useContext(CartContext);
   const { user } = useContext(UserContext);
   const [isComplete, setIsComplete] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   console.log("Cart.js, user: ", user);
   console.log("Cart.js, cart: ", cart);
 
   useEffect(() => {
     getUserCart(user.id);
     setIsComplete(false);
-  }, []);
+  }, [refresh]);
 
   const handlePurchase = cart => {
     console.log("Cart.js, handlePurchase(), cart: ", cart);
     PurchaseOrder(cart);
     clearCart();
     setIsComplete(true);
+  };
+
+  const handleDelete = (id, SKU) => {
+    // e.preventDefault;
+    setRefresh(!refresh);
+    removeItem(id, SKU);
+  };
+
+  const titleText = () => {
+    if (cart.length > 0) {
+      return "Your Cart:";
+    } else {
+      return "Your Cart is empty. Add some items from the store.";
+    }
   };
 
   if (isComplete) {
@@ -55,7 +70,7 @@ const Cart = props => {
           <button> Store </button>
         </NavLink>
         <div className="top-section">
-          <h2>Your Cart: </h2>
+          <h2>{titleText()}</h2>
         </div>
         <div className="want-to-purchase">
           {cart &&
@@ -84,7 +99,7 @@ const Cart = props => {
                     </p> */}
                     <p>Provided by Farm# {item.farmer_id}</p>
                   </div>
-                  <button onClick={() => removeItem(user.id, item.SKU)}>
+                  <button onClick={() => handleDelete(user.id, item.SKU)}>
                     X
                   </button>
                 </div>
@@ -99,10 +114,12 @@ const Cart = props => {
         </div>
         <div className="totals">
           {/* <h3> Total: $ </h3> */}
-          <button onClick={() => handlePurchase(cart)}>
-            {" "}
-            Purchase Produce{" "}
-          </button>
+          {cart.length > 0 && (
+            <button onClick={() => handlePurchase(cart)}>
+              {" "}
+              Purchase Produce{" "}
+            </button>
+          )}
         </div>
       </div>
     </>
