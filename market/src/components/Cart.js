@@ -38,6 +38,14 @@ const Cart = props => {
     removeItem(id, SKU);
   };
 
+  const titleText = () => {
+    if (cart.length > 0) {
+      return "Your Cart:";
+    } else {
+      return "Your Cart is empty. Add some items from the store.";
+    }
+  };
+
   if (isComplete) {
     return (
       <div>
@@ -62,7 +70,7 @@ const Cart = props => {
           <button> Store </button>
         </NavLink>
         <div className="top-section">
-          <h2>Your Cart: </h2>
+          <h2>{titleText()}</h2>
         </div>
         <div className="want-to-purchase">
           {cart &&
@@ -106,10 +114,12 @@ const Cart = props => {
         </div>
         <div className="totals">
           {/* <h3> Total: $ </h3> */}
-          <button onClick={() => handlePurchase(cart)}>
-            {" "}
-            Purchase Produce{" "}
-          </button>
+          {cart.length > 0 && (
+            <button onClick={() => handlePurchase(cart)}>
+              {" "}
+              Purchase Produce{" "}
+            </button>
+          )}
         </div>
       </div>
     </>

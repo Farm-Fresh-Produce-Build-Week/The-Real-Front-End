@@ -29,6 +29,7 @@ const FarmItem = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    props.setRefreshOnAdd(!props.setRefreshOnAdd);
     console.log("FarmItem.js, itemToAdd: ", itemToAdd);
 
     AxiosWithAuthUser()
